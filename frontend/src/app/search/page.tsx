@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { searchPosts } from '@/lib/api';
 import { formatDate } from '@/lib/format';
 import EmptyState from '@/components/EmptyState';
+import PromptCard from '@/components/PromptCard';
 import SearchBox from '@/components/SearchBox';
 import ToolGrid from '@/components/ToolGrid';
 
@@ -17,9 +18,9 @@ export default async function SearchPage({
 }) {
   const { q } = await searchParams;
   const keyword = (q ?? '').trim();
-  const { tools, news, count } = keyword
+  const { tools, prompts, news, count } = keyword
     ? await searchPosts(keyword, 1, 60)
-    : { tools: [], news: [], count: 0 };
+    : { tools: [], prompts: [], news: [], count: 0 };
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
@@ -35,7 +36,7 @@ export default async function SearchPage({
         </p>
       )}
 
-      {keyword && tools.length === 0 && news.length === 0 && (
+      {keyword && tools.length === 0 && prompts.length === 0 && news.length === 0 && (
         <div className="mt-8">
           <EmptyState title="没有找到相关结果" hint="换个关键词试试，比如「写作」「视频」「编程」。" />
         </div>
@@ -45,6 +46,17 @@ export default async function SearchPage({
         <section className="mt-8">
           <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">工具（{tools.length}）</h2>
           <ToolGrid tools={tools} />
+        </section>
+      )}
+
+      {prompts.length > 0 && (
+        <section className="mt-10">
+          <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">提示词（{prompts.length}）</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {prompts.map((p) => (
+              <PromptCard key={p.cid} prompt={p} />
+            ))}
+          </div>
         </section>
       )}
 

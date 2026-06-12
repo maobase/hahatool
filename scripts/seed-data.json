@@ -76,6 +76,13 @@
    "slug": "ai-flash",
    "desc": "AI 行业即时短讯",
    "order": 98
+  },
+  {
+   "mid": 21,
+   "name": "提示词",
+   "slug": "ai-prompts",
+   "desc": "高质量 AI 提示词库",
+   "order": 97
   }
  ],
  "tags": [
@@ -1064,6 +1071,210 @@
    "fields": {},
    "cats": [
     "ai-flash"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 160,
+   "title": "小红书爆款文案生成器",
+   "slug": "prompt-xiaohongshu",
+   "created": 1781220000,
+   "content": "## 使用说明\n把 {产品/主题} 替换成你的内容即可，例如「平价咖啡机」。适合种草、测评、好物分享类笔记。",
+   "fields": {
+    "prompt": "你是一位拥有百万粉丝的小红书博主。请为「{产品/主题}」写一篇小红书笔记：\n1. 标题：20 字内，使用数字、悬念或对比，至少包含一个 emoji\n2. 正文：口语化、有个人体验感，分 3-4 个小段落，每段配 emoji 开头\n3. 结尾：引导互动（提问或求赞）\n4. 附 5 个相关话题标签\n要求：避免广告腔，像朋友安利。",
+    "prompt_model": "通用",
+    "prompt_scene": "营销",
+    "likes": "2680"
+   },
+   "cats": [
+    "ai-prompts"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 161,
+   "title": "周报生成器",
+   "slug": "prompt-weekly-report",
+   "created": 1781212800,
+   "content": "## 使用说明\n把零散的工作记录直接丢进去，30 秒出一份能直接交的周报。",
+   "fields": {
+    "prompt": "你是我的工作助理。根据以下流水账，生成一份结构化周报：\n{粘贴本周做的事，可以很零散}\n\n要求：\n1. 按「本周成果 / 进行中 / 下周计划 / 风险与求助」四节组织\n2. 每条以动词开头，量化成果（没有数字就合理估算并标注）\n3. 语气专业但不浮夸，总长 300 字内",
+    "prompt_model": "通用",
+    "prompt_scene": "办公",
+    "likes": "2310"
+   },
+   "cats": [
+    "ai-prompts"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 162,
+   "title": "代码评审专家",
+   "slug": "prompt-code-review",
+   "created": 1781205600,
+   "content": "## 使用说明\n支持任何语言。配合具体框架使用时，在开头补一句「项目使用 React/Go/...」效果更好。",
+   "fields": {
+    "prompt": "你是一位资深代码评审专家。请评审以下代码：\n```\n{粘贴代码}\n```\n按优先级输出：\n1. 🔴 必须修复：bug、安全漏洞、数据竞争\n2. 🟡 建议修复：性能、可读性、边界条件\n3. 🟢 锦上添花：命名、风格\n每条给出具体修改示例。最后用一句话总评。",
+    "prompt_model": "Claude / GPT",
+    "prompt_scene": "编程",
+    "likes": "1980"
+   },
+   "cats": [
+    "ai-prompts"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 163,
+   "title": "Midjourney 摄影级提示词",
+   "slug": "prompt-mj-photo",
+   "created": 1781218400,
+   "content": "## 使用说明\n把 {主体描述} 换成英文主体，如 \"a chinese girl in hanfu standing in a bamboo forest\"。出片接近真实摄影。",
+   "fields": {
+    "prompt": "{主体描述}, professional photography, shot on Sony A7R IV, 85mm f/1.4, golden hour lighting, shallow depth of field, hyper-detailed, cinematic color grading, 8k --ar 3:4 --style raw",
+    "prompt_model": "Midjourney",
+    "prompt_scene": "绘画",
+    "likes": "1750"
+   },
+   "cats": [
+    "ai-prompts"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 164,
+   "title": "SQL 优化顾问",
+   "slug": "prompt-sql-optimize",
+   "created": 1781211200,
+   "content": "## 使用说明\n把慢 SQL 和表结构贴进去即可。MySQL / PostgreSQL 都适用。",
+   "fields": {
+    "prompt": "你是数据库性能专家。这是我的慢查询：\n```sql\n{粘贴 SQL}\n```\n表结构与数据量：{描述或粘贴 DDL}\n\n请：1) 解释为什么慢（执行计划角度）；2) 给出优化后的 SQL；3) 给出需要的索引 DDL；4) 预估优化效果。若信息不足，先列出你需要的信息。",
+    "prompt_model": "通用",
+    "prompt_scene": "编程",
+    "likes": "1430"
+   },
+   "cats": [
+    "ai-prompts"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 165,
+   "title": "英语口语陪练",
+   "slug": "prompt-english-partner",
+   "created": 1781204000,
+   "content": "## 使用说明\n坚持每天 10 分钟，纠错 + 对话同时进行。可以加一句「my level is IELTS 5.5」让难度更贴合。",
+   "fields": {
+    "prompt": "You are my English speaking partner. Rules:\n1. Chat with me in English about daily topics, one short question at a time\n2. After each of my replies: first correct my mistakes (briefly, in Chinese), then continue the conversation\n3. Use vocabulary slightly above my level\n4. Every 10 turns, summarize my top 3 recurring mistakes\nStart by asking about my day.",
+    "prompt_model": "通用",
+    "prompt_scene": "学习",
+    "likes": "1690"
+   },
+   "cats": [
+    "ai-prompts"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 166,
+   "title": "结构化面试官",
+   "slug": "prompt-interviewer",
+   "created": 1781196800,
+   "content": "## 使用说明\n把 {公司类型} 和 {岗位} 换掉，如「一线大厂 / 后端工程师」。提前热身真实面试。",
+   "fields": {
+    "prompt": "你是 {公司类型} 的资深面试官。对我进行 {岗位} 的模拟面试：\n1. 一次只问一个问题，从自我介绍开始，逐步深入到专业与场景题\n2. 我回答后：先犀利点评（亮点/漏洞/更优答法），再问下一题\n3. 共 8 题，结束后给出综合评分（S/A/B/C）与提升建议\n现在开始。",
+    "prompt_model": "通用",
+    "prompt_scene": "办公",
+    "likes": "1380"
+   },
+   "cats": [
+    "ai-prompts"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 167,
+   "title": "PPT 大纲架构师",
+   "slug": "prompt-ppt-outline",
+   "created": 1781189600,
+   "content": "## 使用说明\n标题即结论是关键技巧。生成后让 AI 逐页扩写讲稿也很好用。",
+   "fields": {
+    "prompt": "你是麦肯锡风格的演示顾问。为「{主题}」设计一份 PPT 大纲：\n1. 先给出金字塔结构：一句话核心主张 + 3 个支撑论点\n2. 输出逐页大纲（10-15 页）：每页标题用「结论句」，并注明该页放什么图表/案例\n3. 开场页给一个抓人的 hook（数据/提问/反常识）\n听众是：{听众描述}",
+    "prompt_model": "通用",
+    "prompt_scene": "办公",
+    "likes": "1270"
+   },
+   "cats": [
+    "ai-prompts"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 168,
+   "title": "起名大师",
+   "slug": "prompt-naming",
+   "created": 1781182400,
+   "content": "## 使用说明\n描述越具体名字越准，比如「面向程序员的 AI 代码审查 SaaS」。",
+   "fields": {
+    "prompt": "你是品牌命名专家。为「{产品/公司描述}」起名：\n1. 给 10 个候选名：5 个中文 + 5 个英文\n2. 每个附：寓意、记忆点、潜在风险（谐音/商标冲突方向）\n3. 风格覆盖：大气稳重 ×3、年轻有梗 ×3、国际化 ×2、技术感 ×2\n4. 最后推荐 Top3 并说明理由\n行业禁忌词：{可选}",
+    "prompt_model": "通用",
+    "prompt_scene": "营销",
+    "likes": "1150"
+   },
+   "cats": [
+    "ai-prompts"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 169,
+   "title": "万能翻译润色官",
+   "slug": "prompt-translate-polish",
+   "created": 1781175200,
+   "content": "## 使用说明\n比直接说「翻译一下」质量高很多，重点在「母语版」。",
+   "fields": {
+    "prompt": "你是专业中英译者与编辑。对以下文本执行：\n{粘贴文本}\n\n1. 若是中文→翻译为地道英文；若是英文→翻译为流畅中文\n2. 给两个版本：「忠实版」（贴近原文）和「母语版」（按目标语言习惯重写）\n3. 标注 3 处你做了关键取舍的地方并解释\n语域要求：{正式/口语/学术，默认正式}",
+    "prompt_model": "通用",
+    "prompt_scene": "写作",
+    "likes": "1520"
+   },
+   "cats": [
+    "ai-prompts"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 170,
+   "title": "费曼学习法教练",
+   "slug": "prompt-feynman",
+   "created": 1781168000,
+   "content": "## 使用说明\n把 {概念} 换成任何东西：区块链、傅里叶变换、通货膨胀……",
+   "fields": {
+    "prompt": "我想真正搞懂「{概念}」。请用费曼学习法带我：\n1. 先用给 12 岁孩子讲的方式解释它（生活类比）\n2. 然后问我 3 个检验理解的问题，等我回答\n3. 根据我的回答指出理解漏洞，针对性重讲\n4. 最后让我用自己的话复述，你来打分（满分 10）并给出标准版本",
+    "prompt_model": "通用",
+    "prompt_scene": "学习",
+    "likes": "1340"
+   },
+   "cats": [
+    "ai-prompts"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 171,
+   "title": "深度辩论对手",
+   "slug": "prompt-debate",
+   "created": 1781160800,
+   "content": "## 使用说明\n写文章/做决策前用它压力测试自己的观点，盲区一目了然。",
+   "fields": {
+    "prompt": "我方观点：「{你的观点}」。你扮演最强反方：\n1. 先用钢人原则（steelman）复述我方最强版本\n2. 然后从事实、逻辑、价值观三个层面各给一个最有力的反驳\n3. 我回应后，继续追击我回应中最薄弱的环节\n4. 5 轮后切换中立裁判视角，复盘双方表现并指出我的论证盲区\n保持犀利但讲理。",
+    "prompt_model": "通用",
+    "prompt_scene": "写作",
+    "likes": "980"
+   },
+   "cats": [
+    "ai-prompts"
    ],
    "tags": []
   }

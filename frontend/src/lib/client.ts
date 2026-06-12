@@ -8,7 +8,7 @@ export interface SuggestItem {
   slug: string;
   logo: string;
   tagline: string;
-  isTool: boolean;
+  kind: 'tool' | 'prompt' | 'news';
 }
 
 export interface CommentItem {
@@ -35,8 +35,8 @@ export async function fetchSuggestions(keyword: string): Promise<SuggestItem[]> 
     title: stripTags(p.title?.rendered ?? ''),
     slug: p.slug,
     logo: p.meta?.logo ?? '',
-    tagline: p.meta?.tagline ?? '',
-    isTool: Boolean(p.meta?.url),
+    tagline: p.meta?.tagline ?? (p.meta?.prompt ? String(p.meta.prompt).slice(0, 40) : ''),
+    kind: p.meta?.url ? 'tool' : p.meta?.prompt ? 'prompt' : 'news',
   }));
 }
 

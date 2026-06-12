@@ -66,6 +66,23 @@ export interface Tool {
   contentHtml?: string;
 }
 
+/** 提示词条目 */
+export interface PromptItem {
+  cid: number;
+  title: string;
+  slug: string;
+  created: number;
+  /** 提示词全文 */
+  prompt: string;
+  /** 适用模型（如：通用 / Midjourney） */
+  model: string;
+  /** 使用场景（如：写作 / 编程 / 营销） */
+  scene: string;
+  likes: number;
+  /** 使用说明 HTML（详情页） */
+  contentHtml?: string;
+}
+
 /** 资讯条目 */
 export interface NewsItem {
   cid: number;

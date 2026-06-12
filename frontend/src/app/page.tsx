@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { ArrowRight, Flame, Megaphone, Sparkles } from 'lucide-react';
-import { getAllTools, getFlash, getNews, getTags, getToolCategories, pickPromo } from '@/lib/api';
+import { getAllTools, getFlash, getNews, getPrompts, getTags, getToolCategories, pickPromo } from '@/lib/api';
 import AdSlot from '@/components/AdSlot';
 import NewsTicker from '@/components/NewsTicker';
+import PromptCard from '@/components/PromptCard';
 import { formatDate } from '@/lib/format';
 import EmptyState from '@/components/EmptyState';
 import ToolCard from '@/components/ToolCard';
@@ -22,14 +23,16 @@ function weeklyNew(created: number[]): number {
 }
 
 export default async function HomePage() {
-  const [tools, categories, news, tags, flash] = await Promise.all([
+  const [tools, categories, news, tags, flash, prompts] = await Promise.all([
     getAllTools(),
     getToolCategories(),
     getNews(1, 3),
     getTags(),
     getFlash(1, 6),
+    getPrompts(),
   ]);
   const midPromo = pickPromo(tools, 'home-mid', 1);
+  const hotPrompts = [...prompts].sort((a, b) => b.likes - a.likes).slice(0, 3);
 
   const banners = tools.filter((t) => t.banner).slice(0, 2);
   const featured = tools.filter((t) => t.featured).slice(0, 8);
@@ -253,6 +256,23 @@ export default async function HomePage() {
                 </div>
               );
             })}
+
+            {/* 热门提示词 */}
+            {hotPrompts.length > 0 && (
+              <section>
+                <SectionHeader
+                  title="热门提示词"
+                  subtitle="复制即用的高质量中文 Prompt"
+                  moreHref="/prompts"
+                  moreText="进入提示词库"
+                />
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {hotPrompts.map((p) => (
+                    <PromptCard key={p.cid} prompt={p} />
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* 热门标签 */}
             {tags.length > 0 && (
