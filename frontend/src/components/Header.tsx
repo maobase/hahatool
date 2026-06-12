@@ -15,6 +15,7 @@ const NAV = [
   { href: '/tools', label: '工具库' },
   { href: '/ranking', label: '排行榜' },
   { href: '/compare', label: '工具PK' },
+  { href: '/prompts', label: '提示词' },
   { href: '/flash', label: 'AI快讯' },
   { href: '/news', label: 'AI资讯' },
 ];

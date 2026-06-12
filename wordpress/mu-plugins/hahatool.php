@@ -20,6 +20,8 @@ const HAHATOOL_META_KEYS = [
     'likes', 'monthly_visits', 'growth', 'rating', 'visits_history', 'regions', 'scores',
     // 内容增强
     'faq', 'cover',
+    // 提示词频道
+    'prompt', 'prompt_model', 'prompt_scene',
     // 运营位
     'featured', 'banner', 'promo',
 ];

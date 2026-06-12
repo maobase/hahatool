@@ -53,6 +53,7 @@ frontend/src/
 | `faq` | 常见问题（每行 `问|答`） | 多行文本 |
 | `screenshot` / `cover` | 截图 / 资讯封面 URL | 可选 |
 | `featured` / `banner` | `1` = 编辑精选 / 首页顶部 Banner | `1` |
+| `prompt` / `prompt_scene` / `prompt_model` | 提示词频道：全文 / 场景 / 适用模型（分类须为 `ai-prompts`） | 多行文本 / `编程` / `通用` |
 | `promo` | 广告位：`home-mid` `ranking-top` `detail-side` `detail-bottom` `tools-inline` `news-inline` | 单值 |
 
 - 分类 = WP 分类；`ai-news`（资讯）与 `ai-flash`（快讯）为保留 slug；

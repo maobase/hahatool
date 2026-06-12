@@ -1,4 +1,4 @@
-import type { Category, NewsItem, Tag, Tool, WpPost } from './types';
+import type { Category, NewsItem, PromptItem, Tag, Tool, WpPost } from './types';
 
 /**
  * WordPress REST API 客户端（仅在服务端调用）。
@@ -8,12 +8,16 @@ const API_BASE = (process.env.WP_API_BASE ?? 'http://localhost:8090/wp-json').re
 
 export const NEWS_CATEGORY_SLUG = 'ai-news';
 export const FLASH_CATEGORY_SLUG = 'ai-flash';
+export const PROMPTS_CATEGORY_SLUG = 'ai-prompts';
+
+/** 非工具的保留分类 */
+const RESERVED_SLUGS = new Set([NEWS_CATEGORY_SLUG, FLASH_CATEGORY_SLUG, PROMPTS_CATEGORY_SLUG]);
 
 /** 分类展示顺序（WP 分类无排序字段，前台固定） */
 const CATEGORY_ORDER: Record<string, number> = {
   chatbot: 1, 'text-writing': 2, image: 3, video: 4, audio: 5,
   'code-it': 6, productivity: 7, marketing: 8, education: 9,
-  'ai-flash': 98, 'ai-news': 99,
+  'ai-prompts': 97, 'ai-flash': 98, 'ai-news': 99,
 };
 
 interface ApiResult<T> {
@@ -134,10 +138,29 @@ function toNews(p: WpPost): NewsItem {
   };
 }
 
-/** 是否为「工具」文章（有 url 字段且不属于资讯/快讯分类） */
+/** 是否为「工具」文章（有 url 字段且不属于保留分类） */
 function isTool(p: WpPost): boolean {
   if (!meta(p, 'url')) return false;
-  return !terms(p, 'category').some((c) => c.slug === NEWS_CATEGORY_SLUG || c.slug === FLASH_CATEGORY_SLUG);
+  return !terms(p, 'category').some((c) => RESERVED_SLUGS.has(c.slug));
+}
+
+/** 是否为「提示词」文章 */
+function isPrompt(p: WpPost): boolean {
+  return Boolean(meta(p, 'prompt'));
+}
+
+function toPrompt(p: WpPost): PromptItem {
+  return {
+    cid: p.id,
+    title: decodeEntities(p.title.rendered),
+    slug: p.slug,
+    created: toTs(p.date_gmt),
+    prompt: meta(p, 'prompt'),
+    model: meta(p, 'prompt_model') || '通用',
+    scene: meta(p, 'prompt_scene') || '其他',
+    likes: Number(meta(p, 'likes')) || 0,
+    contentHtml: p.content?.rendered,
+  };
 }
 
 // ---------------- 分类 ----------------
@@ -158,9 +181,9 @@ export async function getCategories(): Promise<Category[]> {
     .sort((a, b) => a.order - b.order);
 }
 
-/** 工具分类（排除资讯/快讯分类） */
+/** 工具分类（排除资讯/快讯/提示词等保留分类） */
 export async function getToolCategories(): Promise<Category[]> {
-  return (await getCategories()).filter((c) => c.slug !== NEWS_CATEGORY_SLUG && c.slug !== FLASH_CATEGORY_SLUG);
+  return (await getCategories()).filter((c) => !RESERVED_SLUGS.has(c.slug));
 }
 
 async function categoryIdBySlug(slug: string): Promise<number> {
@@ -213,17 +236,18 @@ export async function getToolsByCategory(slug: string, page = 1, pageSize = 24):
   return { tools: data.filter(isTool).map(toTool), pages: totalPages, count: total };
 }
 
-export async function searchPosts(keyword: string, page = 1, pageSize = 24): Promise<{ tools: Tool[]; news: NewsItem[]; pages: number; count: number }> {
+export async function searchPosts(keyword: string, page = 1, pageSize = 24): Promise<{ tools: Tool[]; prompts: PromptItem[]; news: NewsItem[]; pages: number; count: number }> {
   const { data, total, totalPages } = await apiGet<WpPost[]>('wp/v2/posts', {
     search: keyword,
     page,
     per_page: pageSize,
     _embed: 'wp:term',
   });
-  if (!data) return { tools: [], news: [], pages: 0, count: 0 };
+  if (!data) return { tools: [], prompts: [], news: [], pages: 0, count: 0 };
   return {
     tools: data.filter(isTool).map(toTool),
-    news: data.filter((p) => !isTool(p)).map(toNews),
+    prompts: data.filter(isPrompt).map(toPrompt),
+    news: data.filter((p) => !isTool(p) && !isPrompt(p)).map(toNews),
     pages: totalPages,
     count: total,
   };
@@ -265,6 +289,24 @@ export async function getNewsBySlug(slug: string): Promise<NewsItem | null> {
   const post = data?.[0];
   if (!post) return null;
   return toNews(post);
+}
+
+// ---------------- 提示词 ----------------
+
+/** 提示词列表（量级不大，单次拉全量后前端筛选场景） */
+export async function getPrompts(): Promise<PromptItem[]> {
+  const catId = await categoryIdBySlug(PROMPTS_CATEGORY_SLUG);
+  if (!catId) return [];
+  const { data } = await apiGet<WpPost[]>('wp/v2/posts', { categories: catId, per_page: 100 });
+  if (!data) return [];
+  return data.map(toPrompt);
+}
+
+export async function getPromptBySlug(slug: string): Promise<PromptItem | null> {
+  const { data } = await apiGet<WpPost[]>('wp/v2/posts', { slug });
+  const post = data?.[0];
+  if (!post || !meta(post, 'prompt')) return null;
+  return toPrompt(post);
 }
 
 // ---------------- 运营位 ----------------

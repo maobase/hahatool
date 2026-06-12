@@ -109,7 +109,13 @@ export default function SearchBox({
                 type="button"
                 onClick={() => {
                   setOpen(false);
-                  router.push(item.isTool ? `/tool/${item.slug}` : `/news/${item.slug}`);
+                  const path =
+                    item.kind === 'tool'
+                      ? `/tool/${item.slug}`
+                      : item.kind === 'prompt'
+                        ? `/prompts/${item.slug}`
+                        : `/news/${item.slug}`;
+                  router.push(path);
                 }}
                 className="flex w-full items-center gap-3 px-4 py-2.5 text-left transition hover:bg-brand-50 dark:hover:bg-brand-900/30"
               >
@@ -117,7 +123,11 @@ export default function SearchBox({
                 <span className="min-w-0">
                   <span className="block truncate text-sm font-medium text-gray-900 dark:text-gray-100">{item.title}</span>
                   <span className="block truncate text-xs text-gray-500">
-                    {item.isTool ? item.tagline || '查看详情' : 'AI 资讯'}
+                    {item.kind === 'tool'
+                      ? item.tagline || '查看详情'
+                      : item.kind === 'prompt'
+                        ? `提示词 · ${item.tagline}`
+                        : 'AI 资讯'}
                   </span>
                 </span>
               </button>
