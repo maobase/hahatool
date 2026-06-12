@@ -2,6 +2,20 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.4.0] - 2026-06-12
+
+### 新增
+- **站内真实统计**：详情页浏览量（views）与「官网直达」点击（clicks）自动计数
+  - mu-plugin 自定义端点 `POST /hahatool/v1/track`（纯计数器自增，不产生文章修订）
+  - Next `/api/track` 代理：IP+条目+类型 30 分钟去重防刷；浏览每会话仅上报一次
+  - 详情页展示「站内浏览 / 官网直达」真实数据；排行榜新增**人气榜**（按真实浏览量）
+- **SEO 完善**：动态 sitemap.xml（80+ URL，每小时再生）、robots.txt、
+  工具详情 OpenGraph/Twitter 卡片（截图作 og:image）、SoftwareApplication JSON-LD 结构化数据
+- 全局路由加载骨架屏（loading.tsx）
+
+### 修复
+- 站点对外地址改由 `SITE_URL` 环境变量驱动（compose build args 注入构建期产物）
+
 ## [v1.3.0] - 2026-06-12
 
 ### 新增

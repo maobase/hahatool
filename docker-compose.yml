@@ -65,7 +65,11 @@ services:
     profiles: ["tools"]
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        # robots.txt 等构建期产物的站点对外地址
+        NEXT_PUBLIC_SITE_URL: ${SITE_URL:-http://localhost:3000}
     image: hahatool-frontend:latest
     container_name: hahatool-frontend
     restart: unless-stopped
@@ -78,6 +82,7 @@ services:
       WP_APP_USER: ${WP_APP_USER:-}
       WP_APP_PASS: ${WP_APP_PASS:-}
       NEXT_PUBLIC_SITE_NAME: ${SITE_NAME:-HahaTool}
+      NEXT_PUBLIC_SITE_URL: ${SITE_URL:-http://localhost:3000}
       NEXT_PUBLIC_ADMIN_URL: http://localhost:${WP_PORT:-8090}/wp-admin/
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
