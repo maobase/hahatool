@@ -48,6 +48,9 @@ export interface Tool {
   screenshot: string;
   /** 评分 0-5（运营维护） */
   rating: number;
+  /** 站内真实统计：详情页浏览量 / 官网直达点击（自动累加） */
+  views: number;
+  clicks: number;
   /** 近 N 月访问量（流量趋势图） */
   visitsHistory: number[];
   /** 地区流量分布 */

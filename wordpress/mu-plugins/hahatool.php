@@ -16,8 +16,8 @@ if (!defined('ABSPATH')) {
 const HAHATOOL_META_KEYS = [
     // 工具基础
     'url', 'logo', 'tagline', 'pricing', 'screenshot',
-    // 数据指标
-    'likes', 'monthly_visits', 'growth', 'rating', 'visits_history', 'regions', 'scores',
+    // 数据指标（views / clicks 为站内真实统计，由 /hahatool/v1/track 自动累加）
+    'likes', 'monthly_visits', 'growth', 'rating', 'visits_history', 'regions', 'scores', 'views', 'clicks',
     // 内容增强
     'faq', 'cover',
     // 提示词频道
@@ -48,5 +48,32 @@ add_filter('rest_allow_anonymous_comments', '__return_true');
  * 「提交工具」表单的服务端写入依赖它。生产环境请务必启用 HTTPS。
  */
 add_filter('wp_is_application_passwords_available', '__return_true');
+
+/**
+ * 站内真实统计端点：POST /wp-json/hahatool/v1/track  {cid, type: views|clicks}
+ * 只做计数器自增，不更新文章本身（不产生修订、不改动 modified 时间）。
+ * 防刷由 Next.js 代理层（IP+条目 30 分钟去重）负责。
+ */
+add_action('rest_api_init', function () {
+    register_rest_route('hahatool/v1', '/track', [
+        'methods' => 'POST',
+        'permission_callback' => '__return_true',
+        'args' => [
+            'cid' => ['required' => true, 'type' => 'integer'],
+            'type' => ['required' => true, 'type' => 'string', 'enum' => ['views', 'clicks']],
+        ],
+        'callback' => function (WP_REST_Request $req) {
+            $cid = (int) $req['cid'];
+            $type = $req['type'];
+            $post = get_post($cid);
+            if (!$post || $post->post_status !== 'publish' || $post->post_type !== 'post') {
+                return new WP_Error('not_found', 'post not found', ['status' => 404]);
+            }
+            $n = (int) get_post_meta($cid, $type, true) + 1;
+            update_post_meta($cid, $type, (string) $n);
+            return ['ok' => true, 'value' => $n];
+        },
+    ]);
+});
 
 /** REST 列表默认带出分类/标签信息时减少额外请求成本：放宽 per_page 上限到 100（WP 默认即 100，留作显式说明） */

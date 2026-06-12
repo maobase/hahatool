@@ -39,6 +39,8 @@ export default function FavoritesPage() {
             growth: Number(p.meta?.growth) || 0,
             screenshot: p.meta?.screenshot ?? '',
             rating: Number(p.meta?.rating) || 0,
+            views: 0,
+            clicks: 0,
             visitsHistory: [],
             regions: [],
             faq: [],

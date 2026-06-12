@@ -21,6 +21,7 @@ const TABS = [
   { key: 'visits', label: '流量榜', desc: '按月访问量排序' },
   { key: 'likes', label: '收藏榜', desc: '按用户收藏数排序' },
   { key: 'growth', label: '增长榜', desc: '按月环比增速排序' },
+  { key: 'hot', label: '人气榜', desc: '按本站真实浏览量排序（站内统计）' },
   { key: 'new', label: '新品榜', desc: '按收录时间排序' },
 ] as const;
 
@@ -48,6 +49,8 @@ export default async function RankingPage({
         return b.likes - a.likes;
       case 'growth':
         return b.growth - a.growth;
+      case 'hot':
+        return b.views - a.views;
       case 'new':
         return b.created - a.created;
       default:
@@ -144,9 +147,9 @@ export default async function RankingPage({
                 <p className="mt-3 line-clamp-2 min-h-10 text-sm leading-5 text-gray-500">{tool.tagline}</p>
                 <div className="mt-3 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3">
                   <span className="font-display text-lg font-bold tabular-nums text-gray-900 dark:text-gray-100">
-                    {formatCount(sortBy === 'likes' ? tool.likes : tool.monthlyVisits)}
+                    {formatCount(sortBy === 'likes' ? tool.likes : sortBy === 'hot' ? tool.views : tool.monthlyVisits)}
                     <span className="ml-1 text-xs font-normal text-gray-400">
-                      {sortBy === 'likes' ? '收藏' : '月访问'}
+                      {sortBy === 'likes' ? '收藏' : sortBy === 'hot' ? '站内浏览' : '月访问'}
                     </span>
                   </span>
                   <GrowthBadge growth={tool.growth} />

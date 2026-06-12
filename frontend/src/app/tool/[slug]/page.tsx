@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowUpRight, Bookmark, CalendarDays, Globe, TrendingUp } from 'lucide-react';
+import { Bookmark, CalendarDays, Eye, Globe, TrendingUp } from 'lucide-react';
 import { getAllTools, getToolBySlug, pickPromo } from '@/lib/api';
 import AdSlot from '@/components/AdSlot';
 import RadarChart from '@/components/RadarChart';
@@ -14,16 +14,23 @@ import PricingBadge from '@/components/PricingBadge';
 import RatingStars from '@/components/RatingStars';
 import ToolLogo from '@/components/ToolLogo';
 import ToolScreenshot from '@/components/ToolScreenshot';
+import TrackView from '@/components/TrackView';
 import TrafficPanel from '@/components/TrafficPanel';
+import VisitButton from '@/components/VisitButton';
 
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const tool = await getToolBySlug(slug);
+  if (!tool) return { title: '工具详情' };
+  const title = `${tool.title} - ${tool.tagline}`.slice(0, 60);
+  const image = tool.screenshot || `https://s0.wp.com/mshots/v1/${encodeURIComponent(tool.url)}?w=1200`;
   return {
-    title: tool ? `${tool.title} - ${tool.tagline}`.slice(0, 60) : '工具详情',
-    description: tool?.tagline,
+    title,
+    description: tool.tagline,
+    openGraph: { title, description: tool.tagline, type: 'website', images: [{ url: image }] },
+    twitter: { card: 'summary_large_image', title, description: tool.tagline, images: [image] },
   };
 }
 
@@ -41,8 +48,25 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
     .sort((a, b) => b.monthlyVisits - a.monthlyVisits)
     .slice(0, 5);
 
+  // SEO：SoftwareApplication 结构化数据
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: tool.title,
+    description: tool.tagline,
+    url: tool.url,
+    applicationCategory: mainCategory?.name,
+    offers: { '@type': 'Offer', price: tool.pricing === '免费' ? '0' : undefined, description: tool.pricing },
+    ...(tool.rating > 0 && {
+      aggregateRating: { '@type': 'AggregateRating', ratingValue: tool.rating, bestRating: 5, ratingCount: Math.max(1, tool.likes) },
+    }),
+  };
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+      {/* 浏览量上报（每会话一次） */}
+      <TrackView cid={tool.cid} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* 面包屑 */}
       <nav className="text-sm text-gray-400" aria-label="面包屑">
         <Link href="/" className="hover:text-brand-600 dark:hover:text-brand-400">首页</Link>
@@ -87,15 +111,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               </div>
               <div className="flex shrink-0 items-center gap-2">
                 <FavoriteButton cid={tool.cid} size="lg" />
-                <a
-                  href={tool.url}
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                  className="inline-flex min-h-11 items-center justify-center gap-1.5 rounded-xl bg-brand-600 px-6 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700"
-                >
-                  访问官网
-                  <ArrowUpRight size={16} />
-                </a>
+                <VisitButton cid={tool.cid} url={tool.url} />
               </div>
             </div>
 
@@ -112,6 +128,12 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                 <CalendarDays size={15} className="text-gray-400" />
                 {formatDate(tool.created)} 收录
               </span>
+              {tool.views > 0 && (
+                <span className="flex items-center gap-1.5 tabular-nums" title="站内真实浏览量">
+                  <Eye size={15} className="text-sky-500" />
+                  {formatCount(tool.views)} 浏览
+                </span>
+              )}
               <PricingBadge pricing={tool.pricing} />
             </div>
           </div>
@@ -187,6 +209,14 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               <div className="flex items-center justify-between">
                 <dt className="text-gray-500">收藏数</dt>
                 <dd className="font-medium tabular-nums text-gray-800 dark:text-gray-200">{formatCount(tool.likes)}</dd>
+              </div>
+              <div className="flex items-center justify-between">
+                <dt className="text-gray-500" title="本站真实统计">站内浏览</dt>
+                <dd className="font-medium tabular-nums text-gray-800 dark:text-gray-200">{formatCount(tool.views)}</dd>
+              </div>
+              <div className="flex items-center justify-between">
+                <dt className="text-gray-500" title="本站真实统计">官网直达</dt>
+                <dd className="font-medium tabular-nums text-gray-800 dark:text-gray-200">{formatCount(tool.clicks)}</dd>
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-gray-500">分类</dt>

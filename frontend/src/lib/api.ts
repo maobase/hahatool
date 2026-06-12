@@ -92,6 +92,8 @@ function toTool(p: WpPost): Tool {
     growth: Number(meta(p, 'growth')) || 0,
     screenshot: meta(p, 'screenshot'),
     rating: Number(meta(p, 'rating')) || 0,
+    views: Number(meta(p, 'views')) || 0,
+    clicks: Number(meta(p, 'clicks')) || 0,
     visitsHistory: meta(p, 'visits_history')
       .split(',')
       .map((v) => Number(v.trim()))

@@ -54,6 +54,7 @@ frontend/src/
 | `screenshot` / `cover` | 截图 / 资讯封面 URL | 可选 |
 | `featured` / `banner` | `1` = 编辑精选 / 首页顶部 Banner | `1` |
 | `prompt` / `prompt_scene` / `prompt_model` | 提示词频道：全文 / 场景 / 适用模型（分类须为 `ai-prompts`） | 多行文本 / `编程` / `通用` |
+| `views` / `clicks` | **站内真实统计**（详情页浏览 / 官网直达点击），由 `POST /wp-json/hahatool/v1/track` 自动累加，请勿手填 | 自动 |
 | `promo` | 广告位：`home-mid` `ranking-top` `detail-side` `detail-bottom` `tools-inline` `news-inline` | 单值 |
 
 - 分类 = WP 分类；`ai-news`（资讯）与 `ai-flash`（快讯）为保留 slug；
@@ -68,6 +69,7 @@ frontend/src/
 | `GET wp/v2/posts` | 列表 / 搜索 / 详情(slug) | `per_page` `page` `categories` `tags` `search` `slug` `include` `_embed=wp:term` |
 | `GET wp/v2/categories` / `wp/v2/tags` | 分类 / 标签 | `per_page=100&hide_empty=true` |
 | `GET/POST wp/v2/comments` | 评论列表 / 匿名发表 | `post` `per_page`；POST：`post` `author_name` `author_email` `content` |
+| `POST hahatool/v1/track` | 站内统计计数器自增（mu-plugin 自定义端点，不产生修订） | `cid` `type=views\|clicks`；前台经 `/api/track` 代理（IP+条目 30 分钟去重） |
 
 分页总数从响应头 `X-WP-Total` / `X-WP-TotalPages` 读取；meta 在 `post.meta`；分类标签在 `_embedded['wp:term']`。
 
