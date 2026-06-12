@@ -8,13 +8,13 @@ import { formatDate } from '@/lib/format';
 function CommentNode({ comment, depth = 0 }: { comment: CommentItem; depth?: number }) {
   return (
     <li className={depth > 0 ? 'ml-8 mt-3' : ''}>
-      <div className="rounded-xl bg-gray-50 px-4 py-3">
+      <div className="rounded-xl bg-gray-50 dark:bg-gray-800 px-4 py-3">
         <div className="flex items-center gap-2 text-xs text-gray-400">
-          <span className="font-medium text-gray-700">{comment.author}</span>
+          <span className="font-medium text-gray-700 dark:text-gray-300">{comment.author}</span>
           <time>{formatDate(comment.created)}</time>
         </div>
         <div
-          className="prose prose-sm mt-1 max-w-none text-gray-700"
+          className="prose prose-sm dark:prose-invert mt-1 max-w-none text-gray-700 dark:text-gray-300"
           dangerouslySetInnerHTML={{ __html: comment.text }}
         />
       </div>
@@ -71,8 +71,8 @@ export default function Comments({ postId }: { postId: number }) {
   };
 
   return (
-    <section className="mt-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8" aria-label="用户评论">
-      <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900">
+    <section className="mt-8 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm sm:p-8" aria-label="用户评论">
+      <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-gray-100">
         <MessageSquare size={18} className="text-brand-500" />
         用户评论
         <span className="text-sm font-normal text-gray-400">（{count}）</span>
@@ -90,7 +90,7 @@ export default function Comments({ postId }: { postId: number }) {
               maxLength={30}
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-base outline-none transition focus:border-brand-400 sm:text-sm"
+              className="w-full rounded-xl border border-gray-200 bg-white px-3 dark:border-gray-800 dark:bg-gray-800 py-2.5 text-base outline-none transition focus:border-brand-400 sm:text-sm"
             />
           </div>
           <div>
@@ -104,7 +104,7 @@ export default function Comments({ postId }: { postId: number }) {
               autoComplete="email"
               value={mail}
               onChange={(e) => setMail(e.target.value)}
-              className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-base outline-none transition focus:border-brand-400 sm:text-sm"
+              className="w-full rounded-xl border border-gray-200 bg-white px-3 dark:border-gray-800 dark:bg-gray-800 py-2.5 text-base outline-none transition focus:border-brand-400 sm:text-sm"
             />
           </div>
         </div>
@@ -119,7 +119,7 @@ export default function Comments({ postId }: { postId: number }) {
             maxLength={500}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-base outline-none transition focus:border-brand-400 sm:text-sm"
+            className="w-full rounded-xl border border-gray-200 bg-white px-3 dark:border-gray-800 dark:bg-gray-800 py-2.5 text-base outline-none transition focus:border-brand-400 sm:text-sm"
           />
         </div>
         <div className="flex items-center gap-3">

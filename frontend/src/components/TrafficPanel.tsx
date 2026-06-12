@@ -31,8 +31,8 @@ export default function TrafficPanel({
   const barW = visitsHistory.length > 0 ? (W - PAD * 2 - barGap * (visitsHistory.length - 1)) / visitsHistory.length : 0;
 
   return (
-    <section className="mt-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8" aria-label="流量分析">
-      <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900">
+    <section className="mt-8 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm sm:p-8" aria-label="流量分析">
+      <h2 className="flex items-center gap-2 text-lg font-bold text-gray-900 dark:text-gray-100">
         <BarChart3 size={18} className="text-brand-500" />
         {name} 流量分析
         <span className="text-xs font-normal text-gray-400">数据由运营整理，仅供参考</span>
@@ -92,14 +92,14 @@ export default function TrafficPanel({
             <ul className="mt-3 space-y-2.5">
               {regions.map((r) => (
                 <li key={r.name} className="flex items-center gap-3 text-sm">
-                  <span className="w-12 shrink-0 text-gray-600">{r.name}</span>
-                  <span className="h-2.5 flex-1 overflow-hidden rounded-full bg-gray-100">
+                  <span className="w-12 shrink-0 text-gray-600 dark:text-gray-400">{r.name}</span>
+                  <span className="h-2.5 flex-1 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
                     <span
                       className="block h-full rounded-full bg-gradient-to-r from-brand-400 to-brand-600"
                       style={{ width: `${Math.min(100, r.pct)}%` }}
                     />
                   </span>
-                  <span className="w-12 shrink-0 text-right font-display text-xs font-semibold tabular-nums text-gray-700">
+                  <span className="w-12 shrink-0 text-right font-display text-xs font-semibold tabular-nums text-gray-700 dark:text-gray-300">
                     {r.pct}%
                   </span>
                 </li>

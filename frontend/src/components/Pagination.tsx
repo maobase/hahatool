@@ -28,13 +28,13 @@ export default function Pagination({
   return (
     <nav aria-label="分页" className="mt-8 flex items-center justify-center gap-1.5">
       {current > 1 && (
-        <Link href={href(current - 1)} aria-label="上一页" className={`${itemCls} text-gray-600 hover:bg-gray-100`}>
+        <Link href={href(current - 1)} aria-label="上一页" className={`${itemCls} text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800`}>
           <ChevronLeft size={16} />
         </Link>
       )}
       {pages[0] > 1 && (
         <>
-          <Link href={href(1)} className={`${itemCls} text-gray-600 hover:bg-gray-100`}>1</Link>
+          <Link href={href(1)} className={`${itemCls} text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800`}>1</Link>
           {pages[0] > 2 && <span className="px-1 text-gray-400">…</span>}
         </>
       )}
@@ -44,7 +44,7 @@ export default function Pagination({
             {p}
           </span>
         ) : (
-          <Link key={p} href={href(p)} className={`${itemCls} text-gray-600 hover:bg-gray-100`}>
+          <Link key={p} href={href(p)} className={`${itemCls} text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800`}>
             {p}
           </Link>
         ),
@@ -52,11 +52,11 @@ export default function Pagination({
       {pages[pages.length - 1] < total && (
         <>
           {pages[pages.length - 1] < total - 1 && <span className="px-1 text-gray-400">…</span>}
-          <Link href={href(total)} className={`${itemCls} text-gray-600 hover:bg-gray-100`}>{total}</Link>
+          <Link href={href(total)} className={`${itemCls} text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800`}>{total}</Link>
         </>
       )}
       {current < total && (
-        <Link href={href(current + 1)} aria-label="下一页" className={`${itemCls} text-gray-600 hover:bg-gray-100`}>
+        <Link href={href(current + 1)} aria-label="下一页" className={`${itemCls} text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800`}>
           <ChevronRight size={16} />
         </Link>
       )}

@@ -120,18 +120,18 @@ export default async function HomePage() {
       {/* ===== sticky 分类导航条 ===== */}
       <nav
         aria-label="分类快捷导航"
-        className="sticky top-16 z-40 border-b border-gray-200 bg-white/95 backdrop-blur"
+        className="sticky top-16 z-40 border-b border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-950/95 backdrop-blur"
       >
         <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto px-4 py-2.5 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <a
             href="#featured"
-            className="shrink-0 rounded-full bg-gray-900 px-4 py-1.5 text-sm font-medium text-white"
+            className="shrink-0 rounded-full bg-gray-900 dark:bg-brand-600 px-4 py-1.5 text-sm font-medium text-white"
           >
             精选
           </a>
           <a
             href="#trending"
-            className="shrink-0 rounded-full px-4 py-1.5 text-sm text-gray-600 transition hover:bg-gray-100"
+            className="shrink-0 rounded-full px-4 py-1.5 text-sm text-gray-600 dark:text-gray-400 transition hover:bg-gray-100 dark:hover:bg-gray-800"
           >
             🔥 增长最快
           </a>
@@ -139,7 +139,7 @@ export default async function HomePage() {
             <a
               key={c.slug}
               href={`#cat-${c.slug}`}
-              className="shrink-0 rounded-full px-4 py-1.5 text-sm text-gray-600 transition hover:bg-gray-100"
+              className="shrink-0 rounded-full px-4 py-1.5 text-sm text-gray-600 dark:text-gray-400 transition hover:bg-gray-100 dark:hover:bg-gray-800"
             >
               {c.name}
             </a>
@@ -159,7 +159,7 @@ export default async function HomePage() {
                   {banners.map((tool) => (
                     <div
                       key={tool.cid}
-                      className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-brand-700 to-indigo-700 p-6 text-white shadow-md sm:p-8"
+                      className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-brand-700 to-brand-900 p-6 text-white shadow-md sm:p-8"
                     >
                       <span className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[11px]">
                         <Megaphone size={11} />
@@ -177,7 +177,7 @@ export default async function HomePage() {
                           href={tool.url}
                           target="_blank"
                           rel="noopener noreferrer nofollow"
-                          className="inline-flex items-center gap-1 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-brand-700 transition hover:bg-brand-50"
+                          className="inline-flex items-center gap-1 rounded-xl bg-white dark:bg-gray-900 px-4 py-2 text-sm font-semibold text-brand-700 dark:text-brand-300 transition hover:bg-brand-50 dark:hover:bg-brand-900/30"
                         >
                           立即体验
                           <ArrowRight size={15} />
@@ -263,7 +263,7 @@ export default async function HomePage() {
                     <Link
                       key={t.slug}
                       href={`/tag/${t.slug}`}
-                      className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:text-brand-700 hover:shadow-md"
+                      className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:text-brand-700 dark:hover:text-brand-300 hover:shadow-md"
                     >
                       # {t.name}
                       <span className="ml-1.5 font-display text-xs text-gray-400">{t.count}</span>
@@ -282,7 +282,7 @@ export default async function HomePage() {
                     <Link
                       key={item.cid}
                       href={`/news/${item.slug}`}
-                      className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
+                      className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
                     >
                       {item.cover && (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -290,7 +290,7 @@ export default async function HomePage() {
                       )}
                       <div className="p-5">
                         <time className="text-xs text-gray-400">{formatDate(item.created)}</time>
-                        <h3 className="mt-2 line-clamp-2 font-semibold leading-6 text-gray-900">{item.title}</h3>
+                        <h3 className="mt-2 line-clamp-2 font-semibold leading-6 text-gray-900 dark:text-gray-100">{item.title}</h3>
                         <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-500">{item.digest}</p>
                       </div>
                     </Link>

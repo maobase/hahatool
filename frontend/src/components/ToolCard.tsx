@@ -10,7 +10,7 @@ import RatingStars from './RatingStars';
 
 export default function ToolCard({ tool, rank }: { tool: Tool; rank?: number }) {
   return (
-    <div className="group relative flex flex-col rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-lg hover:shadow-brand-100/60">
+    <div className="group relative flex flex-col rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-lg hover:shadow-brand-100/60">
       <Link
         href={`/tool/${tool.slug}`}
         className="absolute inset-0 rounded-2xl"
@@ -22,10 +22,10 @@ export default function ToolCard({ tool, rank }: { tool: Tool; rank?: number }) 
         </span>
       )}
       <div className="flex items-start gap-3">
-        <ToolLogo src={tool.logo} name={tool.title} size={48} className="ring-1 ring-gray-100" />
+        <ToolLogo src={tool.logo} name={tool.title} size={48} className="ring-1 ring-gray-100 dark:ring-gray-800" />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <h3 className="truncate font-semibold text-gray-900 group-hover:text-brand-700">{tool.title}</h3>
+            <h3 className="truncate font-semibold text-gray-900 dark:text-gray-100 group-hover:text-brand-700 dark:group-hover:text-brand-300">{tool.title}</h3>
             <GrowthBadge growth={tool.growth} />
           </div>
           <div className="mt-1 flex items-center gap-2 text-xs text-gray-500">
@@ -36,7 +36,7 @@ export default function ToolCard({ tool, rank }: { tool: Tool; rank?: number }) 
                 <Link
                   key={c.slug}
                   href={`/category/${c.slug}`}
-                  className="relative z-10 rounded-full bg-gray-100 px-2 py-0.5 hover:bg-brand-100 hover:text-brand-700"
+                  className="relative z-10 rounded-full bg-gray-100 dark:bg-gray-800 px-2 py-0.5 hover:bg-brand-100 dark:hover:bg-brand-900/40 hover:text-brand-700 dark:hover:text-brand-300"
                 >
                   {c.name}
                 </Link>
@@ -45,8 +45,8 @@ export default function ToolCard({ tool, rank }: { tool: Tool; rank?: number }) 
           </div>
         </div>
       </div>
-      <p className="mt-3 line-clamp-2 min-h-10 text-sm leading-5 text-gray-600">{tool.tagline || '——'}</p>
-      <div className="mt-4 flex items-center gap-3 border-t border-gray-100 pt-2.5 text-xs text-gray-500">
+      <p className="mt-3 line-clamp-2 min-h-10 text-sm leading-5 text-gray-600 dark:text-gray-400">{tool.tagline || '——'}</p>
+      <div className="mt-4 flex items-center gap-3 border-t border-gray-100 dark:border-gray-800 pt-2.5 text-xs text-gray-500">
         {tool.rating > 0 && <RatingStars rating={tool.rating} size={12} />}
         <span className="flex items-center gap-1 tabular-nums" title="收藏数">
           <Bookmark size={14} className="text-brand-400" />
@@ -64,7 +64,7 @@ export default function ToolCard({ tool, rank }: { tool: Tool; rank?: number }) 
             rel="noopener noreferrer nofollow"
             aria-label={`访问 ${tool.title} 官网`}
             title="访问官网"
-            className="relative z-10 flex min-h-9 min-w-9 items-center justify-center rounded-lg text-gray-300 transition hover:bg-brand-50 hover:text-brand-600"
+            className="relative z-10 flex min-h-9 min-w-9 items-center justify-center rounded-lg text-gray-300 transition hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:text-brand-600 dark:hover:text-brand-400"
           >
             <ArrowUpRight size={16} />
           </a>

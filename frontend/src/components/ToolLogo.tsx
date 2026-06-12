@@ -53,7 +53,7 @@ export default function ToolLogo({
       height={size}
       loading="lazy"
       onError={() => setFailed(true)}
-      className={`shrink-0 rounded-xl bg-gray-100 object-cover ${className}`}
+      className={`shrink-0 rounded-xl bg-gray-100 dark:bg-gray-800 object-cover ${className}`}
       style={{ width: size, height: size }}
     />
   );

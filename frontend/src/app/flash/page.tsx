@@ -23,7 +23,7 @@ export default async function FlashPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
-      <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-900 sm:text-3xl">
+      <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl">
         <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white">
           <Zap size={18} className="fill-current" />
         </span>

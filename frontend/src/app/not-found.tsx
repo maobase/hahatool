@@ -4,7 +4,7 @@ export default function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center px-4 py-32 text-center">
       <p className="text-6xl font-extrabold text-brand-200">404</p>
-      <h1 className="mt-4 text-xl font-bold text-gray-900">页面不存在</h1>
+      <h1 className="mt-4 text-xl font-bold text-gray-900 dark:text-gray-100">页面不存在</h1>
       <p className="mt-2 text-sm text-gray-500">你访问的内容可能已被删除或尚未收录。</p>
       <Link
         href="/"

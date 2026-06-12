@@ -8,9 +8,9 @@ export default function EmptyState({
   hint?: string;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-16 text-center">
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-6 py-16 text-center">
       <PackageOpen size={40} className="text-gray-300" />
-      <p className="mt-4 font-medium text-gray-700">{title}</p>
+      <p className="mt-4 font-medium text-gray-700 dark:text-gray-300">{title}</p>
       <p className="mt-2 max-w-md text-sm leading-6 text-gray-500">{hint}</p>
     </div>
   );

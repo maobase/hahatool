@@ -24,7 +24,7 @@ export default function FavNavLink() {
     <Link
       href="/favorites"
       aria-label={`我的收藏（${count} 个）`}
-      className="relative flex min-h-10 min-w-10 items-center justify-center rounded-lg text-gray-500 transition hover:bg-rose-50 hover:text-rose-500"
+      className="relative flex min-h-10 min-w-10 items-center justify-center rounded-lg text-gray-500 transition hover:bg-rose-50 dark:hover:bg-rose-900/30 hover:text-rose-500"
     >
       <Heart size={19} />
       {count > 0 && (

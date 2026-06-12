@@ -37,7 +37,7 @@ export default async function CategoryPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{category.name}</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl">{category.name}</h1>
       <p className="mt-2 text-sm text-gray-500">
         {category.description} · 共 {count} 款工具
       </p>

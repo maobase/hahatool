@@ -35,7 +35,7 @@ export default function AdSlot({
     return (
       <Link
         href="/submit"
-        className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 bg-gray-50/60 px-5 py-8 text-center transition hover:border-brand-300 hover:bg-brand-50/40"
+        className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50/60 dark:bg-gray-900/40 px-5 py-8 text-center transition hover:border-brand-300 hover:bg-brand-50/40"
         aria-label={`广告位招商：${label}`}
       >
         <Megaphone size={20} className="text-gray-300" />
@@ -51,7 +51,7 @@ export default function AdSlot({
   return (
     <Link
       href="/submit"
-      className="flex items-center justify-center gap-4 rounded-2xl border border-dashed border-gray-300 bg-gray-50/60 px-6 py-7 transition hover:border-brand-300 hover:bg-brand-50/40"
+      className="flex items-center justify-center gap-4 rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50/60 dark:bg-gray-900/40 px-6 py-7 transition hover:border-brand-300 hover:bg-brand-50/40"
       aria-label={`广告位招商：${label}`}
     >
       <Megaphone size={18} className="shrink-0 text-gray-300" />

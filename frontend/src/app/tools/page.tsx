@@ -68,7 +68,7 @@ export default async function ToolsPage({
     `rounded-full px-3.5 py-1.5 text-sm transition ${
       active
         ? 'bg-brand-600 font-medium text-white'
-        : 'bg-white text-gray-600 ring-1 ring-gray-200 hover:text-brand-600 hover:ring-brand-300'
+        : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 ring-1 ring-gray-200 dark:ring-gray-700 hover:text-brand-600 dark:hover:text-brand-400 hover:ring-brand-300'
     }`;
 
   const params: Record<string, string> = {};
@@ -78,7 +78,7 @@ export default async function ToolsPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">全部工具</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl">全部工具</h1>
       <p className="mt-2 text-sm text-gray-500">共 {filtered.length} 款工具</p>
 
       {/* 分类 */}

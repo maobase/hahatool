@@ -30,6 +30,10 @@
 | --- | --- |
 | ![详情](screenshots/tool-detail.png) | ![排行榜](screenshots/ranking.png) |
 
+| 深色模式 🌙 | 多主题色（翡翠绿示例）🎨 |
+| --- | --- |
+| ![深色](screenshots/home-dark.png) | ![翡翠绿](screenshots/home-emerald.png) |
+
 更多截图见 [`screenshots/`](screenshots/)。
 
 ## ✨ 功能特性
@@ -48,6 +52,7 @@
 - 🏆 **四维排行榜**：流量 / 收藏 / 增长 / 新品榜 + 分类子榜 + 前三名领奖台
 
 ### 用户与运营
+- 🎨 **多风格主题**：浅色 / 深色 / 跟随系统 × 4 套主题色（紫罗兰 / 海蓝 / 翡翠 / 玫红），全站换肤、首屏无闪烁、本机持久化
 - 💬 **评论系统**：基于 WordPress 评论，免登录发表，后台可审核
 - ❤️ **本机收藏夹**：localStorage 实现，无需注册登录
 - 📣 **8 个运营位全站预置**：空位显示「虚位以待」占位，后台改一个字段即上刊（见下文）
@@ -143,16 +148,18 @@ hahatool/
 ## 📚 文档
 
 - [安装手册](docs/INSTALL.md) —— 从零部署到验收、常见问题
+- [**WordPress 结合使用教程**](docs/WORDPRESS_GUIDE.md) —— Headless 架构讲解、wp-admin 实操（收录工具/上刊广告/发快讯）、REST 调试、接入已有 WP 站点、安全清单
 - [开发手册](docs/DEVELOPMENT.md) —— 技术栈、目录结构、数据模型、REST 约定、本地热更新
 - [内容运营手册](docs/CONTENT_GUIDE.md) —— 添加工具、运营位上刊、发布快讯与图文视频资讯
+- [AGENTS.md](AGENTS.md) / [CLAUDE.md](CLAUDE.md) —— AI 协作者指南（本项目由 AI 维护，代理按此规范工作）
 
 ## 🗺 Roadmap
 
+- [x] ~~暗色模式~~ → **多风格主题**（明暗 × 4 主题色，2026-06 已上线）
 - [ ] GPTs / 提示词频道
 - [ ] 工具提交在线表单（前台直接入库待审）
 - [ ] 多语言（i18n）
 - [ ] 真实流量统计接入（替代运营手填数据）
-- [ ] 暗色模式
 - [ ] 邮件订阅快讯 / 周报
 
 想要哪个先做？提 Issue 投票，AI 看得到。

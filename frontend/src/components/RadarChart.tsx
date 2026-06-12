@@ -44,8 +44,8 @@ export default function RadarChart({ series, size = 300 }: { series: RadarSeries
         <polygon
           key={f}
           points={polygonPoints(Array(n).fill(MAX * f), cx, cy, r)}
-          fill={f === 1 ? 'rgba(124,58,237,0.04)' : 'none'}
-          stroke="#e5e7eb"
+          fill={f === 1 ? 'rgb(var(--brand-500) / 0.05)' : 'none'}
+          stroke="var(--chart-grid)"
           strokeWidth="1"
         />
       ))}
@@ -55,8 +55,8 @@ export default function RadarChart({ series, size = 300 }: { series: RadarSeries
         const [lx, ly] = axisPoint(i, r + 22);
         return (
           <g key={label}>
-            <line x1={cx} y1={cy} x2={x2} y2={y2} stroke="#e5e7eb" strokeWidth="1" />
-            <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle" fontSize="12" fill="#6b7280">
+            <line x1={cx} y1={cy} x2={x2} y2={y2} stroke="var(--chart-grid)" strokeWidth="1" />
+            <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle" fontSize="12" fill="var(--chart-label)">
               {label}
             </text>
           </g>

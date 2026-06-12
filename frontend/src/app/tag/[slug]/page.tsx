@@ -37,7 +37,7 @@ export default async function TagPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-900 sm:text-3xl">
+      <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl">
         <Hash size={26} className="text-brand-500" />
         {tag.name}
       </h1>
@@ -49,7 +49,7 @@ export default async function TagPage({
             <Link
               key={t.slug}
               href={`/tag/${t.slug}`}
-              className="rounded-full bg-white px-3 py-1 text-sm text-gray-600 ring-1 ring-gray-200 transition hover:text-brand-600 hover:ring-brand-300"
+              className="rounded-full bg-white dark:bg-gray-900 px-3 py-1 text-sm text-gray-600 dark:text-gray-400 ring-1 ring-gray-200 dark:ring-gray-700 transition hover:text-brand-600 dark:hover:text-brand-400 hover:ring-brand-300"
             >
               # {t.name}
               <span className="ml-1 text-xs text-gray-400">{t.count}</span>

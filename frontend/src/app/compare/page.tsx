@@ -65,7 +65,7 @@ export default async function ComparePage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-      <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-900 sm:text-3xl">
+      <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl">
         <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gray-900 text-white">
           <Swords size={18} />
         </span>
@@ -74,7 +74,7 @@ export default async function ComparePage({
       <p className="mt-2 text-sm text-gray-500">任选两款工具，能力雷达、流量与定价一屏对比</p>
 
       {/* 选择器（纯表单，无 JS 依赖） */}
-      <form action="/compare" className="mt-6 flex flex-wrap items-end gap-3 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+      <form action="/compare" className="mt-6 flex flex-wrap items-end gap-3 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm">
         <div className="min-w-40 flex-1">
           <label htmlFor="pick-a" className="mb-1 block text-xs font-medium text-gray-500">
             <span className="mr-1 inline-block h-2.5 w-2.5 rounded-full align-middle" style={{ background: COLOR_A }} />
@@ -84,7 +84,7 @@ export default async function ComparePage({
             id="pick-a"
             name="a"
             defaultValue={toolA.slug}
-            className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-400"
+            className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-400 dark:border-gray-800 dark:bg-gray-800"
           >
             {pickerOptions.map((t) => (
               <option key={t.cid} value={t.slug}>{t.title}</option>
@@ -101,7 +101,7 @@ export default async function ComparePage({
             id="pick-b"
             name="b"
             defaultValue={toolB.slug}
-            className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-400"
+            className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-brand-400 dark:border-gray-800 dark:bg-gray-800"
           >
             {pickerOptions.map((t) => (
               <option key={t.cid} value={t.slug}>{t.title}</option>
@@ -122,7 +122,7 @@ export default async function ComparePage({
           { tool: toolA, color: COLOR_A, side: 'A' },
           { tool: toolB, color: COLOR_B, side: 'B' },
         ].map(({ tool, color, side }) => (
-          <div key={tool.cid} className="rounded-2xl border-2 bg-white p-6 shadow-sm" style={{ borderColor: color }}>
+          <div key={tool.cid} className="rounded-2xl border-2 bg-white dark:bg-gray-900 p-6 shadow-sm" style={{ borderColor: color }}>
             <div className="flex items-center gap-3">
               <ToolLogo src={tool.logo} name={tool.title} size={52} />
               <div className="min-w-0 flex-1">
@@ -130,7 +130,7 @@ export default async function ComparePage({
                   <span className="rounded px-1.5 font-display text-xs font-bold text-white" style={{ background: color }}>
                     {side}
                   </span>
-                  <Link href={`/tool/${tool.slug}`} className="truncate font-bold text-gray-900 hover:underline">
+                  <Link href={`/tool/${tool.slug}`} className="truncate font-bold text-gray-900 dark:text-gray-100 hover:underline">
                     {tool.title}
                   </Link>
                 </p>
@@ -138,12 +138,12 @@ export default async function ComparePage({
               </div>
               <GrowthBadge growth={tool.growth} />
             </div>
-            <p className="mt-3 line-clamp-2 min-h-10 text-sm text-gray-600">{tool.tagline}</p>
+            <p className="mt-3 line-clamp-2 min-h-10 text-sm text-gray-600 dark:text-gray-400">{tool.tagline}</p>
             <a
               href={tool.url}
               target="_blank"
               rel="noopener noreferrer nofollow"
-              className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-brand-600 hover:underline"
+              className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-brand-600 dark:text-brand-400 hover:underline"
             >
               访问官网
               <ArrowUpRight size={14} />
@@ -155,8 +155,8 @@ export default async function ComparePage({
       <div className="mt-8 grid gap-8 lg:grid-cols-2">
         {/* 能力雷达 */}
         {(toolA.scores.length >= 3 || toolB.scores.length >= 3) && (
-          <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h2 className="font-bold text-gray-900">能力雷达对比</h2>
+          <section className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+            <h2 className="font-bold text-gray-900 dark:text-gray-100">能力雷达对比</h2>
             <p className="mt-1 text-xs text-gray-400">五维评分（0-10），由运营团队评估</p>
             <RadarChart
               series={[
@@ -178,8 +178,8 @@ export default async function ComparePage({
         )}
 
         {/* 数据对比表 */}
-        <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          <h2 className="font-bold text-gray-900">数据对比</h2>
+        <section className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+          <h2 className="font-bold text-gray-900 dark:text-gray-100">数据对比</h2>
           <table className="mt-4 w-full text-sm">
             <thead>
               <tr className="text-left text-xs text-gray-400">
@@ -188,7 +188,7 @@ export default async function ComparePage({
                 <th className="py-2 font-medium" style={{ color: COLOR_B }}>{toolB.title}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
               <tr>
                 <td className="py-2.5 text-gray-500">评分</td>
                 <td className="py-2.5"><RatingStars rating={toolA.rating} size={12} /><Winner a={toolA.rating} b={toolB.rating} /></td>
@@ -197,13 +197,13 @@ export default async function ComparePage({
               {rows.map((row) => (
                 <tr key={row.label}>
                   <td className="py-2.5 align-top text-gray-500">{row.label}</td>
-                  <td className="py-2.5 align-top font-medium tabular-nums text-gray-800">
+                  <td className="py-2.5 align-top font-medium tabular-nums text-gray-800 dark:text-gray-200">
                     {row.va}
                     {row.na !== undefined && row.nb !== undefined && (
                       <Winner a={row.na} b={row.nb} higherWins={row.higherWins ?? true} />
                     )}
                   </td>
-                  <td className="py-2.5 align-top font-medium tabular-nums text-gray-800">{row.vb}</td>
+                  <td className="py-2.5 align-top font-medium tabular-nums text-gray-800 dark:text-gray-200">{row.vb}</td>
                 </tr>
               ))}
             </tbody>

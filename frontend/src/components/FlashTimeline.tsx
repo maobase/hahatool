@@ -28,10 +28,10 @@ export default function FlashTimeline({ items, compact = false }: { items: NewsI
     <div className="space-y-6">
       {groups.map((group) => (
         <section key={group.day} aria-label={group.day}>
-          <h3 className="font-display text-sm font-bold text-gray-900">
-            <span className="rounded-lg bg-gray-900 px-2.5 py-1 text-white">{group.day}</span>
+          <h3 className="font-display text-sm font-bold text-gray-900 dark:text-gray-100">
+            <span className="rounded-lg bg-gray-900 dark:bg-brand-600 px-2.5 py-1 text-white">{group.day}</span>
           </h3>
-          <ol className="mt-3 space-y-0 border-l-2 border-brand-100 pl-5">
+          <ol className="mt-3 space-y-0 border-l-2 border-brand-100 dark:border-gray-800 pl-5">
             {group.items.map((item) => (
               <li key={item.cid} className="relative pb-5 last:pb-0">
                 <span
@@ -42,7 +42,7 @@ export default function FlashTimeline({ items, compact = false }: { items: NewsI
                   {timeLabel(item.created)}
                 </time>
                 <Link href={`/news/${item.slug}`} className="group mt-0.5 block">
-                  <p className="text-sm font-medium leading-6 text-gray-800 transition group-hover:text-brand-700">
+                  <p className="text-sm font-medium leading-6 text-gray-800 dark:text-gray-200 transition group-hover:text-brand-700 dark:group-hover:text-brand-300">
                     {item.title}
                   </p>
                   {!compact && item.digest && (

@@ -45,39 +45,39 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       {/* 面包屑 */}
       <nav className="text-sm text-gray-400" aria-label="面包屑">
-        <Link href="/" className="hover:text-brand-600">首页</Link>
+        <Link href="/" className="hover:text-brand-600 dark:hover:text-brand-400">首页</Link>
         <span className="mx-1.5">/</span>
         {mainCategory && (
           <>
-            <Link href={`/category/${mainCategory.slug}`} className="hover:text-brand-600">{mainCategory.name}</Link>
+            <Link href={`/category/${mainCategory.slug}`} className="hover:text-brand-600 dark:hover:text-brand-400">{mainCategory.name}</Link>
             <span className="mx-1.5">/</span>
           </>
         )}
-        <span className="text-gray-600">{tool.title}</span>
+        <span className="text-gray-600 dark:text-gray-400">{tool.title}</span>
       </nav>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-3">
         {/* 主栏 */}
         <div className="lg:col-span-2">
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+          <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm sm:p-8">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-              <ToolLogo src={tool.logo} name={tool.title} size={72} className="ring-1 ring-gray-100" />
+              <ToolLogo src={tool.logo} name={tool.title} size={72} className="ring-1 ring-gray-100 dark:ring-gray-800" />
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">{tool.title}</h1>
+                  <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl">{tool.title}</h1>
                   <GrowthBadge growth={tool.growth} />
                 </div>
                 <div className="mt-1.5">
                   <RatingStars rating={tool.rating} size={15} />
                 </div>
-                <p className="mt-2 text-gray-600">{tool.tagline}</p>
+                <p className="mt-2 text-gray-600 dark:text-gray-400">{tool.tagline}</p>
                 {tool.tags.length > 0 && (
                   <p className="mt-2 flex flex-wrap gap-1.5">
                     {tool.tags.map((t) => (
                       <Link
                         key={t.slug}
                         href={`/tag/${t.slug}`}
-                        className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-600 transition hover:bg-brand-100 hover:text-brand-700"
+                        className="rounded-full bg-gray-100 dark:bg-gray-800 px-2.5 py-0.5 text-xs text-gray-600 dark:text-gray-400 transition hover:bg-brand-100 dark:hover:bg-brand-900/40 hover:text-brand-700 dark:hover:text-brand-300"
                       >
                         # {t.name}
                       </Link>
@@ -99,7 +99,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               </div>
             </div>
 
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-gray-100 pt-5 text-sm text-gray-500">
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-gray-100 dark:border-gray-800 pt-5 text-sm text-gray-500">
               <span className="flex items-center gap-1.5 tabular-nums" title="收藏数">
                 <Bookmark size={15} className="text-brand-500" />
                 {formatCount(tool.likes)} 收藏
@@ -126,7 +126,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
 
           {tool.contentHtml && (
             <article
-              className="prose prose-gray mt-8 max-w-none rounded-2xl border border-gray-200 bg-white p-6 shadow-sm prose-headings:scroll-mt-20 prose-a:text-brand-600 sm:p-8"
+              className="prose prose-gray dark:prose-invert mt-8 max-w-none rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm prose-headings:scroll-mt-20 prose-a:text-brand-600 sm:p-8"
               dangerouslySetInnerHTML={{ __html: tool.contentHtml }}
             />
           )}
@@ -145,8 +145,8 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
 
         {/* 侧栏 */}
         <aside className="space-y-6">
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h2 className="font-semibold text-gray-900">工具信息</h2>
+          <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+            <h2 className="font-semibold text-gray-900 dark:text-gray-100">工具信息</h2>
             <dl className="mt-4 space-y-3 text-sm">
               <div className="flex items-center justify-between gap-3">
                 <dt className="flex items-center gap-1.5 text-gray-500">
@@ -158,7 +158,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                     href={tool.url}
                     target="_blank"
                     rel="noopener noreferrer nofollow"
-                    className="font-medium text-brand-600 hover:underline"
+                    className="font-medium text-brand-600 dark:text-brand-400 hover:underline"
                   >
                     {domainOf(tool.url)}
                   </a>
@@ -172,11 +172,11 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-gray-500">定价模式</dt>
-                <dd className="font-medium text-gray-800">{tool.pricing}</dd>
+                <dd className="font-medium text-gray-800 dark:text-gray-200">{tool.pricing}</dd>
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-gray-500">月访问量</dt>
-                <dd className="font-medium tabular-nums text-gray-800">{formatCount(tool.monthlyVisits)}</dd>
+                <dd className="font-medium tabular-nums text-gray-800 dark:text-gray-200">{formatCount(tool.monthlyVisits)}</dd>
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-gray-500">月增长</dt>
@@ -186,7 +186,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-gray-500">收藏数</dt>
-                <dd className="font-medium tabular-nums text-gray-800">{formatCount(tool.likes)}</dd>
+                <dd className="font-medium tabular-nums text-gray-800 dark:text-gray-200">{formatCount(tool.likes)}</dd>
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-gray-500">分类</dt>
@@ -197,7 +197,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                       <Link
                         key={c.slug}
                         href={`/category/${c.slug}`}
-                        className="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs text-brand-700 hover:bg-brand-100"
+                        className="rounded-full bg-brand-50 dark:bg-brand-900/30 px-2.5 py-0.5 text-xs text-brand-700 dark:text-brand-300 hover:bg-brand-100 dark:hover:bg-brand-900/40"
                       >
                         {c.name}
                       </Link>
@@ -209,14 +209,14 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
 
           {/* 能力雷达 */}
           {tool.scores.length >= 3 && (
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
               <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-gray-900">能力雷达</h2>
-                <Link href={`/compare?a=${tool.slug}`} className="text-xs text-brand-600 hover:underline">
+                <h2 className="font-semibold text-gray-900 dark:text-gray-100">能力雷达</h2>
+                <Link href={`/compare?a=${tool.slug}`} className="text-xs text-brand-600 dark:text-brand-400 hover:underline">
                   发起 PK →
                 </Link>
               </div>
-              <RadarChart series={[{ name: tool.title, color: '#7c3aed', scores: tool.scores }]} size={280} />
+              <RadarChart series={[{ name: tool.title, color: 'rgb(var(--brand-600))', scores: tool.scores }]} size={280} />
             </div>
           )}
 
@@ -225,14 +225,14 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
 
           {/* 替代品 */}
           {alternatives.length > 0 && (
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-              <h2 className="font-semibold text-gray-900">
+            <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+              <h2 className="font-semibold text-gray-900 dark:text-gray-100">
                 {tool.title} 的替代品
                 <span className="ml-1 text-xs font-normal text-gray-400">按流量排序</span>
               </h2>
               <ol className="mt-4 space-y-1">
                 {alternatives.map((t, i) => (
-                  <li key={t.cid} className="group relative flex items-center gap-3 rounded-xl px-2 py-2 transition hover:bg-brand-50">
+                  <li key={t.cid} className="group relative flex items-center gap-3 rounded-xl px-2 py-2 transition hover:bg-brand-50 dark:hover:bg-brand-900/30">
                     <Link
                       href={`/tool/${t.slug}`}
                       className="absolute inset-0 rounded-xl"
@@ -243,7 +243,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                     </span>
                     <ToolLogo src={t.logo} name={t.title} size={36} />
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-sm font-medium text-gray-900 group-hover:text-brand-700">
+                      <span className="block truncate text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-brand-700 dark:group-hover:text-brand-300">
                         {t.title}
                       </span>
                       <span className="block truncate text-xs text-gray-400">
@@ -252,7 +252,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
                     </span>
                     <Link
                       href={`/compare?a=${tool.slug}&b=${t.slug}`}
-                      className="relative z-10 shrink-0 rounded-full bg-gray-100 px-2.5 py-1 text-[11px] font-medium text-gray-500 transition hover:bg-brand-600 hover:text-white"
+                      className="relative z-10 shrink-0 rounded-full bg-gray-100 dark:bg-gray-800 px-2.5 py-1 text-[11px] font-medium text-gray-500 transition hover:bg-brand-600 hover:text-white"
                       aria-label={`${tool.title} 与 ${t.title} 对比`}
                     >
                       PK
@@ -263,7 +263,7 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
               {mainCategory && (
                 <Link
                   href={`/category/${mainCategory.slug}`}
-                  className="mt-3 block text-center text-sm text-brand-600 hover:underline"
+                  className="mt-3 block text-center text-sm text-brand-600 dark:text-brand-400 hover:underline"
                 >
                   查看{mainCategory.name}全部工具 →
                 </Link>

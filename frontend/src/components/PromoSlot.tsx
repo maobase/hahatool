@@ -51,7 +51,7 @@ export function PromoBanner({ tool }: { tool: Tool }) {
 export function PromoSideCard({ tools }: { tools: Tool[] }) {
   if (tools.length === 0) return null;
   return (
-    <div className="rounded-2xl border border-brand-100 bg-gradient-to-b from-brand-50/80 to-white p-5 shadow-sm">
+    <div className="rounded-2xl border border-brand-100 dark:border-gray-800 bg-gradient-to-b from-brand-50/80 to-white dark:from-brand-900/20 dark:to-gray-900 p-5 shadow-sm">
       <p className="flex items-center gap-1 text-xs font-medium text-brand-400">
         <Megaphone size={12} />
         推广
@@ -61,11 +61,11 @@ export function PromoSideCard({ tools }: { tools: Tool[] }) {
           <li key={t.cid}>
             <Link
               href={`/tool/${t.slug}`}
-              className="group flex items-center gap-3 rounded-xl bg-white p-3 ring-1 ring-gray-100 transition hover:ring-brand-300"
+              className="group flex items-center gap-3 rounded-xl bg-white dark:bg-gray-900 p-3 ring-1 ring-gray-100 dark:ring-gray-800 transition hover:ring-brand-300"
             >
               <ToolLogo src={t.logo} name={t.title} size={40} />
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-semibold text-gray-900 group-hover:text-brand-700">
+                <span className="block truncate text-sm font-semibold text-gray-900 dark:text-gray-100 group-hover:text-brand-700 dark:group-hover:text-brand-300">
                   {t.title}
                 </span>
                 <span className="mt-0.5 block truncate text-xs text-gray-500">{t.tagline}</span>

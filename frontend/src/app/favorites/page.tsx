@@ -70,7 +70,7 @@ export default function FavoritesPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-900 sm:text-3xl">
+      <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl">
         <Heart size={26} className="fill-rose-500 text-rose-500" />
         我的收藏
       </h1>
@@ -80,13 +80,13 @@ export default function FavoritesPage() {
         {tools === null ? (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-hidden>
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="h-44 animate-pulse rounded-2xl bg-gray-100" />
+              <div key={i} className="h-44 animate-pulse rounded-2xl bg-gray-100 dark:bg-gray-800" />
             ))}
           </div>
         ) : tools.length === 0 ? (
-          <div className="flex flex-col items-center rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-16 text-center">
+          <div className="flex flex-col items-center rounded-2xl border border-dashed border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-6 py-16 text-center">
             <Heart size={40} className="text-gray-200" />
-            <p className="mt-4 font-medium text-gray-700">还没有收藏任何工具</p>
+            <p className="mt-4 font-medium text-gray-700 dark:text-gray-300">还没有收藏任何工具</p>
             <p className="mt-2 text-sm text-gray-500">在工具卡片或详情页点击心形按钮即可收藏</p>
             <Link
               href="/tools"

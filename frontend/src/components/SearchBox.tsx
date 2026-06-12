@@ -82,8 +82,8 @@ export default function SearchBox({
             autoComplete="off"
             className={
               isHero
-                ? 'w-full rounded-2xl border border-white/10 bg-white py-4 pl-12 pr-28 text-base text-gray-900 shadow-xl shadow-brand-950/30 outline-none transition focus:ring-4 focus:ring-brand-400/40'
-                : 'w-full rounded-xl border border-gray-200 bg-gray-50 py-2 pl-9 pr-3 text-base outline-none transition focus:border-brand-400 focus:bg-white lg:text-sm'
+                ? 'w-full rounded-2xl border border-white/10 bg-white dark:bg-gray-900 py-4 pl-12 pr-28 text-base text-gray-900 dark:text-gray-100 shadow-xl shadow-brand-950/30 outline-none transition focus:ring-4 focus:ring-brand-400/40'
+                : 'w-full rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 py-2 pl-9 pr-3 text-base outline-none transition focus:border-brand-400 focus:bg-white lg:text-sm'
             }
           />
           {isHero && (
@@ -101,7 +101,7 @@ export default function SearchBox({
         <ul
           role="listbox"
           aria-label="搜索建议"
-          className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border border-gray-200 bg-white py-2 text-left shadow-xl"
+          className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 py-2 text-left shadow-xl"
         >
           {items.map((item) => (
             <li key={item.cid}>
@@ -111,11 +111,11 @@ export default function SearchBox({
                   setOpen(false);
                   router.push(item.isTool ? `/tool/${item.slug}` : `/news/${item.slug}`);
                 }}
-                className="flex w-full items-center gap-3 px-4 py-2.5 text-left transition hover:bg-brand-50"
+                className="flex w-full items-center gap-3 px-4 py-2.5 text-left transition hover:bg-brand-50 dark:hover:bg-brand-900/30"
               >
                 <ToolLogo src={item.logo} name={item.title} size={32} />
                 <span className="min-w-0">
-                  <span className="block truncate text-sm font-medium text-gray-900">{item.title}</span>
+                  <span className="block truncate text-sm font-medium text-gray-900 dark:text-gray-100">{item.title}</span>
                   <span className="block truncate text-xs text-gray-500">
                     {item.isTool ? item.tagline || '查看详情' : 'AI 资讯'}
                   </span>
@@ -123,11 +123,11 @@ export default function SearchBox({
               </button>
             </li>
           ))}
-          <li className="border-t border-gray-100 pt-1">
+          <li className="border-t border-gray-100 dark:border-gray-800 pt-1">
             <button
               type="button"
               onClick={submit as any}
-              className="w-full px-4 py-2 text-left text-sm text-brand-600 transition hover:bg-brand-50"
+              className="w-full px-4 py-2 text-left text-sm text-brand-600 dark:text-brand-400 transition hover:bg-brand-50 dark:hover:bg-brand-900/30"
             >
               查看「{q.trim()}」的全部结果 →
             </button>

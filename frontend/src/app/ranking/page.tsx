@@ -27,7 +27,7 @@ const TABS = [
 /** 前三名金/银/铜徽章，其余为普通序号（不使用 emoji 图标） */
 const RANK_BADGE = [
   'bg-amber-400 text-amber-950',
-  'bg-gray-300 text-gray-700',
+  'bg-gray-300 text-gray-700 dark:text-gray-300',
   'bg-orange-300 text-orange-950',
 ];
 
@@ -72,7 +72,7 @@ export default async function RankingPage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-      <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">AI 工具排行榜</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl">AI 工具排行榜</h1>
       <p className="mt-2 text-sm text-gray-500">{active.desc} · 数据由运营团队维护，仅供参考</p>
 
       <div className="mt-6 flex flex-wrap gap-2" role="tablist" aria-label="榜单切换">
@@ -85,7 +85,7 @@ export default async function RankingPage({
             className={`rounded-full px-4 py-1.5 text-sm transition ${
               sortBy === tab.key
                 ? 'bg-brand-600 font-medium text-white'
-                : 'bg-white text-gray-600 ring-1 ring-gray-200 hover:text-brand-600 hover:ring-brand-300'
+                : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400 ring-1 ring-gray-200 dark:ring-gray-700 hover:text-brand-600 dark:hover:text-brand-400 hover:ring-brand-300'
             }`}
           >
             {tab.label}
@@ -97,7 +97,7 @@ export default async function RankingPage({
       <div className="mt-3 flex flex-wrap gap-2">
         <Link
           href={href({ cat: undefined })}
-          className={`rounded-full px-3 py-1 text-xs transition ${!cat ? 'bg-gray-900 text-white' : 'bg-white text-gray-500 ring-1 ring-gray-200 hover:text-brand-600'}`}
+          className={`rounded-full px-3 py-1 text-xs transition ${!cat ? 'bg-gray-900 dark:bg-brand-600 text-white' : 'bg-white dark:bg-gray-900 text-gray-500 ring-1 ring-gray-200 dark:ring-gray-700 hover:text-brand-600 dark:hover:text-brand-400'}`}
         >
           全部分类
         </Link>
@@ -105,7 +105,7 @@ export default async function RankingPage({
           <Link
             key={c.slug}
             href={href({ cat: c.slug })}
-            className={`rounded-full px-3 py-1 text-xs transition ${cat === c.slug ? 'bg-gray-900 text-white' : 'bg-white text-gray-500 ring-1 ring-gray-200 hover:text-brand-600'}`}
+            className={`rounded-full px-3 py-1 text-xs transition ${cat === c.slug ? 'bg-gray-900 dark:bg-brand-600 text-white' : 'bg-white dark:bg-gray-900 text-gray-500 ring-1 ring-gray-200 dark:ring-gray-700 hover:text-brand-600 dark:hover:text-brand-400'}`}
           >
             {c.name}
           </Link>
@@ -126,7 +126,7 @@ export default async function RankingPage({
             {podium.map((tool, i) => (
               <div
                 key={tool.cid}
-                className={`relative rounded-2xl bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${PODIUM_RING[i]}`}
+                className={`relative rounded-2xl bg-white dark:bg-gray-900 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${PODIUM_RING[i]}`}
               >
                 <Link href={`/tool/${tool.slug}`} className="absolute inset-0 rounded-2xl" aria-label={`查看 ${tool.title}`} />
                 <span
@@ -137,13 +137,13 @@ export default async function RankingPage({
                 <div className="mt-2 flex items-center gap-3">
                   <ToolLogo src={tool.logo} name={tool.title} size={52} />
                   <div className="min-w-0">
-                    <p className="truncate font-semibold text-gray-900">{tool.title}</p>
+                    <p className="truncate font-semibold text-gray-900 dark:text-gray-100">{tool.title}</p>
                     <RatingStars rating={tool.rating} size={12} />
                   </div>
                 </div>
                 <p className="mt-3 line-clamp-2 min-h-10 text-sm leading-5 text-gray-500">{tool.tagline}</p>
-                <div className="mt-3 flex items-center justify-between border-t border-gray-100 pt-3">
-                  <span className="font-display text-lg font-bold tabular-nums text-gray-900">
+                <div className="mt-3 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3">
+                  <span className="font-display text-lg font-bold tabular-nums text-gray-900 dark:text-gray-100">
                     {formatCount(sortBy === 'likes' ? tool.likes : tool.monthlyVisits)}
                     <span className="ml-1 text-xs font-normal text-gray-400">
                       {sortBy === 'likes' ? '收藏' : '月访问'}
@@ -168,7 +168,7 @@ export default async function RankingPage({
             {rest.map((tool, i) => (
               <li
                 key={tool.cid}
-                className="relative flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm transition hover:border-brand-300 hover:shadow-md"
+                className="relative flex items-center gap-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm transition hover:border-brand-300 hover:shadow-md"
               >
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-display text-sm font-bold tabular-nums text-gray-400">
                   {i + 4}
@@ -176,7 +176,7 @@ export default async function RankingPage({
                 <ToolLogo src={tool.logo} name={tool.title} size={44} />
                 <div className="min-w-0 flex-1">
                   <span className="flex items-center gap-2">
-                    <Link href={`/tool/${tool.slug}`} className="font-semibold text-gray-900 hover:text-brand-700">
+                    <Link href={`/tool/${tool.slug}`} className="font-semibold text-gray-900 dark:text-gray-100 hover:text-brand-700 dark:hover:text-brand-300">
                       <span className="absolute inset-0" aria-hidden />
                       {tool.title}
                     </Link>
@@ -191,17 +191,17 @@ export default async function RankingPage({
                   <GrowthBadge growth={tool.growth} />
                 </div>
                 <div className="hidden w-20 text-right tabular-nums sm:block">
-                  <p className="font-display font-semibold text-gray-900">{formatCount(tool.monthlyVisits)}</p>
+                  <p className="font-display font-semibold text-gray-900 dark:text-gray-100">{formatCount(tool.monthlyVisits)}</p>
                 </div>
                 <div className="hidden w-16 text-right tabular-nums sm:block">
-                  <p className="font-display font-semibold text-gray-900">{formatCount(tool.likes)}</p>
+                  <p className="font-display font-semibold text-gray-900 dark:text-gray-100">{formatCount(tool.likes)}</p>
                 </div>
                 <a
                   href={tool.url}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                   aria-label={`访问 ${tool.title} 官网`}
-                  className="relative z-10 flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-lg text-gray-400 transition hover:bg-brand-50 hover:text-brand-600"
+                  className="relative z-10 flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-lg text-gray-400 transition hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:text-brand-600 dark:hover:text-brand-400"
                 >
                   <ArrowUpRight size={18} />
                 </a>

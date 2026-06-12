@@ -23,7 +23,7 @@ export default async function SearchPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">搜索</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl">搜索</h1>
 
       <div className="mt-6 max-w-2xl">
         <SearchBox variant="hero" defaultValue={keyword} />
@@ -31,7 +31,7 @@ export default async function SearchPage({
 
       {keyword && (
         <p className="mt-6 text-sm text-gray-500">
-          「<span className="font-medium text-gray-900">{keyword}</span>」共找到 {count} 条结果
+          「<span className="font-medium text-gray-900 dark:text-gray-100">{keyword}</span>」共找到 {count} 条结果
         </p>
       )}
 
@@ -43,23 +43,23 @@ export default async function SearchPage({
 
       {tools.length > 0 && (
         <section className="mt-8">
-          <h2 className="mb-4 text-lg font-semibold text-gray-900">工具（{tools.length}）</h2>
+          <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">工具（{tools.length}）</h2>
           <ToolGrid tools={tools} />
         </section>
       )}
 
       {news.length > 0 && (
         <section className="mt-10">
-          <h2 className="mb-4 text-lg font-semibold text-gray-900">资讯（{news.length}）</h2>
+          <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">资讯（{news.length}）</h2>
           <div className="space-y-3">
             {news.map((item) => (
               <Link
                 key={item.cid}
                 href={`/news/${item.slug}`}
-                className="block rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-brand-300 hover:shadow-md"
+                className="block rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm transition hover:border-brand-300 hover:shadow-md"
               >
                 <time className="text-xs text-gray-400">{formatDate(item.created)}</time>
-                <h3 className="mt-1 font-semibold text-gray-900">{item.title}</h3>
+                <h3 className="mt-1 font-semibold text-gray-900 dark:text-gray-100">{item.title}</h3>
                 <p className="mt-1 line-clamp-2 text-sm text-gray-500">{item.digest}</p>
               </Link>
             ))}

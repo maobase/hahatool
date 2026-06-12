@@ -22,7 +22,7 @@ export default function ToolScreenshot({
   const src = screenshot || `https://s0.wp.com/mshots/v1/${encodeURIComponent(url)}?w=1280`;
 
   return (
-    <figure className="overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-brand-50 to-indigo-50 shadow-sm">
+    <figure className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-gradient-to-br from-brand-50 to-brand-100 dark:from-gray-900 dark:to-gray-900 shadow-sm">
       <div className="relative aspect-[16/9]">
         {!failed ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -40,7 +40,7 @@ export default function ToolScreenshot({
           </div>
         )}
       </div>
-      <figcaption className="border-t border-gray-100 bg-white px-4 py-2 text-xs text-gray-400">
+      <figcaption className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-2 text-xs text-gray-400">
         {name} 官网预览 · 截图自动生成，以官网实际为准
       </figcaption>
     </figure>

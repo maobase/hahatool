@@ -9,7 +9,7 @@ export default function NewsTicker({ items }: { items: NewsItem[] }) {
   const loop = [...items, ...items];
 
   return (
-    <div className="border-b border-brand-100 bg-brand-50/70">
+    <div className="border-b border-brand-100 dark:border-gray-800 bg-brand-50/70 dark:bg-gray-900/70">
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-2 sm:px-6">
         <Link
           href="/flash"
@@ -24,7 +24,7 @@ export default function NewsTicker({ items }: { items: NewsItem[] }) {
               <li key={`${item.cid}-${i}`} className={i >= items.length ? 'motion-reduce:hidden' : ''} aria-hidden={i >= items.length}>
                 <Link
                   href={`/news/${item.slug}`}
-                  className="whitespace-nowrap text-sm text-gray-600 transition hover:text-brand-700"
+                  className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-400 transition hover:text-brand-700 dark:hover:text-brand-300"
                 >
                   {item.title}
                 </Link>
@@ -32,7 +32,7 @@ export default function NewsTicker({ items }: { items: NewsItem[] }) {
             ))}
           </ul>
         </div>
-        <Link href="/flash" className="hidden shrink-0 text-xs text-brand-600 hover:underline sm:block">
+        <Link href="/flash" className="hidden shrink-0 text-xs text-brand-600 dark:text-brand-400 hover:underline sm:block">
           全部快讯 →
         </Link>
       </div>
