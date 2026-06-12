@@ -49,6 +49,23 @@ wpcli post delete 1 2 3 --force >/dev/null 2>&1 || true
 echo "==> 导入示例数据 ..."
 wpcli eval-file /scripts/seed-wp.php
 
+# 为「提交工具」表单创建 Application Password（前台服务端写入待审文章用）
+if ! grep -q '^WP_APP_PASS=' .env 2>/dev/null; then
+  echo "==> 创建提交表单专用 Application Password ..."
+  APP_PASS=$(wpcli user application-password create "$ADMIN_USER" hahatool-submit --porcelain | tr -d '\r')
+  if [ -n "$APP_PASS" ]; then
+    {
+      echo ""
+      echo "# ---- 提交工具表单（由 setup-wp.sh 自动生成）----"
+      echo "WP_APP_USER=$ADMIN_USER"
+      echo "WP_APP_PASS=$APP_PASS"
+    } >> .env
+    echo "    已写入 .env（WP_APP_USER / WP_APP_PASS），执行 docker compose up -d frontend 生效"
+  else
+    echo "    ⚠️ 创建失败，提交表单将不可用；可手动在 wp-admin → 用户 → 应用程序密码 创建后写入 .env"
+  fi
+fi
+
 echo "✓ 完成！"
 echo "  后台： http://localhost:${WP_PORT}/wp-admin/  （${ADMIN_USER} / ${ADMIN_PASS}）"
 echo "  前台： http://localhost:${FRONTEND_PORT:-3000}"
