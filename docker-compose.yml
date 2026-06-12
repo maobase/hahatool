@@ -1,0 +1,90 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: hahatool-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-hahatool_root}
+      MYSQL_DATABASE: ${DB_NAME:-hahatool}
+      MYSQL_USER: ${DB_USER:-hahatool}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-hahatool_pass}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-hahatool_root}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - hahatool
+
+  wordpress:
+    image: wordpress:apache
+    container_name: hahatool-wordpress
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: ${DB_NAME:-hahatool}
+      WORDPRESS_DB_USER: ${DB_USER:-hahatool}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-hahatool_pass}
+      WORDPRESS_TABLE_PREFIX: wp_
+    ports:
+      - "${WP_PORT:-8090}:80"
+    volumes:
+      - wp_data:/var/www/html
+      # HahaTool 必装插件：注册自定义字段到 REST API、放开匿名评论
+      - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
+    networks:
+      - hahatool
+
+  # WP-CLI 工具容器（按需运行）：bash scripts/setup-wp.sh 内部使用
+  wpcli:
+    image: wordpress:cli
+    user: "33:33"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: ${DB_NAME:-hahatool}
+      WORDPRESS_DB_USER: ${DB_USER:-hahatool}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-hahatool_pass}
+      WORDPRESS_TABLE_PREFIX: wp_
+    volumes:
+      - wp_data:/var/www/html
+      - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./scripts:/scripts:ro
+    networks:
+      - hahatool
+    profiles: ["tools"]
+
+  frontend:
+    build: ./frontend
+    image: hahatool-frontend:latest
+    container_name: hahatool-frontend
+    restart: unless-stopped
+    depends_on:
+      - wordpress
+    environment:
+      # 容器内部直连 WordPress REST API
+      WP_API_BASE: http://wordpress/wp-json
+      NEXT_PUBLIC_SITE_NAME: ${SITE_NAME:-HahaTool}
+      NEXT_PUBLIC_ADMIN_URL: http://localhost:${WP_PORT:-8090}/wp-admin/
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    networks:
+      - hahatool
+
+volumes:
+  db_data:
+  wp_data:
+
+networks:
+  hahatool:
+    driver: bridge

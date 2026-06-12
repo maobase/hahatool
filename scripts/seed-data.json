@@ -1,0 +1,1071 @@
+{
+ "categories": [
+  {
+   "mid": 10,
+   "name": "聊天机器人",
+   "slug": "chatbot",
+   "desc": "AI 对话助手与智能问答工具",
+   "order": 1
+  },
+  {
+   "mid": 11,
+   "name": "文本与写作",
+   "slug": "text-writing",
+   "desc": "AI 写作、改写、校对与文案生成",
+   "order": 2
+  },
+  {
+   "mid": 12,
+   "name": "图像与设计",
+   "slug": "image",
+   "desc": "AI 绘画、图像生成与设计工具",
+   "order": 3
+  },
+  {
+   "mid": 13,
+   "name": "视频生成",
+   "slug": "video",
+   "desc": "AI 视频生成、剪辑与数字人",
+   "order": 4
+  },
+  {
+   "mid": 14,
+   "name": "音频与音乐",
+   "slug": "audio",
+   "desc": "AI 音乐创作、配音与语音合成",
+   "order": 5
+  },
+  {
+   "mid": 15,
+   "name": "代码与开发",
+   "slug": "code-it",
+   "desc": "AI 编程助手与开发者工具",
+   "order": 6
+  },
+  {
+   "mid": 16,
+   "name": "效率办公",
+   "slug": "productivity",
+   "desc": "AI 搜索、PPT、文档等效率工具",
+   "order": 7
+  },
+  {
+   "mid": 17,
+   "name": "营销与增长",
+   "slug": "marketing",
+   "desc": "AI 营销文案与增长工具",
+   "order": 8
+  },
+  {
+   "mid": 18,
+   "name": "教育与翻译",
+   "slug": "education",
+   "desc": "AI 学习、教育与翻译工具",
+   "order": 9
+  },
+  {
+   "mid": 19,
+   "name": "AI资讯",
+   "slug": "ai-news",
+   "desc": "AI 行业新闻与动态",
+   "order": 99
+  },
+  {
+   "mid": 20,
+   "name": "AI快讯",
+   "slug": "ai-flash",
+   "desc": "AI 行业即时短讯",
+   "order": 98
+  }
+ ],
+ "tags": [
+  {
+   "mid": 30,
+   "name": "对话助手",
+   "slug": "chat-assistant",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 31,
+   "name": "文生图",
+   "slug": "text-to-image",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 32,
+   "name": "文生视频",
+   "slug": "text-to-video",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 33,
+   "name": "语音合成",
+   "slug": "voice-synthesis",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 34,
+   "name": "AI写作",
+   "slug": "ai-writing",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 35,
+   "name": "代码助手",
+   "slug": "coding-assistant",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 36,
+   "name": "开源",
+   "slug": "open-source",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 37,
+   "name": "国产",
+   "slug": "made-in-china",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 38,
+   "name": "免费可用",
+   "slug": "free-to-use",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 39,
+   "name": "办公提效",
+   "slug": "office-productivity",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 40,
+   "name": "视频剪辑",
+   "slug": "video-editing",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 41,
+   "name": "设计工具",
+   "slug": "design-tool",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 42,
+   "name": "AI音乐",
+   "slug": "ai-music",
+   "desc": "",
+   "order": 0
+  },
+  {
+   "mid": 43,
+   "name": "AI搜索",
+   "slug": "ai-search",
+   "desc": "",
+   "order": 0
+  }
+ ],
+ "posts": [
+  {
+   "cid": 100,
+   "title": "ChatGPT",
+   "slug": "chatgpt",
+   "created": 1780999200,
+   "content": "## ChatGPT 是什么？\n\nChatGPT 是 OpenAI 推出的对话式 AI 助手，可以回答问题、撰写文案、编写代码、分析数据，是目前全球用户量最大的 AI 工具。\n\n## 核心功能\n\n- 多轮自然语言对话与知识问答\n- 写作辅助：文章、邮件、文案、翻译\n- 代码生成与调试\n- 文件上传分析、图像理解与生成\n\n## 定价\n\n免费版可用基础模型；Plus 订阅 $20/月，可使用更强模型与高级功能。",
+   "fields": {
+    "url": "https://chatgpt.com",
+    "logo": "https://favicon.im/chatgpt.com?larger=true",
+    "tagline": "OpenAI 出品的全能 AI 对话助手，写作、编程、分析样样精通",
+    "pricing": "免费增值",
+    "likes": "9800",
+    "monthly_visits": "4600000000",
+    "featured": "1",
+    "banner": "1",
+    "growth": "5.2",
+    "rating": "4.8",
+    "visits_history": "4100000000,4250000000,4180000000,4400000000,4520000000,4600000000",
+    "regions": "美国:19.1,印度:8.8,巴西:5.2,英国:4.1,其他:62.8",
+    "faq": "ChatGPT 免费吗？|提供免费版，可使用基础模型；Plus 订阅 $20/月解锁更强模型与高级功能。\n国内如何使用 ChatGPT？|官方服务需要海外网络环境与账号，企业用户可考虑通过 Azure OpenAI 等合规渠道接入 API。\nChatGPT 和 Claude 怎么选？|日常问答与生态插件 ChatGPT 更全面；长文档处理与代码生成可优先试试 Claude。",
+    "scores": "易用性:9.5,功能强度:9.6,性价比:8.5,生态集成:9.8,中文友好:8.0"
+   },
+   "cats": [
+    "chatbot"
+   ],
+   "tags": [
+    "chat-assistant",
+    "free-to-use"
+   ]
+  },
+  {
+   "cid": 101,
+   "title": "Claude",
+   "slug": "claude",
+   "created": 1780912800,
+   "content": "## Claude 是什么？\n\nClaude 是 Anthropic 推出的 AI 助手，以长文本处理、代码能力和安全性著称，适合写作、分析与编程场景。\n\n## 核心功能\n\n- 超长上下文，轻松处理长文档\n- 高质量写作与翻译\n- 强大的代码生成能力（Claude Code）\n- Artifacts 实时预览生成内容\n\n## 定价\n\n提供免费版；Pro 订阅 $20/月。",
+   "fields": {
+    "url": "https://claude.ai",
+    "logo": "https://favicon.im/claude.ai?larger=true",
+    "tagline": "Anthropic 出品，长文本与编程能力突出的 AI 助手",
+    "pricing": "免费增值",
+    "likes": "5200",
+    "monthly_visits": "180000000",
+    "featured": "1",
+    "growth": "18.4",
+    "rating": "4.9",
+    "visits_history": "120000000,135000000,142000000,158000000,171000000,180000000",
+    "regions": "美国:32.4,英国:7.2,印度:6.8,德国:4.5,其他:49.1",
+    "scores": "易用性:9.2,功能强度:9.7,性价比:8.3,生态集成:8.8,中文友好:8.2"
+   },
+   "cats": [
+    "chatbot"
+   ],
+   "tags": [
+    "chat-assistant",
+    "coding-assistant"
+   ]
+  },
+  {
+   "cid": 102,
+   "title": "Kimi",
+   "slug": "kimi",
+   "created": 1780826400,
+   "content": "## Kimi 是什么？\n\nKimi 是月之暗面（Moonshot AI）推出的智能助手，以超长上下文窗口闻名，擅长长文档阅读、资料整理与中文创作。\n\n## 核心功能\n\n- 支持超长文本输入，整本书也能读\n- 联网搜索与信息汇总\n- 中文写作与办公辅助\n\n## 定价\n\n个人版免费使用。",
+   "fields": {
+    "url": "https://kimi.moonshot.cn",
+    "logo": "https://favicon.im/kimi.moonshot.cn?larger=true",
+    "tagline": "月之暗面出品，超长上下文的国产智能助手",
+    "pricing": "免费",
+    "likes": "3100",
+    "monthly_visits": "36000000",
+    "featured": "1",
+    "growth": "12.1",
+    "rating": "4.6",
+    "visits_history": "24000000,27000000,29500000,31000000,34000000,36000000",
+    "regions": "中国:94.2,美国:2.1,新加坡:1.2,日本:0.8,其他:1.7",
+    "scores": "易用性:9.0,功能强度:8.6,性价比:9.6,生态集成:7.8,中文友好:9.8"
+   },
+   "cats": [
+    "chatbot"
+   ],
+   "tags": [
+    "chat-assistant",
+    "made-in-china",
+    "free-to-use"
+   ]
+  },
+  {
+   "cid": 103,
+   "title": "豆包",
+   "slug": "doubao",
+   "created": 1780740000,
+   "content": "## 豆包是什么？\n\n豆包是字节跳动推出的免费 AI 智能助手，支持对话问答、写作、绘画、语音通话等能力，移动端体验出色。\n\n## 核心功能\n\n- 智能对话与知识问答\n- AI 写作、AI 绘画\n- 语音对话与角色扮演\n\n## 定价\n\n完全免费。",
+   "fields": {
+    "url": "https://www.doubao.com",
+    "logo": "https://favicon.im/doubao.com?larger=true",
+    "tagline": "字节跳动出品的免费 AI 助手，对话、绘画、语音全都行",
+    "pricing": "免费",
+    "likes": "2800",
+    "monthly_visits": "52000000",
+    "growth": "24.6",
+    "rating": "4.5",
+    "visits_history": "30000000,35000000,39000000,44000000,48000000,52000000",
+    "regions": "中国:96.5,美国:1.3,日本:0.7,韩国:0.5,其他:1.0",
+    "scores": "易用性:9.4,功能强度:8.4,性价比:9.8,生态集成:8.2,中文友好:9.9"
+   },
+   "cats": [
+    "chatbot"
+   ],
+   "tags": [
+    "chat-assistant",
+    "made-in-china",
+    "free-to-use"
+   ]
+  },
+  {
+   "cid": 104,
+   "title": "文心一言",
+   "slug": "yiyan",
+   "created": 1781049600,
+   "content": "## 文心一言是什么？\n\n文心一言是百度推出的知识增强大语言模型产品，覆盖问答、创作、绘画等场景，并与百度搜索深度结合。\n\n## 核心功能\n\n- 中文知识问答与创作\n- 文生图能力\n- 插件生态与办公场景整合\n\n## 定价\n\n基础功能免费，高级模型需开通会员。",
+   "fields": {
+    "url": "https://yiyan.baidu.com",
+    "logo": "https://favicon.im/yiyan.baidu.com?larger=true",
+    "tagline": "百度知识增强大模型，中文问答与创作好帮手",
+    "pricing": "免费增值",
+    "likes": "2400",
+    "monthly_visits": "28000000",
+    "growth": "-3.2",
+    "rating": "4.2",
+    "scores": "易用性:8.8,功能强度:8.0,性价比:8.6,生态集成:8.4,中文友好:9.7"
+   },
+   "cats": [
+    "chatbot"
+   ],
+   "tags": [
+    "chat-assistant",
+    "made-in-china"
+   ]
+  },
+  {
+   "cid": 105,
+   "title": "Notion AI",
+   "slug": "notion-ai",
+   "created": 1780963200,
+   "content": "## Notion AI 是什么？\n\nNotion AI 是集成在 Notion 笔记/知识库中的 AI 助手，可在文档里直接生成、改写、总结内容，并能基于工作区内容回答问题。\n\n## 核心功能\n\n- 文档内一键生成与润色\n- 会议纪要、待办自动整理\n- 基于知识库的问答（Q&A）\n\n## 定价\n\n按席位订阅，AI 功能为付费加购。",
+   "fields": {
+    "url": "https://www.notion.so",
+    "logo": "https://favicon.im/notion.so?larger=true",
+    "tagline": "笔记里的 AI 助手，生成、总结、问答一气呵成",
+    "pricing": "免费增值",
+    "likes": "2100",
+    "monthly_visits": "110000000",
+    "growth": "6.8",
+    "rating": "4.5",
+    "scores": "易用性:8.9,功能强度:8.5,性价比:8.0,生态集成:9.2,中文友好:7.6"
+   },
+   "cats": [
+    "text-writing"
+   ],
+   "tags": [
+    "ai-writing",
+    "office-productivity"
+   ]
+  },
+  {
+   "cid": 106,
+   "title": "秘塔写作猫",
+   "slug": "xiezuocat",
+   "created": 1780876800,
+   "content": "## 秘塔写作猫是什么？\n\n秘塔写作猫是面向中文场景的 AI 写作工具，提供智能纠错、改写润色、全文写作等能力，深受新媒体与文案工作者欢迎。\n\n## 核心功能\n\n- 中文语法纠错与润色\n- AI 全文写作与续写\n- 多种文体模板\n\n## 定价\n\n免费额度 + 会员订阅。",
+   "fields": {
+    "url": "https://xiezuocat.com",
+    "logo": "https://favicon.im/xiezuocat.com?larger=true",
+    "tagline": "中文 AI 写作神器：纠错、润色、全文生成",
+    "pricing": "免费增值",
+    "likes": "860",
+    "monthly_visits": "4200000",
+    "growth": "4.2",
+    "rating": "4.3",
+    "scores": "易用性:9.0,功能强度:7.8,性价比:8.4,生态集成:7.0,中文友好:9.8"
+   },
+   "cats": [
+    "text-writing"
+   ],
+   "tags": [
+    "ai-writing",
+    "made-in-china"
+   ]
+  },
+  {
+   "cid": 107,
+   "title": "Grammarly",
+   "slug": "grammarly",
+   "created": 1780790400,
+   "content": "## Grammarly 是什么？\n\nGrammarly 是全球知名的英文写作辅助工具，提供语法检查、用词建议、语气调整和 AI 生成能力。\n\n## 核心功能\n\n- 实时英文语法与拼写检查\n- 语气与表达优化建议\n- GrammarlyGO AI 写作\n\n## 定价\n\n免费版 + Premium 订阅。",
+   "fields": {
+    "url": "https://www.grammarly.com",
+    "logo": "https://favicon.im/grammarly.com?larger=true",
+    "tagline": "英文写作必备：语法检查、润色与 AI 生成",
+    "pricing": "免费增值",
+    "likes": "1900",
+    "monthly_visits": "64000000",
+    "growth": "2.1",
+    "rating": "4.6",
+    "scores": "易用性:9.1,功能强度:8.6,性价比:8.2,生态集成:9.0,中文友好:6.5"
+   },
+   "cats": [
+    "text-writing"
+   ],
+   "tags": [
+    "ai-writing"
+   ]
+  },
+  {
+   "cid": 108,
+   "title": "Midjourney",
+   "slug": "midjourney",
+   "created": 1780998000,
+   "content": "## Midjourney 是什么？\n\nMidjourney 是顶级 AI 绘画工具，以艺术感极强的图像生成效果闻名，广泛用于概念设计、插画与创意工作。\n\n## 核心功能\n\n- 文生图，风格艺术感强\n- 图生图、局部重绘、放大\n- 网页端编辑器与个性化风格\n\n## 定价\n\n订阅制，基础套餐 $10/月起。",
+   "fields": {
+    "url": "https://www.midjourney.com",
+    "logo": "https://favicon.im/midjourney.com?larger=true",
+    "tagline": "艺术感天花板的 AI 绘画工具，设计师的灵感引擎",
+    "pricing": "付费",
+    "likes": "7600",
+    "monthly_visits": "16000000",
+    "featured": "1",
+    "banner": "1",
+    "growth": "3.9",
+    "rating": "4.8",
+    "visits_history": "14500000,15200000,14800000,15600000,15900000,16000000",
+    "regions": "美国:24.6,日本:6.9,巴西:5.4,法国:4.8,其他:58.3",
+    "faq": "Midjourney 有免费试用吗？|目前已取消免费试用，基础套餐 $10/月起。\nMidjourney 怎么用？|在官网或 Discord 输入 /imagine 加提示词即可生成，网页版支持图像编辑与个性化风格。\n生成的图片可以商用吗？|付费订阅用户拥有商用权利，具体以官方服务条款为准。",
+    "scores": "易用性:7.8,功能强度:9.8,性价比:7.6,生态集成:7.4,中文友好:7.0"
+   },
+   "cats": [
+    "image"
+   ],
+   "tags": [
+    "text-to-image"
+   ]
+  },
+  {
+   "cid": 109,
+   "title": "Stable Diffusion",
+   "slug": "stable-diffusion",
+   "created": 1780617600,
+   "content": "## Stable Diffusion 是什么？\n\nStable Diffusion 是 Stability AI 开源的图像生成模型，可本地部署，生态丰富（WebUI、ComfyUI、LoRA 等），是开源 AI 绘画的事实标准。\n\n## 核心功能\n\n- 开源可本地部署，数据私有\n- 文生图、图生图、ControlNet 精准控制\n- 海量社区模型与插件\n\n## 定价\n\n开源免费，官方亦提供 API 服务。",
+   "fields": {
+    "url": "https://stability.ai",
+    "logo": "https://favicon.im/stability.ai?larger=true",
+    "tagline": "开源 AI 绘画的事实标准，可本地部署、生态丰富",
+    "pricing": "免费",
+    "likes": "4100",
+    "monthly_visits": "8000000",
+    "growth": "-1.5",
+    "rating": "4.7",
+    "scores": "易用性:6.8,功能强度:9.4,性价比:9.9,生态集成:9.6,中文友好:7.5"
+   },
+   "cats": [
+    "image"
+   ],
+   "tags": [
+    "text-to-image",
+    "open-source"
+   ]
+  },
+  {
+   "cid": 110,
+   "title": "Canva AI",
+   "slug": "canva",
+   "created": 1780531200,
+   "content": "## Canva AI 是什么？\n\nCanva（可画）是在线设计平台，内置 Magic Studio 系列 AI 能力：文生图、魔法改图、一键排版等，让非设计师也能快速出图。\n\n## 核心功能\n\n- 海量模板 + AI 一键设计\n- Magic Media 文生图/文生视频\n- 品牌套件与团队协作\n\n## 定价\n\n免费版 + Pro 订阅。",
+   "fields": {
+    "url": "https://www.canva.com",
+    "logo": "https://favicon.im/canva.com?larger=true",
+    "tagline": "人人都会用的在线设计平台，AI 一键出图排版",
+    "pricing": "免费增值",
+    "likes": "3500",
+    "monthly_visits": "380000000",
+    "growth": "7.4",
+    "rating": "4.7",
+    "visits_history": "340000000,355000000,348000000,362000000,371000000,380000000",
+    "regions": "美国:14.2,巴西:9.8,印度:8.4,墨西哥:5.1,其他:62.5",
+    "promo": "ranking-top",
+    "scores": "易用性:9.6,功能强度:8.8,性价比:8.8,生态集成:9.0,中文友好:9.0"
+   },
+   "cats": [
+    "image"
+   ],
+   "tags": [
+    "design-tool",
+    "text-to-image"
+   ]
+  },
+  {
+   "cid": 111,
+   "title": "即梦AI",
+   "slug": "jimeng",
+   "created": 1780444800,
+   "content": "## 即梦AI 是什么？\n\n即梦 AI 是字节跳动旗下的 AI 创作平台，提供图片生成与视频生成能力，与剪映生态打通，中文提示词友好。\n\n## 核心功能\n\n- 文生图、智能画布\n- 文生视频、图生视频\n- 与剪映工作流衔接\n\n## 定价\n\n免费积分 + 会员订阅。",
+   "fields": {
+    "url": "https://jimeng.jianying.com",
+    "logo": "https://favicon.im/jimeng.jianying.com?larger=true",
+    "tagline": "字节旗下 AI 创作平台，图片视频一站生成",
+    "pricing": "免费增值",
+    "likes": "1200",
+    "monthly_visits": "9000000",
+    "growth": "31.2",
+    "rating": "4.4",
+    "scores": "易用性:9.2,功能强度:8.6,性价比:9.0,生态集成:8.8,中文友好:9.9"
+   },
+   "cats": [
+    "image"
+   ],
+   "tags": [
+    "text-to-image",
+    "text-to-video",
+    "made-in-china"
+   ]
+  },
+  {
+   "cid": 112,
+   "title": "Runway",
+   "slug": "runway",
+   "created": 1780911000,
+   "content": "## Runway 是什么？\n\nRunway 是 AI 视频生成领域的先驱，其 Gen 系列模型支持文生视频、图生视频与各类专业视频编辑能力，被广泛用于影视与广告制作。\n\n## 核心功能\n\n- Gen 系列文生视频/图生视频\n- 运动笔刷、镜头控制\n- 绿幕抠像等专业工具集\n\n## 定价\n\n免费试用额度 + 订阅制。",
+   "fields": {
+    "url": "https://runwayml.com",
+    "logo": "https://favicon.im/runwayml.com?larger=true",
+    "tagline": "AI 视频生成先驱，影视级创作工具箱",
+    "pricing": "免费增值",
+    "likes": "2900",
+    "monthly_visits": "7800000",
+    "featured": "1",
+    "growth": "15.7",
+    "rating": "4.6",
+    "visits_history": "5800000,6200000,6500000,7000000,7400000,7800000",
+    "regions": "美国:28.3,英国:6.4,加拿大:5.2,印度:4.9,其他:55.2",
+    "scores": "易用性:8.4,功能强度:9.5,性价比:7.4,生态集成:8.2,中文友好:7.2"
+   },
+   "cats": [
+    "video"
+   ],
+   "tags": [
+    "text-to-video",
+    "video-editing"
+   ]
+  },
+  {
+   "cid": 113,
+   "title": "可灵AI",
+   "slug": "kling",
+   "created": 1780358400,
+   "content": "## 可灵AI 是什么？\n\n可灵（Kling）是快手推出的 AI 视频生成工具，生成质量位居全球第一梯队，支持文生视频、图生视频与运镜控制。\n\n## 核心功能\n\n- 高质量文生视频/图生视频\n- 运镜控制与首尾帧\n- AI 图片生成\n\n## 定价\n\n每日免费积分 + 会员订阅。",
+   "fields": {
+    "url": "https://klingai.kuaishou.com",
+    "logo": "https://favicon.im/klingai.kuaishou.com?larger=true",
+    "tagline": "快手出品的 AI 视频生成，画质位居全球第一梯队",
+    "pricing": "免费增值",
+    "likes": "1500",
+    "monthly_visits": "6200000",
+    "growth": "42.8",
+    "rating": "4.7",
+    "visits_history": "3100000,3600000,4200000,4900000,5500000,6200000",
+    "regions": "中国:78.4,美国:8.2,日本:3.6,韩国:2.4,其他:7.4",
+    "scores": "易用性:8.8,功能强度:9.6,性价比:8.6,生态集成:7.8,中文友好:9.8"
+   },
+   "cats": [
+    "video"
+   ],
+   "tags": [
+    "text-to-video",
+    "made-in-china"
+   ]
+  },
+  {
+   "cid": 114,
+   "title": "HeyGen",
+   "slug": "heygen",
+   "created": 1780272000,
+   "content": "## HeyGen 是什么？\n\nHeyGen 是 AI 数字人视频平台，可用虚拟形象 + AI 配音快速生成口播视频，支持视频翻译与口型同步，常用于出海营销。\n\n## 核心功能\n\n- AI 数字人口播视频\n- 视频翻译 + 口型同步\n- 照片数字人\n\n## 定价\n\n订阅制，提供免费试用。",
+   "fields": {
+    "url": "https://www.heygen.com",
+    "logo": "https://favicon.im/heygen.com?larger=true",
+    "tagline": "AI 数字人视频平台，口播视频与视频翻译利器",
+    "pricing": "付费",
+    "likes": "1300",
+    "monthly_visits": "5400000",
+    "growth": "11.3",
+    "rating": "4.5",
+    "scores": "易用性:9.0,功能强度:8.8,性价比:7.2,生态集成:8.4,中文友好:8.0"
+   },
+   "cats": [
+    "video"
+   ],
+   "tags": [
+    "text-to-video"
+   ]
+  },
+  {
+   "cid": 115,
+   "title": "剪映",
+   "slug": "jianying",
+   "created": 1780185600,
+   "content": "## 剪映是什么？\n\n剪映是字节跳动推出的视频剪辑工具，内置丰富 AI 能力：智能剪辑、AI 字幕、数字人、图文成片，是短视频创作者的标配。\n\n## 核心功能\n\n- 图文成片、一键成片\n- AI 字幕、智能抠像\n- 数字人与 AI 配音\n\n## 定价\n\n基础免费 + 会员高级功能。",
+   "fields": {
+    "url": "https://www.capcut.cn",
+    "logo": "https://favicon.im/capcut.cn?larger=true",
+    "tagline": "短视频创作标配剪辑工具，AI 字幕、图文成片",
+    "pricing": "免费增值",
+    "likes": "2600",
+    "monthly_visits": "42000000",
+    "growth": "8.9",
+    "rating": "4.6",
+    "scores": "易用性:9.5,功能强度:8.8,性价比:9.4,生态集成:9.2,中文友好:9.9"
+   },
+   "cats": [
+    "video"
+   ],
+   "tags": [
+    "video-editing",
+    "made-in-china",
+    "free-to-use"
+   ]
+  },
+  {
+   "cid": 116,
+   "title": "Suno",
+   "slug": "suno",
+   "created": 1780824000,
+   "content": "## Suno 是什么？\n\nSuno 是当前最火的 AI 音乐生成工具，输入一段歌词或描述即可生成带人声的完整歌曲，支持多种曲风与中文歌词。\n\n## 核心功能\n\n- 文本生成完整歌曲（含人声）\n- 自定义歌词、曲风\n- 续写与翻唱\n\n## 定价\n\n每日免费额度 + 订阅制。",
+   "fields": {
+    "url": "https://suno.com",
+    "logo": "https://favicon.im/suno.com?larger=true",
+    "tagline": "一句话生成完整歌曲，最火的 AI 音乐工具",
+    "pricing": "免费增值",
+    "likes": "2200",
+    "monthly_visits": "12000000",
+    "featured": "1",
+    "growth": "22.5",
+    "rating": "4.7",
+    "visits_history": "8200000,9100000,9800000,10500000,11300000,12000000",
+    "regions": "美国:22.8,德国:7.1,巴西:6.3,日本:5.5,其他:58.3",
+    "promo": "home-mid",
+    "scores": "易用性:9.3,功能强度:9.2,性价比:8.6,生态集成:7.6,中文友好:8.8"
+   },
+   "cats": [
+    "audio"
+   ],
+   "tags": [
+    "ai-music"
+   ]
+  },
+  {
+   "cid": 117,
+   "title": "ElevenLabs",
+   "slug": "elevenlabs",
+   "created": 1780099200,
+   "content": "## ElevenLabs 是什么？\n\nElevenLabs 是业界领先的 AI 语音合成平台，语音自然度极高，支持声音克隆与多语言配音，被广泛用于有声书、视频配音。\n\n## 核心功能\n\n- 超拟真 TTS 文本转语音\n- 声音克隆\n- 多语言配音与变声\n\n## 定价\n\n免费额度 + 按量订阅。",
+   "fields": {
+    "url": "https://elevenlabs.io",
+    "logo": "https://favicon.im/elevenlabs.io?larger=true",
+    "tagline": "超拟真 AI 语音合成与声音克隆平台",
+    "pricing": "免费增值",
+    "likes": "1800",
+    "monthly_visits": "21000000",
+    "growth": "16.2",
+    "rating": "4.8",
+    "scores": "易用性:8.9,功能强度:9.6,性价比:7.8,生态集成:8.8,中文友好:8.2"
+   },
+   "cats": [
+    "audio"
+   ],
+   "tags": [
+    "voice-synthesis"
+   ]
+  },
+  {
+   "cid": 118,
+   "title": "GitHub Copilot",
+   "slug": "github-copilot",
+   "created": 1780822000,
+   "content": "## GitHub Copilot 是什么？\n\nGitHub Copilot 是 GitHub 与 OpenAI 合作推出的 AI 编程助手，在编辑器中实时补全代码、解释代码、生成测试，是使用最广的 AI 编程工具。\n\n## 核心功能\n\n- 编辑器内代码补全\n- Copilot Chat 对话式编程\n- Agent 模式自动完成任务\n\n## 定价\n\n个人版 $10/月，提供免费层。",
+   "fields": {
+    "url": "https://github.com/features/copilot",
+    "logo": "https://favicon.im/github.com?larger=true",
+    "tagline": "使用最广的 AI 编程助手，代码补全与对话编程",
+    "pricing": "免费增值",
+    "likes": "4500",
+    "monthly_visits": "28000000",
+    "featured": "1",
+    "growth": "9.4",
+    "rating": "4.7",
+    "visits_history": "22000000,23500000,24800000,26000000,27200000,28000000",
+    "regions": "美国:26.4,印度:11.2,中国:7.8,德国:5.3,其他:49.3",
+    "scores": "易用性:9.2,功能强度:9.0,性价比:8.4,生态集成:9.8,中文友好:8.0"
+   },
+   "cats": [
+    "code-it"
+   ],
+   "tags": [
+    "coding-assistant"
+   ]
+  },
+  {
+   "cid": 119,
+   "title": "Cursor",
+   "slug": "cursor",
+   "created": 1780738000,
+   "content": "## Cursor 是什么？\n\nCursor 是基于 VS Code 打造的 AI 代码编辑器，深度整合大模型，支持全代码库问答与 Agent 自动改码，是 AI 编程的明星产品。\n\n## 核心功能\n\n- Tab 智能补全与多行编辑\n- 全库上下文问答\n- Agent 模式自动完成需求\n\n## 定价\n\n免费版 + Pro $20/月。",
+   "fields": {
+    "url": "https://cursor.com",
+    "logo": "https://favicon.im/cursor.com?larger=true",
+    "tagline": "AI 原生代码编辑器，Agent 自动改码的明星产品",
+    "pricing": "免费增值",
+    "likes": "3900",
+    "monthly_visits": "18000000",
+    "featured": "1",
+    "growth": "38.6",
+    "rating": "4.9",
+    "visits_history": "9800000,11500000,13200000,15000000,16800000,18000000",
+    "regions": "美国:31.2,中国:9.4,印度:7.6,英国:4.8,其他:47.0",
+    "faq": "Cursor 免费版够用吗？|免费版有每月额度限制，轻度使用可以；重度开发建议 Pro $20/月。\nCursor 和 GitHub Copilot 有什么区别？|Copilot 是编辑器插件，Cursor 是完整的 AI 原生编辑器，Agent 模式可跨文件自动改码。\n支持哪些语言？|主流编程语言全部支持，对 TypeScript、Python 生态优化最好。",
+    "promo": "detail-side",
+    "scores": "易用性:9.0,功能强度:9.8,性价比:8.0,生态集成:9.4,中文友好:8.4"
+   },
+   "cats": [
+    "code-it"
+   ],
+   "tags": [
+    "coding-assistant"
+   ]
+  },
+  {
+   "cid": 120,
+   "title": "通义灵码",
+   "slug": "tongyi-lingma",
+   "created": 1780012800,
+   "content": "## 通义灵码是什么？\n\n通义灵码是阿里云推出的 AI 编程助手，支持主流 IDE，提供代码补全、注释生成、单测生成等能力，对中文注释与国内生态友好。\n\n## 核心功能\n\n- 行级/函数级代码补全\n- 自然语言生成代码\n- 单元测试与注释生成\n\n## 定价\n\n个人版免费。",
+   "fields": {
+    "url": "https://lingma.aliyun.com",
+    "logo": "https://favicon.im/aliyun.com?larger=true",
+    "tagline": "阿里云 AI 编程助手，个人版免费",
+    "pricing": "免费",
+    "likes": "980",
+    "monthly_visits": "3600000",
+    "growth": "14.8",
+    "rating": "4.4",
+    "scores": "易用性:8.8,功能强度:8.2,性价比:9.6,生态集成:8.6,中文友好:9.8"
+   },
+   "cats": [
+    "code-it"
+   ],
+   "tags": [
+    "coding-assistant",
+    "made-in-china",
+    "free-to-use"
+   ]
+  },
+  {
+   "cid": 121,
+   "title": "Perplexity",
+   "slug": "perplexity",
+   "created": 1781043000,
+   "content": "## Perplexity 是什么？\n\nPerplexity 是 AI 搜索引擎的代表产品，结合大模型与实时检索，直接给出带引用来源的答案，被称为「答案引擎」。\n\n## 核心功能\n\n- AI 搜索，附带来源引用\n- Deep Research 深度研究\n- 多模型切换\n\n## 定价\n\n免费版 + Pro $20/月。",
+   "fields": {
+    "url": "https://www.perplexity.ai",
+    "logo": "https://favicon.im/perplexity.ai?larger=true",
+    "tagline": "带引用来源的 AI 搜索「答案引擎」",
+    "pricing": "免费增值",
+    "likes": "3300",
+    "monthly_visits": "120000000",
+    "featured": "1",
+    "growth": "19.3",
+    "rating": "4.8",
+    "visits_history": "86000000,94000000,101000000,108000000,115000000,120000000",
+    "regions": "美国:25.7,印度:9.3,巴西:5.8,德国:4.6,其他:54.6",
+    "promo": "detail-side",
+    "scores": "易用性:9.4,功能强度:9.2,性价比:8.6,生态集成:8.0,中文友好:8.4"
+   },
+   "cats": [
+    "productivity"
+   ],
+   "tags": [
+    "ai-search",
+    "free-to-use"
+   ]
+  },
+  {
+   "cid": 122,
+   "title": "Gamma",
+   "slug": "gamma",
+   "created": 1779926400,
+   "content": "## Gamma 是什么？\n\nGamma 是 AI 演示文稿工具，输入主题即可一键生成精美的 PPT / 网页 / 文档，自动排版能力出色。\n\n## 核心功能\n\n- 一句话生成完整 PPT\n- 自动排版与主题美化\n- 导出 PPT/PDF、网页发布\n\n## 定价\n\n免费额度 + Plus/Pro 订阅。",
+   "fields": {
+    "url": "https://gamma.app",
+    "logo": "https://favicon.im/gamma.app?larger=true",
+    "tagline": "一句话生成精美 PPT，自动排版强到离谱",
+    "pricing": "免费增值",
+    "likes": "1600",
+    "monthly_visits": "23000000",
+    "growth": "13.6",
+    "rating": "4.6",
+    "scores": "易用性:9.5,功能强度:8.6,性价比:8.4,生态集成:7.8,中文友好:8.6"
+   },
+   "cats": [
+    "productivity"
+   ],
+   "tags": [
+    "office-productivity"
+   ]
+  },
+  {
+   "cid": 123,
+   "title": "WPS AI",
+   "slug": "wps-ai",
+   "created": 1779840000,
+   "content": "## WPS AI 是什么？\n\nWPS AI 是金山办公推出的办公 AI 助手，深度集成在 WPS 文字、表格、演示中，支持文档生成、数据处理与 PPT 美化。\n\n## 核心功能\n\n- 文档起草与润色\n- 表格公式与数据分析\n- 一键生成 PPT\n\n## 定价\n\n会员制，提供免费体验额度。",
+   "fields": {
+    "url": "https://ai.wps.cn",
+    "logo": "https://favicon.im/wps.cn?larger=true",
+    "tagline": "WPS 全家桶里的 AI 办公助手",
+    "pricing": "免费增值",
+    "likes": "1100",
+    "monthly_visits": "15000000",
+    "growth": "10.2",
+    "rating": "4.3",
+    "scores": "易用性:9.2,功能强度:8.2,性价比:8.8,生态集成:9.0,中文友好:9.9"
+   },
+   "cats": [
+    "productivity"
+   ],
+   "tags": [
+    "office-productivity",
+    "made-in-china"
+   ]
+  },
+  {
+   "cid": 124,
+   "title": "Copy.ai",
+   "slug": "copy-ai",
+   "created": 1779753600,
+   "content": "## Copy.ai 是什么？\n\nCopy.ai 是面向营销团队的 AI 文案与工作流平台，可批量生成广告语、邮件、博客等营销内容，并支持 GTM 自动化工作流。\n\n## 核心功能\n\n- 营销文案批量生成\n- 品牌语调定制\n- 营销工作流自动化\n\n## 定价\n\n免费版 + 团队订阅。",
+   "fields": {
+    "url": "https://www.copy.ai",
+    "logo": "https://favicon.im/copy.ai?larger=true",
+    "tagline": "营销团队的 AI 文案与自动化工作流平台",
+    "pricing": "免费增值",
+    "likes": "900",
+    "monthly_visits": "2800000",
+    "growth": "-2.8",
+    "rating": "4.2",
+    "scores": "易用性:8.8,功能强度:8.0,性价比:8.2,生态集成:8.4,中文友好:6.8"
+   },
+   "cats": [
+    "marketing"
+   ],
+   "tags": [
+    "ai-writing"
+   ]
+  },
+  {
+   "cid": 125,
+   "title": "Jasper",
+   "slug": "jasper",
+   "created": 1779667200,
+   "content": "## Jasper 是什么？\n\nJasper 是企业级 AI 营销内容平台，围绕品牌知识库生成一致风格的营销内容，深受市场团队欢迎。\n\n## 核心功能\n\n- 品牌声音与知识库\n- 营销内容批量生产\n- 团队协作与 API\n\n## 定价\n\n订阅制，$39/月起。",
+   "fields": {
+    "url": "https://www.jasper.ai",
+    "logo": "https://favicon.im/jasper.ai?larger=true",
+    "tagline": "企业级 AI 营销内容平台，品牌风格统一输出",
+    "pricing": "付费",
+    "likes": "850",
+    "monthly_visits": "1800000",
+    "growth": "-5.4",
+    "rating": "4.1",
+    "scores": "易用性:8.4,功能强度:8.6,性价比:7.0,生态集成:8.8,中文友好:6.5"
+   },
+   "cats": [
+    "marketing"
+   ],
+   "tags": [
+    "ai-writing"
+   ]
+  },
+  {
+   "cid": 126,
+   "title": "Duolingo",
+   "slug": "duolingo",
+   "created": 1779580800,
+   "content": "## Duolingo 是什么？\n\n多邻国是全球最受欢迎的语言学习应用，引入 AI 对话练习与个性化学习路径，让外语学习像游戏一样上瘾。\n\n## 核心功能\n\n- 游戏化语言课程\n- AI 对话与角色扮演练习\n- 个性化复习计划\n\n## 定价\n\n免费 + Super/Max 订阅。",
+   "fields": {
+    "url": "https://www.duolingo.com",
+    "logo": "https://favicon.im/duolingo.com?larger=true",
+    "tagline": "游戏化语言学习应用，AI 对话练口语",
+    "pricing": "免费增值",
+    "likes": "2000",
+    "monthly_visits": "96000000",
+    "growth": "5.6",
+    "rating": "4.7",
+    "scores": "易用性:9.6,功能强度:8.4,性价比:9.0,生态集成:7.6,中文友好:9.0"
+   },
+   "cats": [
+    "education"
+   ],
+   "tags": [
+    "free-to-use"
+   ]
+  },
+  {
+   "cid": 127,
+   "title": "有道翻译",
+   "slug": "youdao",
+   "created": 1779494400,
+   "content": "## 有道翻译是什么？\n\n有道翻译是网易推出的翻译工具，基于子曰大模型提供 AI 翻译、润色与写作能力，支持文档、图片、网页等多种翻译形态。\n\n## 核心功能\n\n- 多语种文本/文档/图片翻译\n- AI 润色与双语对照\n- 划词与浏览器插件\n\n## 定价\n\n基础免费 + 会员高级功能。",
+   "fields": {
+    "url": "https://fanyi.youdao.com",
+    "logo": "https://favicon.im/youdao.com?larger=true",
+    "tagline": "网易出品，大模型加持的 AI 翻译工具",
+    "pricing": "免费",
+    "likes": "760",
+    "monthly_visits": "31000000",
+    "growth": "3.3",
+    "rating": "4.4",
+    "scores": "易用性:9.3,功能强度:8.0,性价比:9.4,生态集成:8.2,中文友好:9.9"
+   },
+   "cats": [
+    "education"
+   ],
+   "tags": [
+    "made-in-china",
+    "free-to-use"
+   ]
+  },
+  {
+   "cid": 140,
+   "title": "2026年5月全球AI工具流量榜：聊天助手依旧领跑，视频生成增速第一",
+   "slug": "ai-traffic-2026-05",
+   "created": 1780996800,
+   "content": "最新流量统计显示，对话类 AI 助手依旧占据访问量榜首，而 AI 视频生成赛道月环比增速超过 40%，成为增长最快的品类。\n\n## 看点\n\n- 头部聊天助手月访问量保持在数十亿级别\n- 视频生成工具集体爆发，国产产品表现亮眼\n- AI 编程工具付费转化率持续走高\n\n## 趋势解读\n\n从流量结构看，AI 工具正在从「尝鲜」走向「日常」：办公、剪辑、编程等生产力场景的留存率显著高于娱乐场景。对于工具开发者而言，深耕垂直工作流比追逐通用对话更有机会。",
+   "fields": {
+    "cover": "https://picsum.photos/seed/aitraffic/1200/630"
+   },
+   "cats": [
+    "ai-news"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 141,
+   "title": "国产大模型加速出海：多款AI应用登顶海外应用商店",
+   "slug": "china-ai-going-global",
+   "created": 1780909000,
+   "content": "近期多款国产 AI 应用在海外应用商店登顶效率榜，覆盖对话助手、图像生成与视频剪辑等品类，出海成为国产 AI 的关键词。\n\n## 看点\n\n- 视频与图像类工具成为出海主力\n- 本地化运营与多语言能力是胜负手\n- 订阅制付费在海外市场跑通\n\n## 趋势解读\n\n国产 AI 工具凭借工程化速度与产品打磨能力，在海外市场建立了差异化优势。接下来比拼的将是模型能力的持续迭代与合规运营。",
+   "fields": {
+    "cover": "https://picsum.photos/seed/goingglobal/1200/630"
+   },
+   "cats": [
+    "ai-news"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 142,
+   "title": "AI视频进入「分钟级」时代：长视频生成成为下一个竞技场",
+   "slug": "ai-video-minute-era",
+   "created": 1780820000,
+   "content": "多家厂商相继展示分钟级连贯视频生成能力，AI 视频正从「几秒钟的片段」迈向「可叙事的内容」，长视频生成成为新的竞技场。\n\n## 看点\n\n- 生成时长与一致性大幅提升\n- 运镜控制、多镜头叙事成为标配\n- 影视与广告行业开始规模化采用\n\n## 趋势解读\n\n当生成时长突破分钟级，AI 视频的应用场景将从素材补充转向成片生产，内容产业的成本结构可能被重写。",
+   "fields": {
+    "cover": "https://picsum.photos/seed/aivideo/1200/630"
+   },
+   "cats": [
+    "ai-news"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 143,
+   "title": "视频实测：主流 AI 视频生成工具横向对比",
+   "slug": "ai-video-review",
+   "created": 1781180000,
+   "content": "我们用同一组提示词实测了多款主流 AI 视频生成工具，从画质、运动一致性、提示词遵循三个维度做了横向对比，本文附实测视频与截图。\n\n## 实测视频\n\n<video src=\"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4\" controls preload=\"metadata\" playsinline></video>\n\n*同一提示词下的生成效果对比（示例视频）*\n\n## 画面表现\n\n![画面对比示意](https://picsum.photos/seed/frame-a/1000/560)\n\n从静帧画质看，第一梯队工具在光影与材质细节上已经接近实拍素材；人物面部与手部仍是普遍弱项。\n\n## 运动一致性\n\n![运动一致性示意](https://picsum.photos/seed/frame-b/1000/560)\n\n长镜头下的主体一致性差距明显：部分工具在 10 秒以上的镜头中会出现主体漂移。\n\n## B 站完整版\n\n<iframe src=\"//player.bilibili.com/player.html?bvid=BV1GJ411x7h7&autoplay=0\" allowfullscreen frameborder=\"0\"></iframe>\n\n## 结论\n\n- 追求电影感：优先 Runway、可灵\n- 中文提示词友好：即梦、可灵\n- 性价比之选：关注各家免费额度的刷新规则",
+   "fields": {
+    "cover": "https://picsum.photos/seed/aidemo/1200/630"
+   },
+   "cats": [
+    "ai-news"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 150,
+   "title": "OpenAI 推出新一代推理模型预览版，API 成本下降 40%",
+   "slug": "flash-openai-new-model",
+   "created": 1781166000,
+   "content": "OpenAI 面向开发者开放新一代推理模型预览，官方称在数学与代码基准上显著提升，API 定价较上代下降约 40%。",
+   "fields": {},
+   "cats": [
+    "ai-flash"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 151,
+   "title": "可灵 AI 升级 2.5：支持 3 分钟连贯视频生成",
+   "slug": "flash-kling-2-5",
+   "created": 1781159000,
+   "content": "快手可灵 AI 发布 2.5 版本，单次生成时长提升至 3 分钟，多镜头叙事一致性明显增强，同步开放 API。",
+   "fields": {},
+   "cats": [
+    "ai-flash"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 152,
+   "title": "Cursor 母公司 Anysphere 完成新一轮融资，估值创新高",
+   "slug": "flash-anysphere-funding",
+   "created": 1781151000,
+   "content": "AI 编程工具 Cursor 的母公司 Anysphere 宣布完成新一轮融资，将用于扩充模型训练与企业版研发。",
+   "fields": {},
+   "cats": [
+    "ai-flash"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 153,
+   "title": "Suno 上线中文歌声优化模型，国风曲风效果大幅提升",
+   "slug": "flash-suno-chinese",
+   "created": 1781143000,
+   "content": "Suno 针对中文发音与咬字推出优化模型，国风、民谣等曲风的人声自然度明显提升。",
+   "fields": {},
+   "cats": [
+    "ai-flash"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 154,
+   "title": "豆包大模型日均 tokens 调用量突破 60 万亿",
+   "slug": "flash-doubao-tokens",
+   "created": 1781089000,
+   "content": "字节跳动披露豆包大模型最新使用数据：日均 tokens 调用量突破 60 万亿，企业客户数同比翻倍。",
+   "fields": {},
+   "cats": [
+    "ai-flash"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 155,
+   "title": "Midjourney 网页编辑器开放视频生成内测",
+   "slug": "flash-mj-video",
+   "created": 1781082000,
+   "content": "Midjourney 向订阅用户开放网页端视频生成内测，支持图生视频与运镜参数控制。",
+   "fields": {},
+   "cats": [
+    "ai-flash"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 156,
+   "title": "文心一言深度搜索功能宣布全面免费",
+   "slug": "flash-yiyan-free",
+   "created": 1781075000,
+   "content": "百度宣布文心一言深度搜索功能全面免费开放，并将逐步开放最新模型的免费体验额度。",
+   "fields": {},
+   "cats": [
+    "ai-flash"
+   ],
+   "tags": []
+  },
+  {
+   "cid": 157,
+   "title": "Anthropic 发布 Claude 新版本，长上下文能力再升级",
+   "slug": "flash-claude-update",
+   "created": 1781002000,
+   "content": "Anthropic 推出 Claude 新版本，长上下文检索准确率进一步提升，编程基准成绩刷新纪录。",
+   "fields": {},
+   "cats": [
+    "ai-flash"
+   ],
+   "tags": []
+  }
+ ]
+}

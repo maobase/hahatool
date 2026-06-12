@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-white;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* 正文富媒体（资讯/工具详情的 Markdown 内容） */
+  .prose img {
+    @apply rounded-xl border border-gray-100;
+  }
+  .prose video {
+    @apply aspect-video w-full rounded-xl border border-gray-200 bg-black;
+  }
+  .prose iframe {
+    @apply aspect-video w-full rounded-xl border border-gray-200 bg-black;
+  }
+  .prose figure > figcaption,
+  .prose img + em,
+  .prose video + p > em:only-child {
+    @apply text-center text-sm text-gray-400;
+  }
+
+  /* 快讯跑马灯 */
+  @keyframes ticker-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .ticker-track {
+    animation: ticker-scroll 40s linear infinite;
+  }
+  .ticker-mask:hover .ticker-track {
+    animation-play-state: paused;
+  }
+  .ticker-mask {
+    mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  }
+}
