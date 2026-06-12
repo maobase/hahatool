@@ -41,4 +41,10 @@ add_action('init', function () {
 /** 允许匿名评论（前台评论框免登录，仍受 WP 审核设置约束） */
 add_filter('rest_allow_anonymous_comments', '__return_true');
 
+/**
+ * 允许在非 HTTPS 环境使用 Application Passwords（本地 Docker 为 http）。
+ * 「提交工具」表单的服务端写入依赖它。生产环境请务必启用 HTTPS。
+ */
+add_filter('wp_is_application_passwords_available', '__return_true');
+
 /** REST 列表默认带出分类/标签信息时减少额外请求成本：放宽 per_page 上限到 100（WP 默认即 100，留作显式说明） */
