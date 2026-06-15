@@ -1,0 +1,52 @@
+<?php if (!defined('ABSPATH')) exit; ?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%237c3aed'/><text x='32' y='44' font-size='34' fill='white' text-anchor='middle' font-family='sans-serif'>哈</text></svg>">
+    <?php wp_head(); ?>
+    <script>/* 首屏防闪烁：在样式应用前写入已存的主题偏好 */
+    (function(){try{var t=JSON.parse(localStorage.getItem('hahatool:theme')||'{}');var m=t.mode||'light';var d=m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);var e=document.documentElement;e.setAttribute('data-mode',d?'dark':'light');if(t.accent)e.setAttribute('data-accent',t.accent);}catch(e){}})();</script>
+</head>
+<body <?php body_class(); ?>>
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="<?php echo esc_url(home_url('/')); ?>">
+      <span class="brand-logo">✦</span>
+      <span><?php bloginfo('name'); ?><small>哈哈工具</small></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="<?php echo esc_url(home_url('/')); ?>"<?php echo is_front_page() ? ' class="active"' : ''; ?>>首页</a>
+      <a href="<?php echo esc_url(home_url('/tools/')); ?>">工具库</a>
+      <a href="<?php echo esc_url(home_url('/ranking/')); ?>">排行榜</a>
+      <a href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>">提示词</a>
+      <a href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">AI快讯</a>
+      <a href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">AI资讯</a>
+    </nav>
+    <div class="nav-right">
+      <form class="nav-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="search" name="s" placeholder="搜索 AI 工具…" value="<?php echo esc_attr(get_search_query()); ?>" aria-label="搜索">
+      </form>
+      <button class="icon-btn" id="themeBtn" aria-label="外观设置" title="外观设置">🎨</button>
+      <a class="btn" href="<?php echo esc_url(home_url('/submit/')); ?>">提交工具</a>
+      <button class="icon-btn nav-toggle" id="navToggle" aria-label="菜单">☰</button>
+    </div>
+  </div>
+  <div id="themeMenu" style="display:none;position:absolute;right:24px;top:64px;z-index:60;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-lg);width:220px">
+    <p class="muted" style="margin:0 0 8px">外观模式</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px" data-theme-mode>
+      <button data-mode="light" class="btn-ghost" style="padding:8px;font-size:12px">浅色</button>
+      <button data-mode="dark" class="btn-ghost" style="padding:8px;font-size:12px">深色</button>
+      <button data-mode="system" class="btn-ghost" style="padding:8px;font-size:12px">系统</button>
+    </div>
+    <p class="muted" style="margin:14px 0 8px">主题色</p>
+    <div style="display:flex;gap:10px" data-theme-accent>
+      <button data-accent="violet" title="紫罗兰" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#7c3aed;cursor:pointer"></button>
+      <button data-accent="sky" title="海蓝" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#0284c7;cursor:pointer"></button>
+      <button data-accent="emerald" title="翡翠" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#059669;cursor:pointer"></button>
+      <button data-accent="rose" title="玫红" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#e11d48;cursor:pointer"></button>
+    </div>
+  </div>
+</header>

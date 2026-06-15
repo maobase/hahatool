@@ -1,0 +1,128 @@
+<?php
+/** 首页 */
+if (!defined('ABSPATH')) exit;
+get_header();
+
+$all = hahatool_tools(['posts_per_page' => 200]);
+$tools = $all->posts;
+$tool_cats = get_categories(['hide_empty' => true, 'exclude' => implode(',', hahatool_reserved_ids())]);
+$week_ago = time() - 7 * 86400;
+$weekly_new = count(array_filter($tools, fn($p) => strtotime($p->post_date_gmt . ' UTC') > $week_ago));
+
+// 派生板块
+$featured = array_values(array_filter($tools, fn($p) => hh_meta($p->ID, 'featured') === '1'));
+usort($tools, fn($a, $b) => (float)hh_meta($b->ID, 'growth') - (float)hh_meta($a->ID, 'growth'));
+$trending = array_slice($tools, 0, 4);
+$latest = $all->posts; // 已按日期倒序
+
+$flash = hahatool_channel('ai-flash', 5)->posts;
+$news = hahatool_channel('ai-news', 3)->posts;
+$prompts_q = hahatool_channel('ai-prompts', 100)->posts;
+usort($prompts_q, fn($a, $b) => (float)hh_meta($b->ID, 'likes') - (float)hh_meta($a->ID, 'likes'));
+$hot_prompts = array_slice($prompts_q, 0, 3);
+$mid_promo = hahatool_promo('home-mid', 1);
+
+$hot_kw = ['AI写作', 'AI绘画', '视频生成', 'AI编程', '数字人', 'AI音乐'];
+?>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <span class="pill">✦ 全球 AI 工具中文导航 · 每日更新</span>
+    <h1>发现最好用的 <span class="hl">AI 工具</span></h1>
+    <p class="sub">收录全球优秀 AI 产品，附流量数据、定价与真实点评，帮你少踩坑、快上手。</p>
+    <form class="hero-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
+      <span class="s-icon">🔍</span>
+      <input type="search" name="s" placeholder="搜索 AI 工具，例如：视频生成、写作助手…" aria-label="搜索">
+      <button class="btn" type="submit">搜索</button>
+    </form>
+    <div class="hero-tags">
+      <span>热门：</span>
+      <?php foreach ($hot_kw as $kw): ?>
+        <a href="<?php echo esc_url(home_url('/?s=' . urlencode($kw))); ?>"><?php echo esc_html($kw); ?></a>
+      <?php endforeach; ?>
+    </div>
+    <div class="hero-stats">
+      <div><div class="n tnum"><?php echo count($all->posts); ?><span>+</span></div><div class="l">收录工具</div></div>
+      <div><div class="n tnum"><?php echo count($tool_cats); ?><span>+</span></div><div class="l">工具分类</div></div>
+      <div><div class="n tnum"><?php echo $weekly_new; ?><span>+</span></div><div class="l">本周新增</div></div>
+    </div>
+  </div>
+</section>
+
+<nav class="catbar">
+  <div class="catbar-inner">
+    <a href="#featured">精选</a>
+    <a href="#trending">🔥 增长最快</a>
+    <?php foreach ($tool_cats as $c): ?>
+      <a href="#cat-<?php echo esc_attr($c->slug); ?>"><?php echo esc_html($c->name); ?></a>
+    <?php endforeach; ?>
+  </div>
+</nav>
+
+<main class="wrap">
+  <?php if (!$tools): ?>
+    <div class="empty">还没有任何工具数据。请在后台发布带 <code>url</code> 字段的文章，或运行示例数据导入。</div>
+  <?php else: ?>
+
+    <?php if ($featured): ?>
+    <section class="section" id="featured">
+      <div class="section-head"><div><h2>编辑精选</h2><div class="sub">运营团队为你挑选的优质 AI 工具</div></div><a class="more" href="<?php echo esc_url(home_url('/tools/')); ?>">查看全部 ›</a></div>
+      <div class="grid">
+        <?php foreach (array_slice($featured, 0, 8) as $p) hahatool_tool_card($p); wp_reset_postdata(); ?>
+      </div>
+    </section>
+    <?php endif; ?>
+
+    <section class="section" id="trending">
+      <div class="section-head"><div><h2>增长最快</h2><div class="sub">本月访问量增速最高的黑马工具</div></div><a class="more" href="<?php echo esc_url(home_url('/ranking/')); ?>">查看增长榜 ›</a></div>
+      <div class="grid">
+        <?php foreach ($trending as $i => $p) hahatool_tool_card($p, 'NO.' . ($i + 1)); wp_reset_postdata(); ?>
+      </div>
+    </section>
+
+    <?php if ($mid_promo): ?>
+      <section class="section"><?php hahatool_render_promo('home-mid', $mid_promo); ?></section>
+    <?php endif; ?>
+
+    <section class="section">
+      <div class="section-head"><div><h2>最新收录</h2><div class="sub">刚刚加入 HahaTool 的新工具</div></div><a class="more" href="<?php echo esc_url(home_url('/tools/')); ?>">查看全部 ›</a></div>
+      <div class="grid">
+        <?php foreach (array_slice($latest, 0, 8) as $p) hahatool_tool_card($p); wp_reset_postdata(); ?>
+      </div>
+    </section>
+
+    <?php foreach ($tool_cats as $cat):
+      $cq = hahatool_tools(['posts_per_page' => 4, 'category__and' => [], 'cat' => $cat->term_id]);
+      if (!$cq->posts) continue; ?>
+      <section class="section" id="cat-<?php echo esc_attr($cat->slug); ?>">
+        <div class="section-head"><div><h2><?php echo esc_html($cat->name); ?></h2><div class="sub"><?php echo esc_html($cat->description); ?></div></div><a class="more" href="<?php echo esc_url(get_category_link($cat)); ?>">全部 <?php echo (int)$cat->count; ?> 款 ›</a></div>
+        <div class="grid"><?php foreach ($cq->posts as $p) hahatool_tool_card($p); wp_reset_postdata(); ?></div>
+      </section>
+    <?php endforeach; ?>
+
+    <?php if ($hot_prompts): ?>
+    <section class="section">
+      <div class="section-head"><div><h2>热门提示词</h2><div class="sub">复制即用的高质量中文 Prompt</div></div><a class="more" href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>">进入提示词库 ›</a></div>
+      <div class="grid grid-3"><?php foreach ($hot_prompts as $p) hahatool_prompt_card($p); wp_reset_postdata(); ?></div>
+    </section>
+    <?php endif; ?>
+
+    <?php if ($news): ?>
+    <section class="section">
+      <div class="section-head"><div><h2>AI 资讯</h2><div class="sub">行业新闻与趋势解读</div></div><a class="more" href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">查看全部 ›</a></div>
+      <div class="grid grid-3">
+        <?php foreach ($news as $p): ?>
+          <a class="card" href="<?php echo esc_url(get_permalink($p)); ?>">
+            <time class="muted"><?php echo esc_html(get_the_date('Y-m-d', $p)); ?></time>
+            <h3 style="margin-top:8px"><?php echo esc_html(get_the_title($p)); ?></h3>
+            <p class="tagline"><?php echo esc_html(wp_trim_words(wp_strip_all_tags($p->post_content), 40)); ?></p>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    </section>
+    <?php endif; ?>
+
+  <?php endif; ?>
+</main>
+
+<?php get_footer();

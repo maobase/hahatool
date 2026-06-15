@@ -40,6 +40,7 @@ services:
       - wp_data:/var/www/html
       # HahaTool 必装插件：注册自定义字段到 REST API、放开匿名评论
       - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./wordpress/themes/hahatool:/var/www/html/wp-content/themes/hahatool
     networks:
       - hahatool
 
@@ -59,6 +60,7 @@ services:
     volumes:
       - wp_data:/var/www/html
       - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./wordpress/themes/hahatool:/var/www/html/wp-content/themes/hahatool
       - ./scripts:/scripts:ro
     networks:
       - hahatool

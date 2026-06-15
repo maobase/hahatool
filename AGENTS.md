@@ -4,7 +4,7 @@
 
 ## 项目一句话
 
-中文 AI 工具导航站：Headless WordPress（内容）+ Next.js 15 前台（渲染），Docker Compose 部署。「工具 = WordPress 文章 + 自定义字段（meta）」。
+中文 AI 工具导航站：WordPress（内容）+ **两种前台**（Next.js 15 无头前台 / WordPress 主题），Docker Compose 部署。「工具 = WordPress 文章 + 自定义字段（meta）」。两个前台共用同一套数据，`scripts/switch-mode.sh` 切换。
 
 ## 常用命令
 
@@ -20,7 +20,8 @@ docker compose build frontend && docker compose up -d frontend   # 前台改动�
 
 | 位置 | 职责 |
 | --- | --- |
-| `wordpress/mu-plugins/hahatool.php` | 把自定义字段注册进 REST（`HAHATOOL_META_KEYS`）、放开匿名评论。卷挂载，改完即生效 |
+| `wordpress/mu-plugins/hahatool.php` | 把自定义字段注册进 REST（`HAHATOOL_META_KEYS`）、站内统计端点、放开匿名评论。卷挂载，改完即生效 |
+| `wordpress/themes/hahatool/` | WordPress 主题版前台（PHP 渲染）。`inc/helpers.php` 的数据逻辑须与 `lib/api.ts` 对齐；新增 meta 展示要两边同步 |
 | `frontend/src/lib/api.ts` | WP REST 客户端（**仅服务端**），60s ISR，失败返回空数据降级。字段映射在 `toTool()`/`toNews()` |
 | `frontend/src/lib/client.ts` | 浏览器端：搜索建议 / 评论 / localStorage 收藏 |
 | `frontend/src/app/api/wp/[...path]/route.ts` | 浏览器端 REST 代理（端点白名单，勿随意放宽） |

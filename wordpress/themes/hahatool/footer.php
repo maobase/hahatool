@@ -1,0 +1,38 @@
+<?php if (!defined('ABSPATH')) exit; ?>
+<footer class="site-footer">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="brand" href="<?php echo esc_url(home_url('/')); ?>">
+        <span class="brand-logo">✦</span><span><?php bloginfo('name'); ?></span>
+      </a>
+      <p class="muted" style="margin-top:12px;max-width:280px">发现最好用的 AI 网站和工具。精选全球优秀 AI 产品，让每个人都能找到合适的 AI 工具。</p>
+    </div>
+    <div>
+      <h4>探索</h4>
+      <ul>
+        <li><a href="<?php echo esc_url(home_url('/tools/')); ?>">全部工具</a></li>
+        <li><a href="<?php echo esc_url(home_url('/ranking/')); ?>">排行榜</a></li>
+        <li><a href="<?php echo esc_url(home_url('/compare/')); ?>">工具 PK</a></li>
+        <li><a href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>">提示词库</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>资讯</h4>
+      <ul>
+        <li><a href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">AI 快讯</a></li>
+        <li><a href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">AI 资讯</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>运营</h4>
+      <ul>
+        <li><a href="<?php echo esc_url(home_url('/submit/')); ?>">提交工具</a></li>
+        <li><a href="<?php echo esc_url(admin_url()); ?>" target="_blank" rel="noopener">内容管理后台</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">© <?php echo esc_html(date('Y')); ?> <?php bloginfo('name'); ?> · WordPress 主题版 · 由 AI 构建 · 仅供学习交流</div>
+</footer>
+<?php wp_footer(); ?>
+</body>
+</html>
