@@ -53,14 +53,14 @@ $breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 
           </div>
           <div class="detail-actions">
             <?php echo hahatool_fav_button($id, true); ?>
-            <a class="btn" href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$id; ?>">访问官网 ↗</a>
+            <a class="btn" href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$id; ?>">访问官网 <?php echo hh_icon('arrow-up-right', 15); ?></a>
           </div>
         </div>
         <div class="detail-stats">
-          <span>☆ <?php echo hahatool_count(hh_meta($id, 'likes')); ?> 收藏</span>
-          <span>📈 月访问 <?php echo hahatool_count(hh_meta($id, 'monthly_visits')); ?></span>
-          <?php if ((int)hh_meta($id, 'views')): ?><span>👁 <?php echo hahatool_count(hh_meta($id, 'views')); ?> 浏览</span><?php endif; ?>
-          <span>🗓 <?php echo esc_html(get_the_date('Y-m-d')); ?> 收录</span>
+          <span><?php echo hh_icon('bookmark', 15); ?> <?php echo hahatool_count(hh_meta($id, 'likes')); ?> 收藏</span>
+          <span><?php echo hh_icon('trending', 15); ?> 月访问 <?php echo hahatool_count(hh_meta($id, 'monthly_visits')); ?></span>
+          <?php if ((int)hh_meta($id, 'views')): ?><span><?php echo hh_icon('eye', 15); ?> <?php echo hahatool_count(hh_meta($id, 'views')); ?> 浏览</span><?php endif; ?>
+          <span><?php echo hh_icon('calendar', 15); ?> <?php echo esc_html(get_the_date('Y-m-d')); ?> 收录</span>
           <?php echo hahatool_pricing_badge(hh_meta($id, 'pricing')); ?>
         </div>
       </div>
@@ -76,7 +76,7 @@ $breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 
 
       <?php if ($history && count($history) > 1 || $regions): ?>
       <div class="panel">
-        <h2 style="font-size:18px">📊 <?php the_title(); ?> 流量分析 <span class="muted">数据由运营整理，仅供参考</span></h2>
+        <h2 style="font-size:18px;display:flex;align-items:center;gap:6px"><span style="color:var(--brand-500)"><?php echo hh_icon('chart', 18); ?></span><?php the_title(); ?> 流量分析 <span class="muted" style="font-weight:400">数据由运营整理，仅供参考</span></h2>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:18px" class="ta-grid">
           <?php if (count($history) > 1): $mx = max($history); ?>
           <div>
@@ -88,7 +88,7 @@ $breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 
           <?php endif; ?>
           <?php if ($regions): ?>
           <div>
-            <h3 style="font-size:14px;color:var(--text-3)">🌍 主要地区分布</h3>
+            <h3 style="font-size:14px;color:var(--text-3);display:flex;align-items:center;gap:5px"><?php echo hh_icon('globe', 14); ?>主要地区分布</h3>
             <div style="margin-top:12px">
               <?php foreach ($regions as $r): ?><div class="region"><span class="name"><?php echo esc_html(trim($r[0])); ?></span><span class="track"><span class="fill" style="width:<?php echo min(100, (float)$r[1]); ?>%"></span></span><span class="pct tnum"><?php echo (float)$r[1]; ?>%</span></div><?php endforeach; ?>
             </div>
@@ -104,7 +104,7 @@ $breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 
 
       <?php if ($faq): ?>
       <div class="panel faq">
-        <h2 style="font-size:18px">❓ 关于 <?php the_title(); ?> 的常见问题</h2>
+        <h2 style="font-size:18px;display:flex;align-items:center;gap:6px"><span style="color:var(--brand-500)"><?php echo hh_icon('help', 18); ?></span>关于 <?php the_title(); ?> 的常见问题</h2>
         <div style="margin-top:12px"><?php foreach ($faq as $f): ?><details><summary><?php echo esc_html(trim($f[0])); ?></summary><p><?php echo esc_html(trim($f[1])); ?></p></details><?php endforeach; ?></div>
       </div>
       <?php endif; ?>

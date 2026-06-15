@@ -6,6 +6,33 @@
  */
 if (!defined('ABSPATH')) exit;
 
+/**
+ * 内联 SVG 图标（lucide 风格，currentColor 描边），替代 emoji 作功能图标。
+ * 用法：echo hh_icon('bookmark', 14);
+ */
+function hh_icon($name, $size = 14, $stroke = 2) {
+    $paths = [
+        'bookmark' => '<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>',
+        'trending' => '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+        'eye'      => '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+        'calendar' => '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+        'external' => '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
+        'heart'    => '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/>',
+        'arrow-up-right' => '<line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>',
+        'search'   => '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+        'zap'      => '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+        'chart'    => '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+        'globe'    => '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+        'help'     => '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+        'message'  => '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/>',
+        'swords'   => '<polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/>',
+    ];
+    $p = $paths[$name] ?? '';
+    if (!$p) return '';
+    $s = (int) $size;
+    return '<svg width="' . $s . '" height="' . $s . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' . $stroke . '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-.15em;flex-shrink:0">' . $p . '</svg>';
+}
+
 /** 分类链接（按 slug，缺失回退首页） */
 function get_category_link_safe($slug) {
     $t = get_category_by_slug($slug);
@@ -210,7 +237,7 @@ function hahatool_prompt_card($post) {
         <div class="meta-row" style="margin-top:8px">
             <span class="chip chip-brand"><?php echo esc_html(hh_meta($id, 'prompt_scene', '其他')); ?></span>
             <span class="chip"><?php echo esc_html(hh_meta($id, 'prompt_model', '通用')); ?></span>
-            <span class="spacer tnum" style="margin-left:auto">☆ <?php echo hahatool_count(hh_meta($id, 'likes')); ?></span>
+            <span class="spacer tnum" style="margin-left:auto;display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('bookmark', 12); ?><?php echo hahatool_count(hh_meta($id, 'likes')); ?></span>
         </div>
         <pre class="prompt-pre"><?php echo esc_html($prompt); ?></pre>
     </div>
@@ -312,9 +339,9 @@ function hahatool_tool_card($post, $rank = null) {
         <p class="tagline"><?php echo esc_html(hh_meta($id, 'tagline', '——')); ?></p>
         <div class="card-foot">
             <?php echo hahatool_stars(hh_meta($id, 'rating')); ?>
-            <span class="tnum">☆ <?php echo hahatool_count(hh_meta($id, 'likes')); ?></span>
-            <span class="tnum">📈 <?php echo hahatool_count(hh_meta($id, 'monthly_visits')); ?></span>
-            <span class="spacer" style="position:relative;z-index:1;display:inline-flex;gap:2px"><?php echo hahatool_fav_button($id); ?><a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$id; ?>" aria-label="访问官网" title="访问官网" style="color:var(--text-3);padding:4px">↗</a></span>
+            <span class="tnum" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('bookmark', 13); ?><?php echo hahatool_count(hh_meta($id, 'likes')); ?></span>
+            <span class="tnum" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('trending', 13); ?><?php echo hahatool_count(hh_meta($id, 'monthly_visits')); ?></span>
+            <span class="spacer" style="position:relative;z-index:1;display:inline-flex;gap:2px"><?php echo hahatool_fav_button($id); ?><a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$id; ?>" aria-label="访问官网" title="访问官网" style="color:var(--text-3);padding:4px;display:inline-flex"><?php echo hh_icon('arrow-up-right', 16); ?></a></span>
         </div>
     </div>
     <?php

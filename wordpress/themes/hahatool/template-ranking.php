@@ -65,7 +65,7 @@ $vallbl = $by === 'likes' ? '收藏' : ($by === 'hot' ? '站内浏览' : '月访
         <?php echo hahatool_logo($t->ID, 44); ?>
         <div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px"><b><?php echo esc_html(get_the_title($t)); ?></b><?php echo hahatool_pricing_badge(hh_meta($t->ID, 'pricing')); ?></div><div class="muted" style="font-size:13px"><?php echo esc_html(hh_meta($t->ID, 'tagline')); ?></div></div>
         <div class="tnum display" style="font-weight:600;text-align:right;min-width:70px"><?php echo $valfmt($t); ?><div class="muted" style="font-size:11px;font-weight:400"><?php echo $vallbl; ?></div></div>
-        <a style="position:relative;z-index:1;color:var(--text-3)" href="<?php echo esc_url(hh_meta($t->ID, 'url')); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$t->ID; ?>">↗</a>
+        <a style="position:relative;z-index:1;color:var(--text-3);display:inline-flex" href="<?php echo esc_url(hh_meta($t->ID, 'url')); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$t->ID; ?>" aria-label="访问官网"><?php echo hh_icon('arrow-up-right', 18); ?></a>
       </div>
     <?php endforeach; ?>
   </div>
