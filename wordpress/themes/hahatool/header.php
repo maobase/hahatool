@@ -24,9 +24,9 @@
       <a href="<?php echo esc_url(home_url('/tools/')); ?>">工具库</a>
       <a href="<?php echo esc_url(home_url('/ranking/')); ?>">排行榜</a>
       <a href="<?php echo esc_url(home_url('/compare/')); ?>">工具PK</a>
-      <a href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>">提示词</a>
-      <a href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">AI快讯</a>
-      <a href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">AI资讯</a>
+      <a href="<?php echo esc_url(home_url('/prompts/')); ?>">提示词</a>
+      <a href="<?php echo esc_url(home_url('/flash/')); ?>">AI快讯</a>
+      <a href="<?php echo esc_url(home_url('/news/')); ?>">AI资讯</a>
       <a class="menu-only" href="<?php echo esc_url(home_url('/submit/')); ?>" style="color:var(--brand-600);font-weight:600">提交工具</a>
       <a class="menu-only" href="<?php echo esc_url(home_url('/favorites/')); ?>" style="color:#e11d48;font-weight:600">♥ 我的收藏</a>
     </nav>

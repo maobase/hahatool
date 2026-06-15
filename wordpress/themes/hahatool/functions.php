@@ -37,6 +37,10 @@ function hahatool_routes() {
     add_rewrite_rule('^submit/?$', 'index.php?hh_page=submit', 'top');
     add_rewrite_rule('^compare/?$', 'index.php?hh_page=compare', 'top');
     add_rewrite_rule('^favorites/?$', 'index.php?hh_page=favorites', 'top');
+    // 频道清爽 URL 别名，与无头版一致（/prompts /flash /news → 对应分类归档）
+    add_rewrite_rule('^prompts/?$', 'index.php?category_name=ai-prompts', 'top');
+    add_rewrite_rule('^flash/?$', 'index.php?category_name=ai-flash', 'top');
+    add_rewrite_rule('^news/?$', 'index.php?category_name=ai-news', 'top');
 }
 add_action('init', 'hahatool_routes');
 add_filter('query_vars', fn($v) => array_merge($v, ['hh_page']));
@@ -138,6 +142,14 @@ add_action('wp_head', function () {
         $type = 'article';
         $image = hh_meta($id, 'cover') ?: hh_meta($id, 'screenshot');
         if (!$image && hh_meta($id, 'url')) $image = 'https://s0.wp.com/mshots/v1/' . rawurlencode(hh_meta($id, 'url')) . '?w=1200';
+    }
+    // 频道页规范链接指向清爽 URL（/prompts /flash /news），避免与 /category/ 重复内容
+    if (is_category()) {
+        $cslug = get_queried_object()->slug ?? '';
+        $clean = ['ai-prompts' => '/prompts/', 'ai-flash' => '/flash/', 'ai-news' => '/news/'];
+        if (isset($clean[$cslug])) {
+            echo "\n<link rel=\"canonical\" href=\"" . esc_url(home_url($clean[$cslug])) . "\">\n";
+        }
     }
     echo "\n<meta name=\"description\" content=\"" . esc_attr($desc) . "\">\n";
     echo '<meta property="og:type" content="' . esc_attr($type) . "\">\n";

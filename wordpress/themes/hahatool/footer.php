@@ -13,14 +13,14 @@
         <li><a href="<?php echo esc_url(home_url('/tools/')); ?>">全部工具</a></li>
         <li><a href="<?php echo esc_url(home_url('/ranking/')); ?>">排行榜</a></li>
         <li><a href="<?php echo esc_url(home_url('/compare/')); ?>">工具 PK</a></li>
-        <li><a href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>">提示词库</a></li>
+        <li><a href="<?php echo esc_url(home_url('/prompts/')); ?>">提示词库</a></li>
       </ul>
     </div>
     <div>
       <h4>资讯</h4>
       <ul>
-        <li><a href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">AI 快讯</a></li>
-        <li><a href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">AI 资讯</a></li>
+        <li><a href="<?php echo esc_url(home_url('/flash/')); ?>">AI 快讯</a></li>
+        <li><a href="<?php echo esc_url(home_url('/news/')); ?>">AI 资讯</a></li>
       </ul>
     </div>
     <div>
