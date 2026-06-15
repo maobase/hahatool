@@ -46,8 +46,10 @@ $link = function ($k, $v) use ($cat, $pricing, $sort, $base) {
     <?php endforeach; ?>
   </div>
 
-  <?php if ($tools): ?>
-    <div class="grid" style="margin-top:24px"><?php foreach ($tools as $p) hahatool_tool_card($p); wp_reset_postdata(); ?></div>
+  <?php if ($tools): $promo = hahatool_promo('tools-inline', 1); ?>
+    <div class="grid" style="margin-top:24px"><?php foreach (array_slice($tools, 0, 8) as $p) hahatool_tool_card($p); wp_reset_postdata(); ?></div>
+    <div style="margin-top:16px"><?php hahatool_render_promo('tools-inline', $promo); ?></div>
+    <?php if (count($tools) > 8): ?><div class="grid" style="margin-top:16px"><?php foreach (array_slice($tools, 8) as $p) hahatool_tool_card($p); wp_reset_postdata(); ?></div><?php endif; ?>
   <?php else: ?>
     <div class="empty" style="margin-top:24px">没有符合条件的工具，换个筛选条件试试。</div>
   <?php endif; ?>

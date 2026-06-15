@@ -4,6 +4,7 @@ if (!defined('ABSPATH')) exit;
 get_header();
 $cat = get_queried_object();
 $slug = $cat->slug;
+$paged = max(1, (int)get_query_var('paged'));
 ?>
 <div class="wrap" style="padding-top:40px">
 
@@ -22,28 +23,66 @@ $slug = $cat->slug;
   </div>
   <div class="grid grid-3" style="margin-top:24px"><?php foreach ($list as $p) hahatool_prompt_card($p); ?></div>
 
-<?php elseif ($slug === 'ai-flash'): /* 快讯时间线 */ ?>
+<?php elseif ($slug === 'ai-flash'): /* 快讯时间线（按天分组）*/ ?>
   <h1 class="section-title-lg">⚡ AI 快讯</h1>
   <p class="muted">行业即时短讯 · 按时间线更新</p>
-  <div class="flash" style="margin-top:28px;max-width:680px">
-    <?php while (have_posts()): the_post(); ?>
-      <div class="it"><time><?php echo esc_html(get_the_date('n月j日 H:i')); ?></time><a href="<?php the_permalink(); ?>"><p><?php the_title(); ?></p></a></div>
-    <?php endwhile; ?>
+  <div style="margin-top:28px;max-width:720px">
+    <?php
+    $fp = [];
+    while (have_posts()) { the_post(); $fp[] = get_post(); }
+    hahatool_flash_timeline($fp);
+    ?>
   </div>
   <?php the_posts_pagination(['mid_size' => 1]); ?>
 
-<?php elseif ($slug === 'ai-news'): /* 资讯列表 */ ?>
+<?php elseif ($slug === 'ai-news'): /* 资讯列表 + 侧栏 */
+  $news_posts = []; while (have_posts()) { the_post(); $news_posts[] = get_post(); }
+  $headline = ($paged <= 1 && $news_posts) ? array_shift($news_posts) : null;
+  $side_flash = hahatool_channel('ai-flash', 6)->posts;
+  $hot = hahatool_hot_tools(5);
+?>
   <h1 class="section-title-lg">📰 AI 资讯</h1>
   <p class="muted">行业新闻、趋势解读与工具动态</p>
-  <div style="margin-top:24px;display:flex;flex-direction:column;gap:16px">
-    <?php while (have_posts()): the_post(); $cover = hh_meta(get_the_ID(), 'cover'); ?>
-      <a class="news-item" href="<?php the_permalink(); ?>">
-        <div class="body"><time><?php echo esc_html(get_the_date('Y-m-d')); ?></time><h3><?php the_title(); ?></h3><p><?php echo esc_html(wp_trim_words(wp_strip_all_tags(get_the_content()), 50)); ?></p></div>
-        <?php if ($cover): ?><img class="thumb" src="<?php echo esc_url($cover); ?>" alt=""><?php endif; ?>
-      </a>
-    <?php endwhile; ?>
+  <div class="detail-grid" style="margin-top:24px">
+    <div>
+      <?php if ($headline): $hc = hh_meta($headline->ID, 'cover'); ?>
+        <a class="news-headline" href="<?php echo esc_url(get_permalink($headline)); ?>" style="position:relative;display:block;overflow:hidden;border-radius:var(--radius);background:#111827;color:#fff;min-height:180px">
+          <?php if ($hc): ?><img src="<?php echo esc_url($hc); ?>" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5"><?php endif; ?>
+          <span style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,7,18,.92),transparent)"></span>
+          <span style="position:relative;display:block;padding:96px 28px 28px">
+            <span class="chip chip-brand" style="background:rgba(124,58,237,.3);color:#ddd6fe">头条</span>
+            <span style="display:block;font-size:22px;font-weight:700;margin-top:12px"><?php echo esc_html(get_the_title($headline)); ?></span>
+            <span class="muted" style="display:block;margin-top:8px"><?php echo esc_html(get_the_date('Y-m-d', $headline)); ?></span>
+          </span>
+        </a>
+      <?php endif; ?>
+      <div style="margin-top:16px;display:flex;flex-direction:column;gap:16px">
+        <?php foreach ($news_posts as $np): $cover = hh_meta($np->ID, 'cover'); ?>
+          <a class="news-item" href="<?php echo esc_url(get_permalink($np)); ?>">
+            <div class="body"><time><?php echo esc_html(get_the_date('Y-m-d', $np)); ?></time><h3><?php echo esc_html(get_the_title($np)); ?></h3><p><?php echo esc_html(wp_trim_words(wp_strip_all_tags($np->post_content), 50)); ?></p></div>
+            <?php if ($cover): ?><img class="thumb" src="<?php echo esc_url($cover); ?>" alt=""><?php endif; ?>
+          </a>
+        <?php endforeach; ?>
+      </div>
+      <?php the_posts_pagination(['mid_size' => 1]); ?>
+    </div>
+    <aside>
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="font-size:16px">⚡ AI 快讯</h2><a class="muted" style="font-size:12px" href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">全部 →</a></div>
+        <div style="margin-top:14px"><?php hahatool_flash_timeline($side_flash, true); ?></div>
+      </div>
+      <?php if ($hot): ?>
+      <div class="panel" style="margin-top:24px">
+        <h2 style="font-size:16px;margin-bottom:10px">本周热门工具</h2>
+        <div class="rank-list">
+          <?php foreach ($hot as $i => $t): ?>
+            <a class="rank-item" href="<?php echo esc_url(get_permalink($t)); ?>"><span class="num"><?php echo $i + 1; ?></span><?php echo hahatool_logo($t->ID, 32); ?><span style="flex:1;min-width:0;font-size:14px;font-weight:500"><?php echo esc_html(get_the_title($t)); ?></span><span class="muted tnum" style="font-size:12px"><?php echo hahatool_count(hh_meta($t->ID, 'monthly_visits')); ?></span></a>
+          <?php endforeach; ?>
+        </div>
+      </div>
+      <?php endif; ?>
+    </aside>
   </div>
-  <?php the_posts_pagination(['mid_size' => 1]); ?>
 
 <?php else: /* 工具分类 */
   $q = hahatool_tools(['cat' => $cat->term_id, 'posts_per_page' => 24, 'paged' => max(1, get_query_var('paged')), 'no_found_rows' => false]);

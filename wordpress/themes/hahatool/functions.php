@@ -68,6 +68,34 @@ add_action('pre_get_posts', function ($q) {
 /** html 上的主题色/明暗默认值（theme.js 会在首屏前覆盖） */
 add_filter('language_attributes', fn($o) => $o . ' data-accent="violet" data-mode="light"');
 
+/** SEO：OpenGraph / Twitter 卡片 */
+add_action('wp_head', function () {
+    $title = wp_get_document_title();
+    $desc = get_bloginfo('description');
+    $image = '';
+    $type = 'website';
+    if (is_singular('post')) {
+        $id = get_queried_object_id();
+        $type = 'article';
+        $tagline = hh_meta($id, 'tagline');
+        if ($tagline) $desc = $tagline;
+        elseif (hh_meta($id, 'cover')) $image = hh_meta($id, 'cover');
+        if (!$image) {
+            $image = hh_meta($id, 'screenshot') ?: hh_meta($id, 'cover');
+            if (!$image && hh_meta($id, 'url')) $image = 'https://s0.wp.com/mshots/v1/' . rawurlencode(hh_meta($id, 'url')) . '?w=1200';
+        }
+    }
+    echo "\n<meta property=\"og:type\" content=\"" . esc_attr($type) . "\">\n";
+    echo '<meta property="og:title" content="' . esc_attr($title) . "\">\n";
+    echo '<meta property="og:description" content="' . esc_attr($desc) . "\">\n";
+    echo '<meta property="og:url" content="' . esc_url(home_url(add_query_arg(null, null))) . "\">\n";
+    echo '<meta name="twitter:card" content="' . ($image ? 'summary_large_image' : 'summary') . "\">\n";
+    if ($image) {
+        echo '<meta property="og:image" content="' . esc_url($image) . "\">\n";
+        echo '<meta name="twitter:image" content="' . esc_url($image) . "\">\n";
+    }
+}, 5);
+
 /** 工具详情页：输出站内浏览自增信号（theme.js 调用 REST /hahatool/v1/track） */
 add_action('wp_footer', function () {
     if (is_singular('post') && hahatool_is_tool(get_queried_object_id())) {

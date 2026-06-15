@@ -217,6 +217,38 @@ function hahatool_prompt_card($post) {
     <?php
 }
 
+/** 快讯时间线（按天分组渲染） */
+function hahatool_flash_timeline($posts, $compact = false) {
+    if (!$posts) return;
+    $groups = [];
+    foreach ($posts as $p) {
+        $day = get_the_date('n月j日', $p);
+        $groups[$day][] = $p;
+    }
+    echo '<div style="display:flex;flex-direction:column;gap:22px">';
+    foreach ($groups as $day => $items) {
+        echo '<section><h3 style="font-size:14px"><span style="background:#111827;color:#fff;padding:4px 10px;border-radius:8px" class="display">' . esc_html($day) . '</span></h3>';
+        echo '<div class="flash" style="margin-top:12px">';
+        foreach ($items as $p) {
+            echo '<div class="it"><time>' . esc_html(get_the_date('H:i', $p)) . '</time><a href="' . esc_url(get_permalink($p)) . '"><p>' . esc_html(get_the_title($p)) . '</p>';
+            if (!$compact) {
+                $d = wp_trim_words(wp_strip_all_tags($p->post_content), 36);
+                if ($d) echo '<span class="muted" style="font-size:12px;font-weight:400;display:block;margin-top:2px">' . esc_html($d) . '</span>';
+            }
+            echo '</a></div>';
+        }
+        echo '</div></section>';
+    }
+    echo '</div>';
+}
+
+/** 热门工具列表（按月访问量） */
+function hahatool_hot_tools($limit = 5) {
+    $t = hahatool_tools(['posts_per_page' => 300])->posts;
+    usort($t, fn($a, $b) => (float)hh_meta($b->ID, 'monthly_visits') - (float)hh_meta($a->ID, 'monthly_visits'));
+    return array_slice($t, 0, $limit);
+}
+
 /** 双系列雷达（PK 用）。轴取并集，按 A 的标签顺序。 */
 function hahatool_radar_dual($a, $b, $size = 300, $ca = 'var(--brand-600)', $cb = '#f59e0b') {
     $labels = array_map(fn($s) => $s[0], count($a) >= 3 ? $a : $b);
