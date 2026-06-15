@@ -3,8 +3,9 @@ import { getAllTools, getFlash, getNews, getPrompts, getTags, getToolCategories 
 
 const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/+$/, '');
 
-// 构建期后端不可达时动态条目为空，运行时每小时重新生成
-export const revalidate = 3600;
+// 每次请求实时生成：构建期后端不可达会导致只剩静态页，force-dynamic 确保
+// 部署后立即输出完整 sitemap（工具/分类/标签/提示词/资讯全量）。sitemap 流量低，按需生成无压力。
+export const dynamic = 'force-dynamic';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [tools, categories, tags, news, flash, prompts] = await Promise.all([
