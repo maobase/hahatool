@@ -22,7 +22,7 @@ function pk_win($a, $b, $hi = true) {
 }
 ?>
 <div class="wrap" style="padding-top:40px;max-width:1000px">
-  <h1 class="section-title-lg">⚔️ 工具 PK</h1>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="color:var(--brand-500)"><?php echo hh_icon('swords', 26); ?></span>工具 PK</h1>
   <p class="muted">任选两款工具，能力雷达、流量与定价一屏对比</p>
 
   <?php if (!$A || !$B): ?>

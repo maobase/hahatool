@@ -99,7 +99,7 @@ h1,h2,h3,h4{margin:0;line-height:1.25;}
   .nav-toggle{display:flex;}
   .nav-links.open{display:flex;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--surface);border-bottom:1px solid var(--border);padding:8px;gap:2px;}
   .nav-links.open a{padding:12px;border-radius:10px;}
-  .nav-links.open .menu-only{display:block;}
+  .nav-links.open .menu-only{display:flex;align-items:center;}
   /* 移动菜单内：分类改为静态平铺 */
   .nav-links.open .nav-dropdown-btn{display:none;}
   .nav-links.open .nav-dropdown-menu{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:none;padding:4px 0 8px;width:auto;}
@@ -362,8 +362,9 @@ main{padding:40px 0;}
 /* 收藏按钮 */
 .fav-btn{display:inline-flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;color:var(--text-3);padding:4px;border-radius:8px;font-size:14px;transition:.15s;}
 .fav-btn:hover{color:#f43f5e;background:rgba(244,63,94,.08);}
-.fav-btn .heart{font-size:15px;line-height:1;}
+.fav-btn .heart{display:inline-flex;line-height:1;}
 .fav-btn.on .heart{color:#f43f5e;}
+.fav-btn.on .heart svg{fill:#f43f5e;}
 .fav-btn.fav-lg{border:1px solid var(--border);padding:0 16px;min-height:44px;font-weight:600;}
 .fav-btn.fav-lg.on{border-color:#fecdd3;background:#fff1f2;color:#e11d48;}
 [data-mode="dark"] .fav-btn.fav-lg.on{background:rgba(225,29,72,.15);border-color:rgba(225,29,72,.4);}

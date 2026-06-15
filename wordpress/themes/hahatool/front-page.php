@@ -29,11 +29,11 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
 
 <section class="hero">
   <div class="wrap hero-inner">
-    <span class="pill">✦ 全球 AI 工具中文导航 · 每日更新</span>
+    <span class="pill" style="display:inline-flex;align-items:center;gap:5px"><?php echo hh_icon('sparkles', 12); ?>全球 AI 工具中文导航 · 每日更新</span>
     <h1>发现最好用的 <span class="hl">AI 工具</span></h1>
     <p class="sub">收录全球优秀 AI 产品，附流量数据、定价与真实点评，帮你少踩坑、快上手。</p>
     <form class="hero-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
-      <span class="s-icon">🔍</span>
+      <span class="s-icon" style="display:inline-flex"><?php echo hh_icon('search', 20); ?></span>
       <input type="search" name="s" placeholder="搜索 AI 工具，例如：视频生成、写作助手…" aria-label="搜索" data-suggest autocomplete="off">
       <button class="btn" type="submit">搜索</button>
     </form>
@@ -54,7 +54,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
 <?php if ($flash): ?>
 <div class="ticker">
   <div class="ticker-inner">
-    <a class="ticker-badge" href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">⚡ 快讯</a>
+    <a class="ticker-badge" href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('zap', 11); ?>快讯</a>
     <div class="ticker-mask"><div class="ticker-track">
       <?php foreach (array_merge($flash, $flash) as $f): ?><a href="<?php echo esc_url(get_permalink($f)); ?>"><?php echo esc_html(get_the_title($f)); ?></a><?php endforeach; ?>
     </div></div>
@@ -83,7 +83,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
       <div class="grid" style="grid-template-columns:repeat(2,1fr)" id="bannerGrid">
         <?php foreach ($banners as $bp): $bid = $bp->ID; ?>
           <div class="hero-banner">
-            <span class="tag">📣 推广</span>
+            <span class="tag" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('megaphone', 11); ?>推广</span>
             <div style="display:flex;align-items:center;gap:16px">
               <?php echo hahatool_logo($bid, 56); ?>
               <div><h3 style="font-size:20px"><?php echo esc_html(get_the_title($bid)); ?></h3><p style="margin:4px 0 0;color:rgba(255,255,255,.8);font-size:14px;max-width:380px" class="clamp2"><?php echo esc_html(hh_meta($bid, 'tagline')); ?></p></div>

@@ -15,7 +15,7 @@ $paged = max(1, (int)get_query_var('paged'));
   $list = $scene ? array_filter($all, fn($p) => hh_meta($p->ID, 'prompt_scene') === $scene) : $all;
   usort($list, fn($a, $b) => (float)hh_meta($b->ID, 'likes') - (float)hh_meta($a->ID, 'likes'));
 ?>
-  <h1 class="section-title-lg">✍️ AI 提示词库</h1>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="color:var(--brand-500)"><?php echo hh_icon('wand', 26); ?></span>AI 提示词库</h1>
   <p class="muted">高质量中文提示词，按热度排序，点「复制」直接粘贴给任何 AI 使用</p>
   <div class="filters" style="margin-top:20px">
     <a class="<?php echo $scene ? '' : 'on'; ?>" href="<?php echo esc_url(get_category_link($cat)); ?>">全部</a>
@@ -24,7 +24,7 @@ $paged = max(1, (int)get_query_var('paged'));
   <div class="grid grid-3" style="margin-top:24px"><?php foreach ($list as $p) hahatool_prompt_card($p); ?></div>
 
 <?php elseif ($slug === 'ai-flash'): /* 快讯时间线（按天分组）*/ ?>
-  <h1 class="section-title-lg">⚡ AI 快讯</h1>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="color:var(--brand-500)"><?php echo hh_icon('zap', 26); ?></span>AI 快讯</h1>
   <p class="muted">行业即时短讯 · 按时间线更新</p>
   <div style="margin-top:28px;max-width:720px">
     <?php
@@ -41,7 +41,7 @@ $paged = max(1, (int)get_query_var('paged'));
   $side_flash = hahatool_channel('ai-flash', 6)->posts;
   $hot = hahatool_hot_tools(5);
 ?>
-  <h1 class="section-title-lg">📰 AI 资讯</h1>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="color:var(--brand-500)"><?php echo hh_icon('newspaper', 26); ?></span>AI 资讯</h1>
   <p class="muted">行业新闻、趋势解读与工具动态</p>
   <div class="detail-grid" style="margin-top:24px">
     <div>
@@ -68,7 +68,7 @@ $paged = max(1, (int)get_query_var('paged'));
     </div>
     <aside>
       <div class="panel">
-        <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="font-size:16px">⚡ AI 快讯</h2><a class="muted" style="font-size:12px" href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">全部 →</a></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="font-size:16px;display:flex;align-items:center;gap:5px"><?php echo hh_icon('zap', 16); ?>AI 快讯</h2><a class="muted" style="font-size:12px" href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">全部 →</a></div>
         <div style="margin-top:14px"><?php hahatool_flash_timeline($side_flash, true); ?></div>
       </div>
       <?php if ($hot): ?>

@@ -18,7 +18,7 @@ $related = array_slice(array_values($related), 0, 3);
     <div class="meta-row" style="margin-top:8px">
       <span class="chip chip-brand"><?php echo esc_html($scene); ?></span>
       <span class="chip">适用：<?php echo esc_html(hh_meta($id, 'prompt_model', '通用')); ?></span>
-      <span class="muted tnum">☆ <?php echo hahatool_count(hh_meta($id, 'likes')); ?> 热度</span>
+      <span class="muted tnum" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('bookmark', 13); ?><?php echo hahatool_count(hh_meta($id, 'likes')); ?> 热度</span>
       <span class="muted"><?php echo esc_html(get_the_date('Y-m-d')); ?> 收录</span>
     </div>
     <pre style="margin-top:18px;background:var(--surface-2);border:1px solid var(--border-2);border-radius:12px;padding:20px;font-family:ui-monospace,monospace;font-size:14px;line-height:1.8;white-space:pre-wrap;color:var(--text)"><?php echo esc_html($prompt); ?></pre>

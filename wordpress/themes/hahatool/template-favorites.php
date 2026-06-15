@@ -5,13 +5,13 @@ get_header();
 $tools = hahatool_tools(['posts_per_page' => 300])->posts;
 ?>
 <div class="wrap" style="padding-top:40px">
-  <h1 class="section-title-lg">♥ 我的收藏</h1>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="color:#e11d48"><?php echo hh_icon('heart', 24); ?></span>我的收藏</h1>
   <p class="muted">收藏保存在本机浏览器中，无需登录</p>
 
   <div id="favEmpty" class="empty" style="margin-top:24px;display:none">
-    <div style="font-size:40px">♡</div>
+    <div style="color:var(--text-3)"><?php echo hh_icon('heart', 40, 1.5); ?></div>
     <p style="margin-top:8px;font-weight:500;color:var(--text-2)">还没有收藏任何工具</p>
-    <p>在工具卡片或详情页点击 ♥ 即可收藏</p>
+    <p>在工具卡片或详情页点击心形按钮即可收藏</p>
     <a class="btn" style="margin-top:16px;display:inline-flex" href="<?php echo esc_url(home_url('/tools/')); ?>">去逛逛工具库</a>
   </div>
 

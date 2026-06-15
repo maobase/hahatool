@@ -26,6 +26,12 @@ function hh_icon($name, $size = 14, $stroke = 2) {
         'help'     => '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
         'message'  => '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/>',
         'swords'   => '<polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/>',
+        'palette'  => '<circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.5-.7 1.5-1.5 0-.4-.2-.8-.4-1-.3-.3-.4-.6-.4-1 0-.8.7-1.5 1.5-1.5H16c3.3 0 6-2.7 6-6 0-4.9-4.5-9-10-9z"/>',
+        'wand'     => '<path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8 19 13"/><path d="M15 9h0"/><path d="M17.8 6.2 19 5"/><path d="M3 21l9-9"/><path d="M12.2 6.2 11 5"/>',
+        'megaphone'=> '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+        'newspaper'=> '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8z"/>',
+        'sparkles' => '<path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3z"/>',
+        'flame'    => '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
     ];
     $p = $paths[$name] ?? '';
     if (!$p) return '';
@@ -123,9 +129,9 @@ function hahatool_logo($id, $size = 48) {
 /** 收藏按钮（localStorage，前端 theme.js 接管状态） */
 function hahatool_fav_button($id, $large = false) {
     if ($large) {
-        return '<button type="button" class="fav-btn fav-lg" data-fav="' . (int)$id . '" aria-pressed="false" aria-label="收藏"><span class="heart">♥</span><span class="fav-txt">收藏</span></button>';
+        return '<button type="button" class="fav-btn fav-lg" data-fav="' . (int)$id . '" aria-pressed="false" aria-label="收藏"><span class="heart">' . hh_icon('heart', 16) . '</span><span class="fav-txt">收藏</span></button>';
     }
-    return '<button type="button" class="fav-btn" data-fav="' . (int)$id . '" aria-pressed="false" aria-label="收藏"><span class="heart">♥</span></button>';
+    return '<button type="button" class="fav-btn" data-fav="' . (int)$id . '" aria-pressed="false" aria-label="收藏"><span class="heart">' . hh_icon('heart', 16) . '</span></button>';
 }
 
 /** 定价徽章 */
@@ -208,7 +214,7 @@ function hahatool_render_promo($slot, $posts) {
         $p = $posts[0]; $id = $p->ID;
         ?>
         <div class="promo">
-            <span class="tag">📣 推广</span>
+            <span class="tag" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('megaphone', 11); ?>推广</span>
             <?php echo hahatool_logo($id, 56); ?>
             <div><h3><?php echo esc_html(get_the_title($id)); ?></h3><p><?php echo esc_html(hh_meta($id, 'tagline')); ?></p></div>
             <div class="promo-actions">
@@ -219,7 +225,7 @@ function hahatool_render_promo($slot, $posts) {
         <?php
     } else {
         ?>
-        <a class="ad-empty" href="<?php echo esc_url(home_url('/submit/')); ?>">📣 广告位 <b class="display">AD</b> · <?php echo esc_html(hahatool_slot_label($slot)); ?> · 虚位以待 · 联系投放 →</a>
+        <a class="ad-empty" href="<?php echo esc_url(home_url('/submit/')); ?>"><?php echo hh_icon('megaphone', 16); ?> 广告位 <b class="display">AD</b> · <?php echo esc_html(hahatool_slot_label($slot)); ?> · 虚位以待 · 联系投放 →</a>
         <?php
     }
 }

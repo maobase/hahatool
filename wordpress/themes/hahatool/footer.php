@@ -3,7 +3,7 @@
   <div class="wrap foot-grid">
     <div>
       <a class="brand" href="<?php echo esc_url(home_url('/')); ?>">
-        <span class="brand-logo">✦</span><span><?php bloginfo('name'); ?></span>
+        <span class="brand-logo"><?php echo hh_icon('sparkles', 15); ?></span><span><?php bloginfo('name'); ?></span>
       </a>
       <p class="muted" style="margin-top:12px;max-width:280px">发现最好用的 AI 网站和工具。精选全球优秀 AI 产品，让每个人都能找到合适的 AI 工具。</p>
     </div>
