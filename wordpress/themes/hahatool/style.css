@@ -68,6 +68,17 @@ h1,h2,h3,h4{margin:0;line-height:1.25;}
 .nav-links{display:flex;align-items:center;gap:2px;margin-left:16px;}
 .nav-links a{padding:8px 10px;border-radius:10px;font-size:14px;font-weight:500;color:var(--text-2);transition:.15s;white-space:nowrap;}
 .nav-links .menu-only{display:none;} /* 仅在移动菜单显示（如提交工具，桌面用右侧按钮） */
+/* 分类下拉（对齐无头版）*/
+.nav-dropdown{position:relative;}
+.nav-dropdown-btn{padding:8px 10px;border-radius:10px;font-size:14px;font-weight:500;color:var(--text-2);background:none;border:none;cursor:pointer;white-space:nowrap;}
+.nav-dropdown-btn:hover{color:var(--brand-700);background:var(--brand-50);}
+[data-mode="dark"] .nav-dropdown-btn:hover{color:var(--brand-300);background:rgba(124,58,237,.15);}
+.nav-dropdown-menu{position:absolute;left:0;top:calc(100% + 6px);z-index:60;width:240px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:8px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr 1fr;gap:2px;opacity:0;visibility:hidden;transform:translateY(-4px);transition:.15s;}
+.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu{opacity:1;visibility:visible;transform:none;}
+.nav-dropdown-menu a{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:10px;font-size:14px;color:var(--text-2);}
+.nav-dropdown-menu a:hover{background:var(--brand-50);color:var(--brand-700);}
+[data-mode="dark"] .nav-dropdown-menu a:hover{background:rgba(124,58,237,.15);color:var(--brand-300);}
+.nav-dropdown-menu a span{font-size:12px;color:var(--text-3);font-family:var(--font-display);}
 .nav-links a:hover,.nav-links a.active{color:var(--brand-700);background:var(--brand-50);}
 [data-mode="dark"] .nav-links a:hover,[data-mode="dark"] .nav-links a.active{color:var(--brand-300);background:rgba(124,58,237,.15);}
 .nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
@@ -89,6 +100,9 @@ h1,h2,h3,h4{margin:0;line-height:1.25;}
   .nav-links.open{display:flex;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--surface);border-bottom:1px solid var(--border);padding:8px;gap:2px;}
   .nav-links.open a{padding:12px;border-radius:10px;}
   .nav-links.open .menu-only{display:block;}
+  /* 移动菜单内：分类改为静态平铺 */
+  .nav-links.open .nav-dropdown-btn{display:none;}
+  .nav-links.open .nav-dropdown-menu{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:none;padding:4px 0 8px;width:auto;}
   .nav-links.open .nav-links-search{display:block;padding:4px;}
   .nav-links.open .nav-links-search input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);color:var(--text);font-size:16px;outline:none;}
 }
