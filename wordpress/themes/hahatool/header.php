@@ -17,12 +17,17 @@
       <span><?php bloginfo('name'); ?><small>哈哈工具</small></span>
     </a>
     <nav class="nav-links" id="navLinks">
+      <form class="nav-links-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
+        <input type="search" name="s" placeholder="搜索 AI 工具…" aria-label="搜索">
+      </form>
       <a href="<?php echo esc_url(home_url('/')); ?>"<?php echo is_front_page() ? ' class="active"' : ''; ?>>首页</a>
       <a href="<?php echo esc_url(home_url('/tools/')); ?>">工具库</a>
       <a href="<?php echo esc_url(home_url('/ranking/')); ?>">排行榜</a>
+      <a href="<?php echo esc_url(home_url('/compare/')); ?>">工具PK</a>
       <a href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>">提示词</a>
       <a href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">AI快讯</a>
       <a href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">AI资讯</a>
+      <a href="<?php echo esc_url(home_url('/submit/')); ?>" style="color:var(--brand-600);font-weight:600">提交工具</a>
     </nav>
     <div class="nav-right">
       <form class="nav-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
@@ -30,8 +35,8 @@
         <input type="search" name="s" placeholder="搜索 AI 工具…" value="<?php echo esc_attr(get_search_query()); ?>" aria-label="搜索">
       </form>
       <button class="icon-btn" id="themeBtn" aria-label="外观设置" title="外观设置">🎨</button>
-      <a class="btn" href="<?php echo esc_url(home_url('/submit/')); ?>">提交工具</a>
-      <button class="icon-btn nav-toggle" id="navToggle" aria-label="菜单">☰</button>
+      <a class="btn nav-cta" href="<?php echo esc_url(home_url('/submit/')); ?>">提交工具</a>
+      <button class="icon-btn nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false">☰</button>
     </div>
   </div>
   <div id="themeMenu" style="display:none;position:absolute;right:24px;top:64px;z-index:60;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-lg);width:220px">

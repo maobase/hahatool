@@ -37,7 +37,7 @@ function pk_win($a, $b, $hi = true) {
     <button class="btn" type="submit">开始对比</button>
   </form>
 
-  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:20px">
+  <div class="vs-grid" style="margin-top:20px">
     <?php foreach ([['A', $A, $CA], ['B', $B, $CB]] as [$side, $T, $col]): ?>
       <div class="card" style="border:2px solid <?php echo $col; ?>">
         <div class="card-top"><?php echo hahatool_logo($T->ID, 52); ?><div><div style="display:flex;gap:8px;align-items:center"><span class="badge display" style="background:<?php echo $col; ?>;color:#fff"><?php echo $side; ?></span><a href="<?php echo esc_url(get_permalink($T)); ?>"><b><?php echo esc_html($T->post_title); ?></b></a></div><?php echo hahatool_stars(hh_meta($T->ID, 'rating')); ?></div><span class="spacer"><?php echo hahatool_growth_badge(hh_meta($T->ID, 'growth')); ?></span></div>
@@ -56,7 +56,8 @@ function pk_win($a, $b, $hi = true) {
     <?php endif; ?>
     <div class="panel">
       <h2 style="font-size:16px;margin-bottom:12px">数据对比</h2>
-      <table style="width:100%;font-size:14px;border-collapse:collapse">
+      <div class="cmp-table-wrap">
+      <table style="width:100%;min-width:320px;font-size:14px;border-collapse:collapse">
         <thead><tr style="color:var(--text-3);font-size:12px;text-align:left"><th style="padding:6px 0;width:72px">指标</th><th style="color:<?php echo $CA; ?>"><?php echo esc_html($A->post_title); ?></th><th style="color:<?php echo $CB; ?>"><?php echo esc_html($B->post_title); ?></th></tr></thead>
         <tbody>
           <?php
@@ -72,6 +73,7 @@ function pk_win($a, $b, $hi = true) {
           <?php endforeach; ?>
         </tbody>
       </table>
+      </div>
     </div>
   </div>
   <p class="muted" style="text-align:center;margin-top:24px">数据由运营团队整理，仅供参考 · 在上方选择器中任意切换工具</p>
