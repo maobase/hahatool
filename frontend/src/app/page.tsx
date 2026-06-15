@@ -306,7 +306,7 @@ export default async function HomePage() {
                     >
                       {item.cover && (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={item.cover} alt="" loading="lazy" className="aspect-[2/1] w-full object-cover" />
+                        <img src={item.cover} alt={item.title} loading="lazy" className="aspect-[2/1] w-full object-cover" />
                       )}
                       <div className="p-5">
                         <time className="text-xs text-gray-400">{formatDate(item.created)}</time>

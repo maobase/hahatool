@@ -94,7 +94,7 @@ export default async function NewsPage({
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={item.cover}
-                      alt=""
+                      alt={item.title}
                       loading="lazy"
                       className="hidden h-24 w-40 shrink-0 rounded-xl object-cover sm:block"
                     />
