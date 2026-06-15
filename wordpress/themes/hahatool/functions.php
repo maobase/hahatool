@@ -94,24 +94,53 @@ add_filter('document_title_parts', function ($parts) {
     return $parts;
 }, 20);
 
-/** SEO：OpenGraph / Twitter 卡片 */
+/** 计算各页面的 meta 描述（对齐无头版文案） */
+function hahatool_meta_description() {
+    $vmap = [
+        'tools'     => '浏览 HahaTool 收录的全部 AI 工具，支持按分类、定价筛选与多维排序。',
+        'ranking'   => '按月访问量、收藏数、增长速度排序的 AI 工具排行榜。',
+        'compare'   => '任选两款 AI 工具，能力雷达、流量、评分、定价一屏对比。',
+        'submit'    => '向 HahaTool 提交你的 AI 工具，在线表单免费收录。',
+        'favorites' => '我的 AI 工具收藏夹（本机保存，无需登录）。',
+    ];
+    $vp = get_query_var('hh_page');
+    if ($vp && isset($vmap[$vp])) return $vmap[$vp];
+    if (is_singular('post')) {
+        $id = get_queried_object_id();
+        if ($tagline = hh_meta($id, 'tagline')) return $tagline;          // 工具
+        if ($prompt = hh_meta($id, 'prompt')) return mb_substr(trim($prompt), 0, 80) . '…'; // 提示词
+        $excerpt = wp_strip_all_tags(get_the_excerpt($id));               // 资讯/快讯
+        if ($excerpt) return mb_substr($excerpt, 0, 110);
+    }
+    if (is_category()) {
+        $t = get_queried_object();
+        if ($t->slug === 'ai-prompts') return '高质量中文 AI 提示词：写作、编程、营销、办公、学习，一键复制即用。';
+        if ($t->slug === 'ai-news') return 'AI 行业新闻、趋势解读与工具动态。';
+        if ($t->slug === 'ai-flash') return 'AI 行业即时短讯，按时间线滚动更新。';
+        return $t->description ?: ($t->name . ' 分类下的优质 AI 工具，附流量与评分数据。');
+    }
+    if (is_tag()) {
+        $t = get_queried_object();
+        return $t->name . ' 相关 AI 工具 —— HahaTool 收录整理。';
+    }
+    if (is_search()) return '搜索 AI 工具、提示词与资讯。';
+    return get_bloginfo('description');
+}
+
+/** SEO：meta description + OpenGraph / Twitter 卡片 */
 add_action('wp_head', function () {
     $title = wp_get_document_title();
-    $desc = get_bloginfo('description');
+    $desc = hahatool_meta_description();
     $image = '';
     $type = 'website';
     if (is_singular('post')) {
         $id = get_queried_object_id();
         $type = 'article';
-        $tagline = hh_meta($id, 'tagline');
-        if ($tagline) $desc = $tagline;
-        elseif (hh_meta($id, 'cover')) $image = hh_meta($id, 'cover');
-        if (!$image) {
-            $image = hh_meta($id, 'screenshot') ?: hh_meta($id, 'cover');
-            if (!$image && hh_meta($id, 'url')) $image = 'https://s0.wp.com/mshots/v1/' . rawurlencode(hh_meta($id, 'url')) . '?w=1200';
-        }
+        $image = hh_meta($id, 'cover') ?: hh_meta($id, 'screenshot');
+        if (!$image && hh_meta($id, 'url')) $image = 'https://s0.wp.com/mshots/v1/' . rawurlencode(hh_meta($id, 'url')) . '?w=1200';
     }
-    echo "\n<meta property=\"og:type\" content=\"" . esc_attr($type) . "\">\n";
+    echo "\n<meta name=\"description\" content=\"" . esc_attr($desc) . "\">\n";
+    echo '<meta property="og:type" content="' . esc_attr($type) . "\">\n";
     echo '<meta property="og:title" content="' . esc_attr($title) . "\">\n";
     echo '<meta property="og:description" content="' . esc_attr($desc) . "\">\n";
     echo '<meta property="og:url" content="' . esc_url(home_url(add_query_arg(null, null))) . "\">\n";
