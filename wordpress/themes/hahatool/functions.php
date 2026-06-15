@@ -68,6 +68,32 @@ add_action('pre_get_posts', function ($q) {
 /** html 上的主题色/明暗默认值（theme.js 会在首屏前覆盖） */
 add_filter('language_attributes', fn($o) => $o . ' data-accent="violet" data-mode="light"');
 
+/**
+ * SEO：为虚拟路由页与工具详情设置规范的文档标题，对齐无头版。
+ * 虚拟路由（/tools、/ranking 等）WordPress 默认取不到标题，会回退站名。
+ */
+add_filter('document_title_parts', function ($parts) {
+    $vmap = [
+        'tools'     => '全部工具',
+        'ranking'   => 'AI 工具排行榜',
+        'compare'   => 'AI 工具 PK 对比',
+        'submit'    => '提交工具',
+        'favorites' => '我的收藏',
+    ];
+    $vp = get_query_var('hh_page');
+    if ($vp && isset($vmap[$vp])) {
+        $parts['title'] = $vmap[$vp];
+    } elseif (is_singular('post')) {
+        $id = get_queried_object_id();
+        // 工具详情：标题 + 一句话简介，对齐无头版
+        $tagline = hh_meta($id, 'tagline');
+        if (hahatool_is_tool($id) && $tagline) {
+            $parts['title'] = get_the_title($id) . ' - ' . $tagline;
+        }
+    }
+    return $parts;
+}, 20);
+
 /** SEO：OpenGraph / Twitter 卡片 */
 add_action('wp_head', function () {
     $title = wp_get_document_title();
