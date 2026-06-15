@@ -58,7 +58,13 @@ if ((float)hh_meta($id, 'rating')) $jsonld['aggregateRating'] = ['@type' => 'Agg
       </div>
 
       <?php $shot = hh_meta($id, 'screenshot') ?: 'https://s0.wp.com/mshots/v1/' . urlencode($url) . '?w=1280'; ?>
-      <div class="screenshot"><img loading="lazy" src="<?php echo esc_url($shot); ?>" alt="<?php the_title_attribute(); ?> 官网截图"></div>
+      <figure class="screenshot">
+        <div class="screenshot-frame">
+          <img loading="lazy" src="<?php echo esc_url($shot); ?>" alt="<?php the_title_attribute(); ?> 官网截图" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="screenshot-fallback" style="display:none"><?php echo hahatool_logo($id, 56); ?><span>截图生成中，稍后再来看看</span></div>
+        </div>
+        <figcaption><?php the_title(); ?> 官网预览 · 截图自动生成，以官网实际为准</figcaption>
+      </figure>
 
       <?php if ($history && count($history) > 1 || $regions): ?>
       <div class="panel">
