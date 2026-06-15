@@ -2,6 +2,21 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.5.0] - 2026-06-15
+
+### 新增
+- **WordPress 主题版本**（`wordpress/themes/hahatool/`）—— 在原有无头模式之外新增第二种前台：
+  WordPress 主题直接用 PHP 渲染整站，**无需运行 Node**，普通 PHP 虚拟主机即可部署
+  - 完整页面：首页（Hero/统计/分类条/精选/增长/分类/提示词/资讯板块）、工具详情
+    （能力雷达/流量分析/FAQ/评论/替代品/侧栏推广）、工具库、排行榜（含人气榜）、
+    工具 PK（双系列雷达）、提示词库、AI 资讯/快讯、搜索、提交工具
+  - 能力雷达图、流量趋势/地区分布图均由 PHP 生成 SVG，零前端依赖
+  - 明暗模式 + 4 套主题色（CSS 变量 + 轻量 theme.js，localStorage 持久化、首屏防闪烁）
+  - 与无头前台共用 mu-plugin、自定义字段、保留分类与数据契约（`hahatool_is_tool()` 等对齐 `lib/api.ts`）
+  - `/tools` `/ranking` `/compare` `/submit` 为虚拟路由（rewrite + template_include），无需建页面
+- `scripts/switch-mode.sh [theme|headless]`：一行命令在两种模式间切换
+- 主题随 docker-compose 挂载；新增 `wordpress/themes/hahatool/README.md` 主题说明
+
 ## [v1.4.0] - 2026-06-12
 
 ### 新增

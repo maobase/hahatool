@@ -10,7 +10,16 @@
   <img alt="AI Built" src="https://img.shields.io/badge/Built%20by-AI%20🤖-7c3aed">
 </p>
 
-**中文 AI 工具导航站** —— 对标 [toolify.ai](https://www.toolify.ai/zh/) 的开源实现，采用 Headless WordPress + Next.js 架构，并带有自己的差异化功能（工具 PK、能力雷达、快讯时间线、全站预置广告位）。
+**中文 AI 工具导航站** —— 对标 [toolify.ai](https://www.toolify.ai/zh/) 的开源实现，带有自己的差异化功能（工具 PK、能力雷达、快讯时间线、全站预置广告位）。
+
+**两种渲染模式，同一套数据，按需切换：**
+
+| 模式 | 前台 | 适合 |
+| --- | --- | --- |
+| 🚀 **无头模式**（默认） | Next.js 15（`:3000`），WordPress 仅作 REST 数据源 | 追求性能/现代前端栈，前后端分离部署 |
+| 🎨 **WordPress 主题模式** | WordPress 主题直接渲染（`:8090`），**无需运行 Node** | 只想要一个 WordPress 站点、低运维、虚拟主机部署 |
+
+两种模式共用同一套自定义字段与内容，可用 `bash scripts/switch-mode.sh [theme|headless]` 随时切换，互不影响。
 
 > 🤖 **本项目几乎 100% 由 AI 构建**
 >
@@ -52,7 +61,8 @@
 - 📈 **流量分析**：近 6 月访问量趋势柱状图 + 地区分布条形图（纯 SVG 服务端渲染，零图表库）
 - 🏆 **四维排行榜**：流量 / 收藏 / 增长 / 新品榜 + 分类子榜 + 前三名领奖台
 
-### 用户与运营
+### 部署与运营
+- 🎭 **双前台模式**：同一套数据，既可用 Next.js 无头前台，也可用 WordPress 主题直接渲染，一行命令切换
 - 📡 **站内真实统计**：详情页浏览量与「官网直达」点击自动计数（IP 去重防刷），驱动排行榜**人气榜**
 - 🔎 **SEO 完备**：sitemap.xml（全站 80+ URL）、robots.txt、OpenGraph/Twitter 卡片、SoftwareApplication 结构化数据
 - 🎨 **多风格主题**：浅色 / 深色 / 跟随系统 × 4 套主题色（紫罗兰 / 海蓝 / 翡翠 / 玫红），全站换肤、首屏无闪烁、本机持久化
@@ -65,13 +75,16 @@
 
 ```mermaid
 graph LR
-  A[浏览器] -->|3000| B[Next.js 15 前台<br/>SSR + ISR 60s]
-  A -->|"/api/wp/* 代理<br/>(搜索建议/评论/收藏)"| B
-  B -->|REST API| C[WordPress<br/>Headless CMS]
+  A[浏览器] -->|3000 无头模式| B[Next.js 15 前台<br/>SSR + ISR 60s]
+  A -->|8090 主题模式| C[WordPress + HahaTool 主题<br/>PHP 直接渲染]
+  B -->|REST API| C
   C --> D[(MySQL 8)]
-  E[wp-admin<br/>内容运营] -->|8090| C
-  F[mu-plugin<br/>hahatool.php] -.->|注册 meta 到 REST<br/>放开匿名评论| C
+  E[wp-admin<br/>内容运营] --> C
+  F[mu-plugin<br/>hahatool.php] -.->|注册 meta 到 REST<br/>track 统计 / 匿名评论| C
+  C -.->|同一套 meta 字段| C
 ```
+
+两个前台读取**同一套** WordPress 文章 + 自定义字段。无头前台经 REST API，主题模式由 `wordpress/themes/hahatool/` 的 PHP 模板直接渲染（雷达图/流量图均为 PHP 生成的 SVG，零前端依赖）。
 
 - **工具 = WordPress 文章 + 自定义字段（meta）**：`url / logo / tagline / pricing / likes / monthly_visits / growth / rating / scores / visits_history / regions / faq / screenshot / cover / featured / banner / promo`
 - 字段由内置 **mu-plugin** 注册进原生 REST API（`show_in_rest`），无需任何第三方插件
@@ -93,8 +106,16 @@ bash scripts/setup-wp.sh         # 一键：安装 WordPress + 导入示例数�
 
 | 入口 | 地址 | 说明 |
 | --- | --- | --- |
-| 前台 | http://localhost:3000 | 用户访问 |
+| 无头前台 | http://localhost:3000 | Next.js 渲染（默认前台） |
+| WordPress 站点 | http://localhost:8090 | 装上主题后即第二个前台；未装主题时为默认 WP |
 | 后台 | http://localhost:8090/wp-admin/ | 内容运营（账号见 `.env`，默认 admin / hahatool_admin） |
+
+**启用 WordPress 主题模式**（让 `:8090` 也渲染整站，无需 Node）：
+
+```bash
+bash scripts/switch-mode.sh theme       # 激活 HahaTool 主题
+bash scripts/switch-mode.sh headless    # 切回默认主题（仅作 REST 数据源）
+```
 
 示例数据：9 个工具分类、14 个标签、28 款主流 AI 工具（含完整数据与雷达评分）、4 篇资讯、8 条快讯。
 
@@ -139,7 +160,8 @@ hahatool/
 ├── docker-compose.yml            # db + wordpress + wpcli + frontend
 ├── .env.example                  # 环境变量模板
 ├── wordpress/
-│   └── mu-plugins/hahatool.php   # 核心 mu-plugin：meta 注册 / 匿名评论
+│   ├── mu-plugins/hahatool.php   # 核心 mu-plugin：meta 注册 / track 统计 / 匿名评论
+│   └── themes/hahatool/          # WordPress 主题版（PHP 直接渲染整站）
 ├── frontend/                     # Next.js 15 前台（App Router + Tailwind）
 │   └── src/{app,components,lib}
 ├── scripts/
@@ -153,7 +175,8 @@ hahatool/
 ## 📚 文档
 
 - [安装手册](docs/INSTALL.md) —— 从零部署到验收、常见问题
-- [**WordPress 结合使用教程**](docs/WORDPRESS_GUIDE.md) —— Headless 架构讲解、wp-admin 实操（收录工具/上刊广告/发快讯）、REST 调试、接入已有 WP 站点、安全清单
+- [**WordPress 结合使用教程**](docs/WORDPRESS_GUIDE.md) —— 两种模式架构、wp-admin 实操（收录工具/上刊广告/发快讯）、主题模式切换、REST 调试、接入已有 WP 站点、安全清单
+- [主题说明](wordpress/themes/hahatool/README.md) —— 主题模板结构、模式切换、定制指引
 - [开发手册](docs/DEVELOPMENT.md) —— 技术栈、目录结构、数据模型、REST 约定、本地热更新
 - [内容运营手册](docs/CONTENT_GUIDE.md) —— 添加工具、运营位上刊、发布快讯与图文视频资讯
 - [AGENTS.md](AGENTS.md) / [CLAUDE.md](CLAUDE.md) —— AI 协作者指南（本项目由 AI 维护，代理按此规范工作）

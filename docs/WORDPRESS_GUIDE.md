@@ -2,22 +2,31 @@
 
 本文讲清楚一件事：**HahaTool 是怎么把 WordPress 当「无头 CMS」用的，以及你如何在 wp-admin 里完成全部内容工作**。零 WordPress 经验也能照着做。
 
-## 1. 架构：Headless WordPress 是什么
+## 1. 两种模式：无头 vs 主题
 
-传统 WordPress 自己负责「存内容 + 渲染页面」。HahaTool 只用前一半：
+HahaTool 把内容（WordPress）和渲染（前台）解耦，于是有**两种前台模式，共用同一套内容**：
 
 ```
-你在 wp-admin 里写内容 ──► WordPress 存进 MySQL
-                              │
-                              ▼  REST API（/wp-json/wp/v2/*，JSON 格式）
-                          Next.js 前台读取并渲染成你看到的导航站
+                       ┌──► REST API ──► Next.js 前台 (:3000)   ← 无头模式（默认）
+你在 wp-admin 写内容 ──┤
+   存进 MySQL          └──► HahaTool 主题 PHP 渲染 (:8090)       ← 主题模式（无需 Node）
 ```
 
-- **WordPress（http://localhost:8090/wp-admin/）**：只当后台用——写文章、填字段、管评论。它自带的主题前台你永远不会用到；
-- **Next.js（http://localhost:3000）**：用户实际访问的站点，每 60 秒从 REST API 拉一次最新内容；
-- **mu-plugin（`wordpress/mu-plugins/hahatool.php`）**：项目内置的一个小插件，做两件事——把 HahaTool 的自定义字段（url、logo、评分等）注册进 REST API；允许游客免登录发评论。它放在 `mu-plugins` 目录所以**免安装、免激活、后台也无法误停用**。
+- **无头模式**：WordPress 只当数据源，前台用 Next.js（性能好、现代栈、前后端分离）。
+- **主题模式**：激活 `wordpress/themes/hahatool` 主题，WordPress 自己把 `:8090` 渲染成完整导航站，普通 PHP 虚拟主机就能跑，不用 Node。
 
-记住一个心智模型：**「工具」= 一篇 WordPress 文章 + 一组自定义字段**。分类、标签、评论全部用 WordPress 原生功能。
+切换（数据不变，随时来回切）：
+
+```bash
+bash scripts/switch-mode.sh theme       # 启用主题模式
+bash scripts/switch-mode.sh headless    # 切回无头模式
+```
+
+两种模式共用：
+- **mu-plugin（`wordpress/mu-plugins/hahatool.php`）**：把自定义字段（url、logo、评分等）注册进 REST、提供站内统计端点、放开匿名评论。放在 `mu-plugins` 目录所以**免安装、免激活、不可误停用**。
+- **主题（`wordpress/themes/hahatool/`）**：PHP 模板版前台，雷达图/流量图用 PHP 生成 SVG，零前端依赖。详见 [主题说明](../wordpress/themes/hahatool/README.md)。
+
+记住核心心智模型：**「工具」= 一篇 WordPress 文章 + 一组自定义字段**。两个前台读的是同一篇文章，所以你在 wp-admin 的任何改动对两边同时生效。分类、标签、评论全部用 WordPress 原生功能。
 
 ## 2. 第一次进后台必做的一件事
 
