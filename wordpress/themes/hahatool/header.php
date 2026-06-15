@@ -48,7 +48,7 @@
       <a class="icon-btn fav-nav" href="<?php echo esc_url(home_url('/favorites/')); ?>" aria-label="我的收藏" title="我的收藏"><?php echo hh_icon('heart', 19); ?><span class="badge-count" id="favCount"></span></a>
       <button class="icon-btn" id="themeBtn" aria-label="外观设置" title="外观设置"><?php echo hh_icon('palette', 19); ?></button>
       <a class="btn nav-cta" href="<?php echo esc_url(home_url('/submit/')); ?>">提交工具</a>
-      <button class="icon-btn nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false">☰</button>
+      <button class="icon-btn nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false"><?php echo hh_icon('menu', 22); ?></button>
     </div>
   </div>
   <div id="themeMenu" style="display:none;position:absolute;right:24px;top:64px;z-index:60;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:var(--shadow-lg);width:220px">

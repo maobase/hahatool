@@ -66,7 +66,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
 <nav class="catbar">
   <div class="catbar-inner">
     <a href="#featured">精选</a>
-    <a href="#trending">🔥 增长最快</a>
+    <a href="#trending" style="display:inline-flex;align-items:center;gap:4px"><span style="color:#f97316"><?php echo hh_icon('flame', 14); ?></span>增长最快</a>
     <?php foreach ($tool_cats as $c): ?>
       <a href="#cat-<?php echo esc_attr($c->slug); ?>"><?php echo esc_html($c->name); ?></a>
     <?php endforeach; ?>

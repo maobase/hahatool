@@ -37,13 +37,13 @@ $criteria = ['产品可正常访问、功能可用，非纯落地页', '与 AI �
   <div class="panel" style="margin-top:24px">
     <h2 style="font-size:16px">收录标准</h2>
     <ul style="margin:14px 0 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px">
-      <?php foreach ($criteria as $c): ?><li style="display:flex;gap:8px;color:var(--text-2);font-size:14px">✅ <?php echo esc_html($c); ?></li><?php endforeach; ?>
+      <?php foreach ($criteria as $c): ?><li style="display:flex;gap:8px;color:var(--text-2);font-size:14px"><span style="color:#10b981;flex-shrink:0"><?php echo hh_icon('check-circle', 18); ?></span><?php echo esc_html($c); ?></li><?php endforeach; ?>
     </ul>
   </div>
 
   <?php if ($done): ?>
     <div class="panel" style="margin-top:20px;text-align:center;border-color:#10b981">
-      <div style="font-size:40px">✅</div>
+      <div style="color:#10b981"><?php echo hh_icon('check-circle', 40, 1.5); ?></div>
       <h2 style="margin-top:8px">提交成功！</h2>
       <p class="muted">你的工具已进入审核队列，通过后将自动出现在站内（通常 1-3 个工作日）。感谢贡献！</p>
     </div>
@@ -51,7 +51,7 @@ $criteria = ['产品可正常访问、功能可用，非纯落地页', '与 AI �
     <form class="cform panel" method="post" style="margin-top:20px">
       <?php wp_nonce_field('hahatool_submit', 'hh_nonce'); ?>
       <h2 style="font-size:16px">在线提交</h2>
-      <?php if ($err): ?><p style="color:#f43f5e;margin-top:8px">⚠ <?php echo esc_html($err); ?></p><?php endif; ?>
+      <?php if ($err): ?><p style="color:#f43f5e;margin-top:8px;display:flex;align-items:center;gap:6px"><?php echo hh_icon('alert', 16); ?><?php echo esc_html($err); ?></p><?php endif; ?>
       <div class="grid2" style="margin-top:8px">
         <div><label>工具名称 *</label><input name="name" required maxlength="50" placeholder="如：Gemini" value="<?php echo esc_attr($_POST['name'] ?? ''); ?>"></div>
         <div><label>官网链接 *</label><input name="url" type="url" required placeholder="https://…" value="<?php echo esc_attr($_POST['url'] ?? ''); ?>"></div>

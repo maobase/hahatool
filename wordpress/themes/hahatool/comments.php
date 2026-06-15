@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) exit;
 if (post_password_required()) return;
 ?>
 <div id="comments">
-  <h2 style="font-size:18px">💬 用户评论 <span class="muted">（<?php echo get_comments_number(); ?>）</span></h2>
+  <h2 style="font-size:18px;display:flex;align-items:center;gap:6px"><span style="color:var(--brand-500)"><?php echo hh_icon('message', 18); ?></span>用户评论 <span class="muted" style="font-weight:400">（<?php echo get_comments_number(); ?>）</span></h2>
 
   <?php if (have_comments()): ?>
     <ol class="comment-list" style="list-style:none;padding:0;margin:16px 0">

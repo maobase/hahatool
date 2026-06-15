@@ -15,7 +15,7 @@ if (have_posts()) {
 <div class="wrap" style="padding-top:40px">
   <h1 class="section-title-lg">搜索</h1>
   <form class="hero-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" style="margin:20px 0 0;max-width:600px">
-    <span class="s-icon" style="color:var(--text-3)">🔍</span>
+    <span class="s-icon" style="color:var(--text-3);display:inline-flex"><?php echo hh_icon('search', 20); ?></span>
     <input type="search" name="s" value="<?php echo esc_attr($kw); ?>" placeholder="搜索 AI 工具…" data-suggest autocomplete="off" style="color:var(--text);background:var(--surface);border:1px solid var(--border);box-shadow:none">
     <button class="btn" type="submit">搜索</button>
   </form>
