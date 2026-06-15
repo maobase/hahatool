@@ -27,13 +27,15 @@
       <a href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>">提示词</a>
       <a href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">AI快讯</a>
       <a href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">AI资讯</a>
-      <a href="<?php echo esc_url(home_url('/submit/')); ?>" style="color:var(--brand-600);font-weight:600">提交工具</a>
+      <a class="menu-only" href="<?php echo esc_url(home_url('/submit/')); ?>" style="color:var(--brand-600);font-weight:600">提交工具</a>
+      <a class="menu-only" href="<?php echo esc_url(home_url('/favorites/')); ?>" style="color:#e11d48;font-weight:600">♥ 我的收藏</a>
     </nav>
     <div class="nav-right">
-      <form class="nav-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
+      <form class="nav-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" autocomplete="off">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input type="search" name="s" placeholder="搜索 AI 工具…" value="<?php echo esc_attr(get_search_query()); ?>" aria-label="搜索">
+        <input type="search" name="s" placeholder="搜索 AI 工具…" value="<?php echo esc_attr(get_search_query()); ?>" aria-label="搜索" data-suggest>
       </form>
+      <a class="icon-btn fav-nav" href="<?php echo esc_url(home_url('/favorites/')); ?>" aria-label="我的收藏" title="我的收藏">♥<span class="badge-count" id="favCount"></span></a>
       <button class="icon-btn" id="themeBtn" aria-label="外观设置" title="外观设置">🎨</button>
       <a class="btn nav-cta" href="<?php echo esc_url(home_url('/submit/')); ?>">提交工具</a>
       <button class="icon-btn nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false">☰</button>

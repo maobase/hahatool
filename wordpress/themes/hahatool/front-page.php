@@ -15,7 +15,7 @@ usort($tools, fn($a, $b) => (float)hh_meta($b->ID, 'growth') - (float)hh_meta($a
 $trending = array_slice($tools, 0, 4);
 $latest = $all->posts; // 已按日期倒序
 
-$flash = hahatool_channel('ai-flash', 5)->posts;
+$flash = hahatool_channel('ai-flash', 8)->posts;
 $news = hahatool_channel('ai-news', 3)->posts;
 $prompts_q = hahatool_channel('ai-prompts', 100)->posts;
 usort($prompts_q, fn($a, $b) => (float)hh_meta($b->ID, 'likes') - (float)hh_meta($a->ID, 'likes'));
@@ -23,6 +23,7 @@ $hot_prompts = array_slice($prompts_q, 0, 3);
 $mid_promo = hahatool_promo('home-mid', 1);
 
 $hot_kw = ['AI写作', 'AI绘画', '视频生成', 'AI编程', '数字人', 'AI音乐'];
+$tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC', 'number' => 16]);
 ?>
 
 <section class="hero">
@@ -32,7 +33,7 @@ $hot_kw = ['AI写作', 'AI绘画', '视频生成', 'AI编程', '数字人', 'AI�
     <p class="sub">收录全球优秀 AI 产品，附流量数据、定价与真实点评，帮你少踩坑、快上手。</p>
     <form class="hero-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
       <span class="s-icon">🔍</span>
-      <input type="search" name="s" placeholder="搜索 AI 工具，例如：视频生成、写作助手…" aria-label="搜索">
+      <input type="search" name="s" placeholder="搜索 AI 工具，例如：视频生成、写作助手…" aria-label="搜索" data-suggest autocomplete="off">
       <button class="btn" type="submit">搜索</button>
     </form>
     <div class="hero-tags">
@@ -48,6 +49,18 @@ $hot_kw = ['AI写作', 'AI绘画', '视频生成', 'AI编程', '数字人', 'AI�
     </div>
   </div>
 </section>
+
+<?php if ($flash): ?>
+<div class="ticker">
+  <div class="ticker-inner">
+    <a class="ticker-badge" href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">⚡ 快讯</a>
+    <div class="ticker-mask"><div class="ticker-track">
+      <?php foreach (array_merge($flash, $flash) as $f): ?><a href="<?php echo esc_url(get_permalink($f)); ?>"><?php echo esc_html(get_the_title($f)); ?></a><?php endforeach; ?>
+    </div></div>
+    <a href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>" class="muted" style="flex-shrink:0;font-size:12px">全部 →</a>
+  </div>
+</div>
+<?php endif; ?>
 
 <nav class="catbar">
   <div class="catbar-inner">
@@ -104,6 +117,15 @@ $hot_kw = ['AI写作', 'AI绘画', '视频生成', 'AI编程', '数字人', 'AI�
     <section class="section">
       <div class="section-head"><div><h2>热门提示词</h2><div class="sub">复制即用的高质量中文 Prompt</div></div><a class="more" href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>">进入提示词库 ›</a></div>
       <div class="grid grid-3"><?php foreach ($hot_prompts as $p) hahatool_prompt_card($p); wp_reset_postdata(); ?></div>
+    </section>
+    <?php endif; ?>
+
+    <?php if ($tags): ?>
+    <section class="section">
+      <div class="section-head"><div><h2>按标签找工具</h2><div class="sub">从使用场景出发，快速定位同类工具</div></div></div>
+      <div class="tagcloud-grid">
+        <?php foreach ($tags as $t): ?><a href="<?php echo esc_url(get_tag_link($t)); ?>"># <?php echo esc_html($t->name); ?><b><?php echo (int)$t->count; ?></b></a><?php endforeach; ?>
+      </div>
     </section>
     <?php endif; ?>
 

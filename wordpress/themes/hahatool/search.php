@@ -16,7 +16,7 @@ if (have_posts()) {
   <h1 class="section-title-lg">搜索</h1>
   <form class="hero-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" style="margin:20px 0 0;max-width:600px">
     <span class="s-icon" style="color:var(--text-3)">🔍</span>
-    <input type="search" name="s" value="<?php echo esc_attr($kw); ?>" placeholder="搜索 AI 工具…" style="color:var(--text);background:var(--surface);border:1px solid var(--border);box-shadow:none">
+    <input type="search" name="s" value="<?php echo esc_attr($kw); ?>" placeholder="搜索 AI 工具…" data-suggest autocomplete="off" style="color:var(--text);background:var(--surface);border:1px solid var(--border);box-shadow:none">
     <button class="btn" type="submit">搜索</button>
   </form>
   <p class="muted" style="margin-top:16px">「<b style="color:var(--text)"><?php echo esc_html($kw); ?></b>」共找到 <?php echo count($tools) + count($prompts) + count($news); ?> 条结果</p>

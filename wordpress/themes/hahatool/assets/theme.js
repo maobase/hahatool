@@ -9,6 +9,35 @@
     return '<span class="logo logo-fallback" style="width:' + s + 'px;height:' + s + 'px;font-size:' + Math.round(s * 0.42) + 'px">' + name + '</span>';
   };
 
+  // ---- 收藏（localStorage）----
+  var FAV_KEY = 'hahatool:favs';
+  function getFavs() { try { var a = JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); return Array.isArray(a) ? a.map(Number).filter(Boolean) : []; } catch (e) { return []; } }
+  function setFavs(a) { localStorage.setItem(FAV_KEY, JSON.stringify(a)); window.dispatchEvent(new Event('hahatool:favs')); }
+  window.__hhFavs = getFavs;
+  function toggleFav(id) { var f = getFavs(); var i = f.indexOf(id); if (i >= 0) f.splice(i, 1); else f.unshift(id); setFavs(f); return i < 0; }
+  function syncFavUI() {
+    var favs = getFavs();
+    document.querySelectorAll('[data-fav]').forEach(function (b) {
+      var on = favs.indexOf(+b.getAttribute('data-fav')) >= 0;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    var badge = document.getElementById('favCount');
+    if (badge) { badge.textContent = favs.length > 99 ? '99+' : favs.length; badge.style.display = favs.length ? 'flex' : 'none'; }
+    // 收藏页过滤
+    var grid = document.getElementById('favGrid');
+    if (grid) {
+      var empty = document.getElementById('favEmpty');
+      var shown = 0;
+      grid.querySelectorAll('[data-fav-card]').forEach(function (c) {
+        var on = favs.indexOf(+c.getAttribute('data-fav-card')) >= 0;
+        c.style.display = on ? '' : 'none'; if (on) shown++;
+      });
+      if (empty) empty.style.display = shown ? 'none' : '';
+      grid.style.display = shown ? '' : 'none';
+    }
+  }
+
   var root = document.documentElement;
   function saveTheme(patch) {
     var t = {};
@@ -68,6 +97,44 @@
         if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, done);
         else { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove(); done(); }
       });
+    });
+
+    // 收藏按钮
+    syncFavUI();
+    window.addEventListener('hahatool:favs', syncFavUI);
+    window.addEventListener('storage', function (e) { if (e.key === FAV_KEY) syncFavUI(); });
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-fav]');
+      if (btn) { e.preventDefault(); e.stopPropagation(); toggleFav(+btn.getAttribute('data-fav')); }
+    });
+
+    // 搜索即时建议
+    document.querySelectorAll('[data-suggest]').forEach(function (input) {
+      var box = document.createElement('ul');
+      box.className = 'suggest-box'; box.style.display = 'none';
+      input.parentNode.style.position = 'relative';
+      input.parentNode.appendChild(box);
+      var timer, home = (window.HAHATOOL && HAHATOOL.home) || '/';
+      input.addEventListener('input', function () {
+        clearTimeout(timer);
+        var kw = input.value.trim();
+        if (!kw) { box.style.display = 'none'; return; }
+        timer = setTimeout(function () {
+          fetch(HAHATOOL.restUrl + 'wp/v2/posts?per_page=6&search=' + encodeURIComponent(kw))
+            .then(function (r) { return r.json(); })
+            .then(function (posts) {
+              if (!posts.length) { box.style.display = 'none'; return; }
+              box.innerHTML = posts.map(function (p) {
+                var m = p.meta || {}, isTool = !!m.url, isPrompt = !!m.prompt;
+                var sub = isTool ? (m.tagline || '工具') : isPrompt ? '提示词' : 'AI 资讯';
+                var title = (p.title && p.title.rendered ? p.title.rendered : '').replace(/<[^>]+>/g, '');
+                return '<li><a href="' + p.link + '"><b>' + title + '</b><span>' + sub + '</span></a></li>';
+              }).join('') + '<li class="suggest-all"><a href="' + home + '?s=' + encodeURIComponent(kw) + '">查看「' + kw + '」全部结果 →</a></li>';
+              box.style.display = 'block';
+            }).catch(function () { box.style.display = 'none'; });
+        }, 250);
+      });
+      document.addEventListener('click', function (e) { if (!input.parentNode.contains(e.target)) box.style.display = 'none'; });
     });
 
     // 站内浏览统计（每会话每篇一次）

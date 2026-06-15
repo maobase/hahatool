@@ -44,6 +44,7 @@ if ((float)hh_meta($id, 'rating')) $jsonld['aggregateRating'] = ['@type' => 'Agg
             <?php endif; ?>
           </div>
           <div class="detail-actions">
+            <?php echo hahatool_fav_button($id, true); ?>
             <a class="btn" href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$id; ?>">访问官网 ↗</a>
           </div>
         </div>

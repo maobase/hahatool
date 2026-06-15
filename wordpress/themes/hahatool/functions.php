@@ -36,6 +36,7 @@ function hahatool_routes() {
     add_rewrite_rule('^ranking/?$', 'index.php?hh_page=ranking', 'top');
     add_rewrite_rule('^submit/?$', 'index.php?hh_page=submit', 'top');
     add_rewrite_rule('^compare/?$', 'index.php?hh_page=compare', 'top');
+    add_rewrite_rule('^favorites/?$', 'index.php?hh_page=favorites', 'top');
 }
 add_action('init', 'hahatool_routes');
 add_filter('query_vars', fn($v) => array_merge($v, ['hh_page']));

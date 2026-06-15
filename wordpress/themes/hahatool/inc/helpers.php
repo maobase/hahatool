@@ -93,6 +93,14 @@ function hahatool_logo($id, $size = 48) {
     return '<span class="logo logo-fallback" style="width:' . $s . 'px;height:' . $s . 'px;font-size:' . round($s * .42) . 'px">' . esc_html(strtoupper($ch)) . '</span>';
 }
 
+/** 收藏按钮（localStorage，前端 theme.js 接管状态） */
+function hahatool_fav_button($id, $large = false) {
+    if ($large) {
+        return '<button type="button" class="fav-btn fav-lg" data-fav="' . (int)$id . '" aria-pressed="false" aria-label="收藏"><span class="heart">♥</span><span class="fav-txt">收藏</span></button>';
+    }
+    return '<button type="button" class="fav-btn" data-fav="' . (int)$id . '" aria-pressed="false" aria-label="收藏"><span class="heart">♥</span></button>';
+}
+
 /** 定价徽章 */
 function hahatool_pricing_badge($pricing) {
     $map = ['免费' => 'badge-free', '免费增值' => 'badge-freemium', '付费' => 'badge-paid'];
@@ -274,7 +282,7 @@ function hahatool_tool_card($post, $rank = null) {
             <?php echo hahatool_stars(hh_meta($id, 'rating')); ?>
             <span class="tnum">☆ <?php echo hahatool_count(hh_meta($id, 'likes')); ?></span>
             <span class="tnum">📈 <?php echo hahatool_count(hh_meta($id, 'monthly_visits')); ?></span>
-            <a class="spacer" style="position:relative;z-index:1" href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener nofollow" aria-label="访问官网" title="访问官网">↗</a>
+            <span class="spacer" style="position:relative;z-index:1;display:inline-flex;gap:2px"><?php echo hahatool_fav_button($id); ?><a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$id; ?>" aria-label="访问官网" title="访问官网" style="color:var(--text-3);padding:4px">↗</a></span>
         </div>
     </div>
     <?php
