@@ -47,7 +47,7 @@ $vallbl = $by === 'likes' ? '收藏' : ($by === 'hot' ? '站内浏览' : '月访
   <div class="grid grid-3" style="margin-top:24px">
     <?php foreach ($podium as $i => $t): ?>
       <div class="card" style="border:2px solid <?php echo $medal[$i]; ?>">
-        <a class="stretched" href="<?php echo esc_url(get_permalink($t)); ?>"></a>
+        <a class="stretched" href="<?php echo esc_url(get_permalink($t)); ?>" aria-label="查看 <?php echo esc_attr(get_the_title($t)); ?> 详情"></a>
         <span class="badge display" style="position:absolute;left:-8px;top:-10px;background:<?php echo $medal[$i]; ?>;color:#3b2f00">NO.<?php echo $i + 1; ?></span>
         <div class="card-top"><?php echo hahatool_logo($t->ID, 52); ?><div><h3><?php echo esc_html(get_the_title($t)); ?></h3><?php echo hahatool_stars(hh_meta($t->ID, 'rating')); ?></div></div>
         <p class="tagline"><?php echo esc_html(hh_meta($t->ID, 'tagline')); ?></p>
@@ -60,7 +60,7 @@ $vallbl = $by === 'likes' ? '收藏' : ($by === 'hot' ? '站内浏览' : '月访
   <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
     <?php foreach ($rest as $i => $t): ?>
       <div class="card" style="flex-direction:row;align-items:center;gap:16px;padding:14px">
-        <a class="stretched" href="<?php echo esc_url(get_permalink($t)); ?>"></a>
+        <a class="stretched" href="<?php echo esc_url(get_permalink($t)); ?>" aria-label="查看 <?php echo esc_attr(get_the_title($t)); ?> 详情"></a>
         <span class="display" style="width:32px;text-align:center;font-weight:700;color:var(--text-3)"><?php echo $i + 4; ?></span>
         <?php echo hahatool_logo($t->ID, 44); ?>
         <div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px"><b><?php echo esc_html(get_the_title($t)); ?></b><?php echo hahatool_pricing_badge(hh_meta($t->ID, 'pricing')); ?></div><div class="muted" style="font-size:13px"><?php echo esc_html(hh_meta($t->ID, 'tagline')); ?></div></div>

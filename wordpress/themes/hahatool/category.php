@@ -47,7 +47,7 @@ $paged = max(1, (int)get_query_var('paged'));
     <div>
       <?php if ($headline): $hc = hh_meta($headline->ID, 'cover'); ?>
         <a class="news-headline" href="<?php echo esc_url(get_permalink($headline)); ?>" style="position:relative;display:block;overflow:hidden;border-radius:var(--radius);background:#111827;color:#fff;min-height:180px">
-          <?php if ($hc): ?><img src="<?php echo esc_url($hc); ?>" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5"><?php endif; ?>
+          <?php if ($hc): ?><img src="<?php echo esc_url($hc); ?>" alt="<?php echo esc_attr(get_the_title($headline)); ?>" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5"><?php endif; ?>
           <span style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,7,18,.92),transparent)"></span>
           <span style="position:relative;display:block;padding:96px 28px 28px">
             <span class="chip chip-brand" style="background:rgba(124,58,237,.3);color:#ddd6fe">头条</span>
@@ -60,7 +60,7 @@ $paged = max(1, (int)get_query_var('paged'));
         <?php foreach ($news_posts as $np): $cover = hh_meta($np->ID, 'cover'); ?>
           <a class="news-item" href="<?php echo esc_url(get_permalink($np)); ?>">
             <div class="body"><time><?php echo esc_html(get_the_date('Y-m-d', $np)); ?></time><h3><?php echo esc_html(get_the_title($np)); ?></h3><p><?php echo esc_html(wp_trim_words(wp_strip_all_tags($np->post_content), 50)); ?></p></div>
-            <?php if ($cover): ?><img class="thumb" src="<?php echo esc_url($cover); ?>" alt=""><?php endif; ?>
+            <?php if ($cover): ?><img class="thumb" src="<?php echo esc_url($cover); ?>" alt="<?php echo esc_attr(get_the_title($np)); ?>" loading="lazy"><?php endif; ?>
           </a>
         <?php endforeach; ?>
       </div>

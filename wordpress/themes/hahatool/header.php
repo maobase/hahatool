@@ -49,11 +49,11 @@
       <button data-mode="system" class="btn-ghost" style="padding:8px;font-size:12px">系统</button>
     </div>
     <p class="muted" style="margin:14px 0 8px">主题色</p>
-    <div style="display:flex;gap:10px" data-theme-accent>
-      <button data-accent="violet" title="紫罗兰" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#7c3aed;cursor:pointer"></button>
-      <button data-accent="sky" title="海蓝" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#0284c7;cursor:pointer"></button>
-      <button data-accent="emerald" title="翡翠" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#059669;cursor:pointer"></button>
-      <button data-accent="rose" title="玫红" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#e11d48;cursor:pointer"></button>
+    <div style="display:flex;gap:10px" data-theme-accent role="radiogroup" aria-label="主题色">
+      <button data-accent="violet" title="紫罗兰" aria-label="紫罗兰主题色" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#7c3aed;cursor:pointer"></button>
+      <button data-accent="sky" title="海蓝" aria-label="海蓝主题色" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#0284c7;cursor:pointer"></button>
+      <button data-accent="emerald" title="翡翠" aria-label="翡翠主题色" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#059669;cursor:pointer"></button>
+      <button data-accent="rose" title="玫红" aria-label="玫红主题色" style="width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:#e11d48;cursor:pointer"></button>
     </div>
   </div>
 </header>
