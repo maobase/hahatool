@@ -22,9 +22,13 @@ bash scripts/switch-mode.sh headless    # 切回默认主题，仅作 REST 数�
 | `/ranking/` | `template-ranking.php` | 排行榜（流量/收藏/增长/人气/新品 + 领奖台）|
 | `/compare/?a=&b=` | `template-compare.php` | 工具 PK（双系列能力雷达 + 数据对比）|
 | `/submit/` | `template-submit.php` | 提交工具（写入待审文章）|
-| `/category/<slug>/` | `category.php` | 工具分类→网格；`ai-prompts/ai-flash/ai-news`→对应频道布局 |
+| `/favorites/` | `template-favorites.php` | 我的收藏（localStorage，前端筛选）|
+| `/category/<slug>/` | `category.php` | 工具分类→网格；`ai-prompts`→提示词库；`ai-flash`→按天分组时间线；`ai-news`→头条+列表+侧栏 |
+| `/tag/<slug>/` | `tag.php` | 标签页（含相关标签云）|
 | 工具/提示词/资讯详情 | `single.php` → `template-parts/single-*.php` | 按 meta 自动分流 |
 | `/?s=` | `search.php` | 搜索结果（工具/提示词/资讯分组）|
+
+与无头原版**功能对等**的交互（纯前端 `assets/theme.js`）：收藏（♥ 按钮 + 顶栏计数 + 收藏页）、搜索即时建议下拉、首页快讯跑马灯、明暗 × 4 主题色、一键复制提示词、站内浏览/点击统计上报。首页含 Banner 大卡运营位、编辑精选、增长最快、分类板块、标签云、热门提示词、AI 资讯等板块。
 
 `/tools` `/ranking` `/submit` `/compare` 为 `functions.php` 注册的**虚拟路由**（rewrite + `template_include`），无需在后台建页面。
 

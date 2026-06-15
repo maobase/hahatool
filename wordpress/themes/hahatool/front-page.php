@@ -10,6 +10,7 @@ $week_ago = time() - 7 * 86400;
 $weekly_new = count(array_filter($tools, fn($p) => strtotime($p->post_date_gmt . ' UTC') > $week_ago));
 
 // 派生板块
+$banners = array_slice(array_values(array_filter($tools, fn($p) => hh_meta($p->ID, 'banner') === '1')), 0, 2);
 $featured = array_values(array_filter($tools, fn($p) => hh_meta($p->ID, 'featured') === '1'));
 usort($tools, fn($a, $b) => (float)hh_meta($b->ID, 'growth') - (float)hh_meta($a->ID, 'growth'));
 $trending = array_slice($tools, 0, 4);
@@ -76,6 +77,26 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
   <?php if (!$tools): ?>
     <div class="empty">还没有任何工具数据。请在后台发布带 <code>url</code> 字段的文章，或运行示例数据导入。</div>
   <?php else: ?>
+
+    <?php if ($banners): ?>
+    <section class="section" aria-label="推广位">
+      <div class="grid" style="grid-template-columns:repeat(2,1fr)" id="bannerGrid">
+        <?php foreach ($banners as $bp): $bid = $bp->ID; ?>
+          <div class="hero-banner">
+            <span class="tag">📣 推广</span>
+            <div style="display:flex;align-items:center;gap:16px">
+              <?php echo hahatool_logo($bid, 56); ?>
+              <div><h3 style="font-size:20px"><?php echo esc_html(get_the_title($bid)); ?></h3><p style="margin:4px 0 0;color:rgba(255,255,255,.8);font-size:14px;max-width:380px" class="clamp2"><?php echo esc_html(hh_meta($bid, 'tagline')); ?></p></div>
+            </div>
+            <div style="margin-top:20px;display:flex;gap:12px">
+              <a class="btn" style="background:#fff;color:var(--brand-700)" href="<?php echo esc_url(hh_meta($bid, 'url')); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$bid; ?>">立即体验 →</a>
+              <a class="btn btn-ghost" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)" href="<?php echo esc_url(get_permalink($bid)); ?>">查看详情</a>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </section>
+    <?php endif; ?>
 
     <?php if ($featured): ?>
     <section class="section" id="featured">

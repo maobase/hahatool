@@ -110,8 +110,11 @@ if ((float)hh_meta($id, 'rating')) $jsonld['aggregateRating'] = ['@type' => 'Agg
           <div class="row"><dt>评分</dt><dd><?php echo hahatool_stars(hh_meta($id, 'rating')) ?: '—'; ?></dd></div>
           <div class="row"><dt>定价模式</dt><dd><?php echo esc_html(hh_meta($id, 'pricing', '—')); ?></dd></div>
           <div class="row"><dt>月访问量</dt><dd class="tnum"><?php echo hahatool_count(hh_meta($id, 'monthly_visits')); ?></dd></div>
+          <div class="row"><dt>月增长</dt><dd><?php echo hahatool_growth_badge(hh_meta($id, 'growth')) ?: '—'; ?></dd></div>
+          <div class="row"><dt>收藏数</dt><dd class="tnum"><?php echo hahatool_count(hh_meta($id, 'likes')); ?></dd></div>
           <div class="row"><dt>站内浏览</dt><dd class="tnum"><?php echo hahatool_count(hh_meta($id, 'views')); ?></dd></div>
           <div class="row"><dt>官网直达</dt><dd class="tnum"><?php echo hahatool_count(hh_meta($id, 'clicks')); ?></dd></div>
+          <?php if ($cats): ?><div class="row"><dt>分类</dt><dd style="display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end"><?php foreach ($cats as $c): ?><a class="chip chip-brand" href="<?php echo esc_url(get_category_link($c)); ?>"><?php echo esc_html($c->name); ?></a><?php endforeach; ?></dd></div><?php endif; ?>
         </dl>
       </div>
 
