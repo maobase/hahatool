@@ -52,7 +52,8 @@ add_filter('wp_is_application_passwords_available', '__return_true');
 /**
  * 站内真实统计端点：POST /wp-json/hahatool/v1/track  {cid, type: views|clicks}
  * 只做计数器自增，不更新文章本身（不产生修订、不改动 modified 时间）。
- * 防刷由 Next.js 代理层（IP+条目 30 分钟去重）负责。
+ * 服务端防刷：同一 IP 对同一条目同一类型 30 分钟内只计一次（transient 去重），
+ * 与无头版 /api/track 代理行为一致——主题模式直连本端点时同样受保护。
  */
 add_action('rest_api_init', function () {
     register_rest_route('hahatool/v1', '/track', [
@@ -69,7 +70,16 @@ add_action('rest_api_init', function () {
             if (!$post || $post->post_status !== 'publish' || $post->post_type !== 'post') {
                 return new WP_Error('not_found', 'post not found', ['status' => 404]);
             }
-            $n = (int) get_post_meta($cid, $type, true) + 1;
+            // IP+条目+类型 30 分钟去重（防刷）
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+            $ip = trim(explode(',', $ip)[0]);
+            $key = 'hh_trk_' . md5($ip . ':' . $cid . ':' . $type);
+            $n = (int) get_post_meta($cid, $type, true);
+            if (get_transient($key)) {
+                return ['ok' => true, 'value' => $n, 'deduped' => true];
+            }
+            set_transient($key, 1, 30 * MINUTE_IN_SECONDS);
+            $n++;
             update_post_meta($cid, $type, (string) $n);
             return ['ok' => true, 'value' => $n];
         },
