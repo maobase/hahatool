@@ -20,10 +20,18 @@ if ($main) {
 $side_promo = hahatool_promo('detail-side', 2, $id);
 
 // 结构化数据
+$pricing = hh_meta($id, 'pricing');
 $jsonld = ['@context' => 'https://schema.org', '@type' => 'SoftwareApplication', 'name' => get_the_title(), 'description' => hh_meta($id, 'tagline'), 'url' => $url, 'applicationCategory' => $main ? $main->name : null];
+$jsonld['offers'] = array_filter(['@type' => 'Offer', 'price' => $pricing === '免费' ? '0' : null, 'description' => $pricing]);
 if ((float)hh_meta($id, 'rating')) $jsonld['aggregateRating'] = ['@type' => 'AggregateRating', 'ratingValue' => (float)hh_meta($id, 'rating'), 'bestRating' => 5, 'ratingCount' => max(1, (int)hh_meta($id, 'likes'))];
+// 面包屑结构化数据
+$crumbs = [['@type' => 'ListItem', 'position' => 1, 'name' => '首页', 'item' => home_url('/')]];
+if ($main) $crumbs[] = ['@type' => 'ListItem', 'position' => 2, 'name' => $main->name, 'item' => get_category_link($main)];
+$crumbs[] = ['@type' => 'ListItem', 'position' => count($crumbs) + 1, 'name' => get_the_title(), 'item' => get_permalink($id)];
+$breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => $crumbs];
 ?>
 <script type="application/ld+json"><?php echo wp_json_encode($jsonld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
+<script type="application/ld+json"><?php echo wp_json_encode($breadcrumb, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
 
 <div class="wrap" style="padding-top:32px">
   <nav class="crumb"><a href="<?php echo esc_url(home_url('/')); ?>">首页</a> / <?php if ($main): ?><a href="<?php echo esc_url(get_category_link($main)); ?>"><?php echo esc_html($main->name); ?></a> / <?php endif; ?><span style="color:var(--text-2)"><?php the_title(); ?></span></nav>

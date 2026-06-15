@@ -62,11 +62,24 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ slu
     }),
   };
 
+  // SEO：面包屑结构化数据
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/+$/, '');
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '首页', item: `${siteUrl}/` },
+      ...(mainCategory ? [{ '@type': 'ListItem', position: 2, name: mainCategory.name, item: `${siteUrl}/category/${mainCategory.slug}` }] : []),
+      { '@type': 'ListItem', position: mainCategory ? 3 : 2, name: tool.title, item: `${siteUrl}/tool/${tool.slug}` },
+    ],
+  };
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       {/* 浏览量上报（每会话一次） */}
       <TrackView cid={tool.cid} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       {/* 面包屑 */}
       <nav className="text-sm text-gray-400" aria-label="面包屑">
         <Link href="/" className="hover:text-brand-600 dark:hover:text-brand-400">首页</Link>
