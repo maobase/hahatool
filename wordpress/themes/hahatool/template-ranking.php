@@ -57,14 +57,30 @@ $vallbl = $by === 'likes' ? '收藏' : ($by === 'hot' ? '站内浏览' : '月访
   </div>
   <?php endif; ?>
 
-  <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+  <?php if ($rest): ?>
+  <div class="rk-head">
+    <span style="width:32px;text-align:center">排名</span>
+    <span style="width:44px"></span>
+    <span style="flex:1">工具</span>
+    <span style="width:64px;text-align:right">增长</span>
+    <span style="width:80px;text-align:right">月访问</span>
+    <span style="width:64px;text-align:right">收藏</span>
+    <span style="width:18px"></span>
+  </div>
+  <?php endif; ?>
+  <div class="rk-list">
     <?php foreach ($rest as $i => $t): ?>
       <div class="card" style="flex-direction:row;align-items:center;gap:16px;padding:14px">
         <a class="stretched" href="<?php echo esc_url(get_permalink($t)); ?>" aria-label="查看 <?php echo esc_attr(get_the_title($t)); ?> 详情"></a>
         <span class="display" style="width:32px;text-align:center;font-weight:700;color:var(--text-3)"><?php echo $i + 4; ?></span>
         <?php echo hahatool_logo($t->ID, 44); ?>
-        <div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px"><b><?php echo esc_html(get_the_title($t)); ?></b><?php echo hahatool_pricing_badge(hh_meta($t->ID, 'pricing')); ?></div><div class="muted" style="font-size:13px"><?php echo esc_html(hh_meta($t->ID, 'tagline')); ?></div></div>
-        <div class="tnum display" style="font-weight:600;text-align:right;min-width:70px"><?php echo $valfmt($t); ?><div class="muted" style="font-size:11px;font-weight:400"><?php echo $vallbl; ?></div></div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><b><?php echo esc_html(get_the_title($t)); ?></b><?php echo hahatool_pricing_badge(hh_meta($t->ID, 'pricing')); ?><?php if ($by === 'new'): ?><span class="muted" style="font-size:12px"><?php echo esc_html(get_the_date('Y-m-d', $t)); ?> 收录</span><?php endif; ?></div>
+          <div class="muted" style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><?php echo esc_html(hh_meta($t->ID, 'tagline')); ?></div>
+        </div>
+        <span class="rk-num" style="width:64px"><?php echo hahatool_growth_badge(hh_meta($t->ID, 'growth')); ?></span>
+        <span class="rk-num tnum" style="width:80px"><?php echo hahatool_count(hh_meta($t->ID, 'monthly_visits')); ?></span>
+        <span class="rk-num tnum" style="width:64px"><?php echo hahatool_count(hh_meta($t->ID, 'likes')); ?></span>
         <a style="position:relative;z-index:1;color:var(--text-3);display:inline-flex" href="<?php echo esc_url(hh_meta($t->ID, 'url')); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$t->ID; ?>" aria-label="访问官网"><?php echo hh_icon('arrow-up-right', 18); ?></a>
       </div>
     <?php endforeach; ?>

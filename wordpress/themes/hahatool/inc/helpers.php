@@ -14,6 +14,7 @@ function hh_icon($name, $size = 14, $stroke = 2) {
     $paths = [
         'bookmark' => '<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>',
         'trending' => '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+        'trending-down' => '<polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/>',
         'eye'      => '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
         'calendar' => '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
         'external' => '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
@@ -150,7 +151,9 @@ function hahatool_growth_badge($g) {
     $g = (float)$g;
     if (!$g) return '';
     $up = $g > 0;
-    return '<span class="badge ' . ($up ? 'badge-up' : 'badge-down') . '">' . ($up ? '▲ +' : '▼ ') . $g . '%</span>';
+    // 用 lucide 风格 SVG 箭头（与无头版 GrowthBadge 一致，符合「图标用 SVG 不用字符」标准）
+    $icon = hh_icon($up ? 'trending' : 'trending-down', 11);
+    return '<span class="badge ' . ($up ? 'badge-up' : 'badge-down') . '">' . $icon . ($up ? '+' : '') . $g . '%</span>';
 }
 
 /** 星级（双层填充支持小数） */
