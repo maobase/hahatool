@@ -335,7 +335,7 @@ function hahatool_tool_card($post, $rank = null) {
     ?>
     <div class="card">
         <a class="stretched" href="<?php the_permalink($id); ?>" aria-label="查看 <?php echo esc_attr(get_the_title($id)); ?> 详情"></a>
-        <?php if ($rank !== null): ?><span class="badge" style="position:absolute;left:-8px;top:-8px;background:#111827;color:#fff;width:26px;height:26px;justify-content:center"><?php echo $rank; ?></span><?php endif; ?>
+        <?php if ($rank !== null): ?><span class="badge" style="position:absolute;left:16px;top:-8px;z-index:2;background:#f97316;color:#fff;box-shadow:var(--shadow-lg)"><?php echo hh_icon('flame', 11); ?><?php echo esc_html($rank); ?></span><?php endif; ?>
         <div class="card-top">
             <?php echo hahatool_logo($id, 48); ?>
             <div style="min-width:0;flex:1">

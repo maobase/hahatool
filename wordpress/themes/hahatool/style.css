@@ -193,6 +193,9 @@ main{padding:40px 0;}
 .logo-fallback{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;background:linear-gradient(135deg,var(--brand-400),var(--brand-600));}
 .card h3{font-size:16px;font-weight:600;}
 .card a.stretched::after{content:"";position:absolute;inset:0;border-radius:var(--radius);}
+.news-card{padding:0;overflow:hidden;}
+.news-card .news-cover{display:block;width:100%;aspect-ratio:2/1;object-fit:cover;}
+.news-card .news-body{padding:20px;}
 .meta-row{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap;font-size:12px;color:var(--text-3);}
 .chip{padding:2px 8px;border-radius:var(--radius-full);background:var(--surface-2);color:var(--text-2);font-size:12px;}
 .chip-brand{background:var(--brand-50);color:var(--brand-700);}

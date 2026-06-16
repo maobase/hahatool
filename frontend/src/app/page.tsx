@@ -134,9 +134,10 @@ export default async function HomePage() {
           </a>
           <a
             href="#trending"
-            className="shrink-0 rounded-full px-4 py-1.5 text-sm text-gray-600 dark:text-gray-400 transition hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="inline-flex shrink-0 items-center gap-1 rounded-full px-4 py-1.5 text-sm text-gray-600 dark:text-gray-400 transition hover:bg-gray-100 dark:hover:bg-gray-800"
           >
-            🔥 增长最快
+            <Flame size={14} className="text-orange-500" />
+            增长最快
           </a>
           {categories.map((c) => (
             <a

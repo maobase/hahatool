@@ -108,7 +108,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
     <?php endif; ?>
 
     <section class="section" id="trending">
-      <div class="section-head"><div><h2>增长最快</h2><div class="sub">本月访问量增速最高的黑马工具</div></div><a class="more" href="<?php echo esc_url(home_url('/ranking/')); ?>">查看增长榜 ›</a></div>
+      <div class="section-head"><div><h2>增长最快</h2><div class="sub">本月访问量增速最高的黑马工具</div></div><a class="more" href="<?php echo esc_url(home_url('/ranking/?by=growth')); ?>">查看增长榜 ›</a></div>
       <div class="grid">
         <?php foreach ($trending as $i => $p) hahatool_tool_card($p, 'NO.' . ($i + 1)); wp_reset_postdata(); ?>
       </div>
@@ -154,11 +154,14 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
     <section class="section">
       <div class="section-head"><div><h2>AI 资讯</h2><div class="sub">行业新闻与趋势解读</div></div><a class="more" href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">查看全部 ›</a></div>
       <div class="grid grid-3">
-        <?php foreach ($news as $p): ?>
-          <a class="card" href="<?php echo esc_url(get_permalink($p)); ?>">
-            <time class="muted"><?php echo esc_html(get_the_date('Y-m-d', $p)); ?></time>
-            <h3 style="margin-top:8px"><?php echo esc_html(get_the_title($p)); ?></h3>
-            <p class="tagline"><?php echo esc_html(wp_trim_words(wp_strip_all_tags($p->post_content), 40)); ?></p>
+        <?php foreach ($news as $p): $nc = hh_meta($p->ID, 'cover'); ?>
+          <a class="card news-card" href="<?php echo esc_url(get_permalink($p)); ?>">
+            <?php if ($nc): ?><img class="news-cover" src="<?php echo esc_url($nc); ?>" alt="<?php echo esc_attr(get_the_title($p)); ?>" loading="lazy"><?php endif; ?>
+            <div class="news-body">
+              <time class="muted"><?php echo esc_html(get_the_date('Y-m-d', $p)); ?></time>
+              <h3 style="margin-top:8px"><?php echo esc_html(get_the_title($p)); ?></h3>
+              <p class="tagline"><?php echo esc_html(wp_trim_words(wp_strip_all_tags($p->post_content), 40)); ?></p>
+            </div>
           </a>
         <?php endforeach; ?>
       </div>
