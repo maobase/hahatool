@@ -38,7 +38,7 @@ if (have_posts()) {
   <?php if ($news): ?>
     <section class="section"><h2 style="font-size:18px;margin-bottom:16px">资讯（<?php echo count($news); ?>）</h2>
       <div style="display:flex;flex-direction:column;gap:12px"><?php foreach ($news as $p): ?>
-        <a class="news-item" href="<?php echo esc_url(get_permalink($p)); ?>"><div class="body"><time><?php echo esc_html(get_the_date('Y-m-d', $p)); ?></time><h3><?php echo esc_html(get_the_title($p)); ?></h3></div></a>
+        <a class="news-item" href="<?php echo esc_url(get_permalink($p)); ?>"><div class="body"><time><?php echo esc_html(get_the_date('Y-m-d', $p)); ?></time><h3><?php echo esc_html(get_the_title($p)); ?></h3><p><?php echo esc_html(wp_trim_words(wp_strip_all_tags($p->post_content), 40)); ?></p></div></a>
       <?php endforeach; ?></div></section>
   <?php endif; ?>
 </div>

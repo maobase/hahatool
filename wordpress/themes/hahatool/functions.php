@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.11');
+define('HAHATOOL_VERSION', '1.6.12');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -61,11 +61,13 @@ add_action('after_switch_theme', function () {
     flush_rewrite_rules();
 });
 
-/** 分类/标签/搜索归档每页 24 条 */
+/** 分类/标签归档每页 24 条；搜索一次取 60 条（与无头版搜索抓取量对齐） */
 add_action('pre_get_posts', function ($q) {
     if (is_admin() || !$q->is_main_query()) return;
-    if ($q->is_category() || $q->is_tag() || $q->is_search()) {
+    if ($q->is_category() || $q->is_tag()) {
         $q->set('posts_per_page', 24);
+    } elseif ($q->is_search()) {
+        $q->set('posts_per_page', 60);
     }
 });
 
