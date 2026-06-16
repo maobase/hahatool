@@ -40,6 +40,25 @@ add_action('init', function () {
     }
 });
 
+/**
+ * 文章预计阅读时长（分钟）——中文按 ~400 字/分钟，至少 1 分钟。
+ * 同时供 WP 主题与无头版（REST 字段）调用，保证两版口径一致。
+ */
+function hahatool_read_time($content) {
+    $text = trim(wp_strip_all_tags((string) $content));
+    if ($text === '') return 0;
+    $chars = mb_strlen(preg_replace('/\s+/u', '', $text));
+    return max(1, (int) ceil($chars / 400));
+}
+
+/** 阅读时长暴露到 REST（无头版列表/详情读取 post.read_time） */
+add_action('rest_api_init', function () {
+    register_rest_field('post', 'read_time', [
+        'get_callback' => fn($post) => hahatool_read_time(get_post_field('post_content', $post['id'])),
+        'schema' => ['type' => 'integer'],
+    ]);
+});
+
 /** 允许匿名评论（前台评论框免登录，仍受 WP 审核设置约束） */
 add_filter('rest_allow_anonymous_comments', '__return_true');
 

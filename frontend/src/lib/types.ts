@@ -25,6 +25,8 @@ export interface WpPost {
   content?: { rendered: string };
   excerpt?: { rendered: string };
   meta?: Record<string, string>;
+  /** 预计阅读时长（分钟），由 mu-plugin 的 read_time REST 字段提供 */
+  read_time?: number;
   _embedded?: {
     'wp:term'?: { taxonomy: string; name: string; slug: string }[][];
   };
@@ -95,5 +97,7 @@ export interface NewsItem {
   digest: string;
   /** 封面图 URL（cover 字段，可选） */
   cover: string;
+  /** 预计阅读时长（分钟） */
+  readTime: number;
   contentHtml?: string;
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 import { getNews, getNewsBySlug } from '@/lib/api';
 import { formatDate } from '@/lib/format';
 
@@ -36,7 +36,15 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
           <img src={item.cover} alt={`${item.title} 封面`} className="aspect-[2/1] w-full object-cover" />
         )}
         <div className="p-6 sm:p-10">
-          <time className="text-sm text-gray-400">{formatDate(item.created)}</time>
+          <div className="flex items-center gap-2 text-sm text-gray-400">
+            <time>{formatDate(item.created)}</time>
+            {item.readTime > 0 && (
+              <>
+                <span>·</span>
+                <span className="inline-flex items-center gap-1"><Clock size={13} />{item.readTime} 分钟阅读</span>
+              </>
+            )}
+          </div>
           <h1 className="mt-3 text-2xl font-bold leading-9 text-gray-900 dark:text-gray-100 sm:text-3xl">{item.title}</h1>
           <div
             className="prose prose-gray dark:prose-invert mt-6 max-w-none prose-a:text-brand-600"

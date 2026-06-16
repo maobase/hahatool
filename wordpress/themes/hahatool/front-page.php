@@ -158,7 +158,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
           <a class="card news-card" href="<?php echo esc_url(get_permalink($p)); ?>">
             <?php if ($nc): ?><img class="news-cover" src="<?php echo esc_url($nc); ?>" alt="<?php echo esc_attr(get_the_title($p)); ?>" loading="lazy"><?php endif; ?>
             <div class="news-body">
-              <time class="muted"><?php echo esc_html(get_the_date('Y-m-d', $p)); ?></time>
+              <div class="news-meta"><time><?php echo esc_html(get_the_date('Y-m-d', $p)); ?></time><span>·</span><span class="rt"><?php echo hh_icon('clock', 12); ?><?php echo (int) hahatool_read_time($p->post_content); ?> 分钟阅读</span></div>
               <h3 style="margin-top:8px"><?php echo esc_html(get_the_title($p)); ?></h3>
               <p class="tagline"><?php echo esc_html(wp_trim_words(wp_strip_all_tags($p->post_content), 40)); ?></p>
             </div>

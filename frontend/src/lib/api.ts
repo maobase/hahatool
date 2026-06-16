@@ -136,6 +136,7 @@ function toNews(p: WpPost): NewsItem {
     created: toTs(p.date_gmt),
     digest: decodeEntities(p.excerpt?.rendered ?? '').replace(/\s+/g, ' '),
     cover: meta(p, 'cover'),
+    readTime: Number(p.read_time) || 0,
     contentHtml: p.content?.rendered,
   };
 }

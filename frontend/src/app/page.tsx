@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Flame, Megaphone, Sparkles } from 'lucide-react';
+import { ArrowRight, Clock, Flame, Megaphone, Sparkles } from 'lucide-react';
 import { getAllTools, getFlash, getNews, getPrompts, getTags, getToolCategories, pickPromo } from '@/lib/api';
 import AdSlot from '@/components/AdSlot';
 import NewsTicker from '@/components/NewsTicker';
@@ -310,7 +310,15 @@ export default async function HomePage() {
                         <img src={item.cover} alt={item.title} loading="lazy" className="aspect-[2/1] w-full object-cover" />
                       )}
                       <div className="p-5">
-                        <time className="text-xs text-gray-400">{formatDate(item.created)}</time>
+                        <div className="flex items-center gap-2 text-xs text-gray-400">
+                          <time>{formatDate(item.created)}</time>
+                          {item.readTime > 0 && (
+                            <>
+                              <span>·</span>
+                              <span className="inline-flex items-center gap-1"><Clock size={12} />{item.readTime} 分钟阅读</span>
+                            </>
+                          )}
+                        </div>
                         <h3 className="mt-2 line-clamp-2 font-semibold leading-6 text-gray-900 dark:text-gray-100">{item.title}</h3>
                         <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-500">{item.digest}</p>
                       </div>

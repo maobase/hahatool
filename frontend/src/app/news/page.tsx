@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Zap } from 'lucide-react';
+import { Clock, Zap } from 'lucide-react';
 import { getAllTools, getFlash, getNews, pickPromo } from '@/lib/api';
 import AdSlot from '@/components/AdSlot';
 import { formatCount, formatDate } from '@/lib/format';
@@ -73,7 +73,15 @@ export default async function NewsPage({
                     </span>
                     <h2 className="mt-4 text-xl font-bold leading-8 sm:text-2xl">{headline.title}</h2>
                     <p className="mt-3 line-clamp-2 text-sm leading-6 text-white/75">{headline.digest}</p>
-                    <time className="mt-4 block text-xs text-white/50">{formatDate(headline.created)}</time>
+                    <div className="mt-4 flex items-center gap-2 text-xs text-white/50">
+                      <time>{formatDate(headline.created)}</time>
+                      {headline.readTime > 0 && (
+                        <>
+                          <span>·</span>
+                          <span className="inline-flex items-center gap-1"><Clock size={12} />{headline.readTime} 分钟阅读</span>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </Link>
               )}
@@ -86,7 +94,15 @@ export default async function NewsPage({
                   className="flex gap-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md sm:p-6"
                 >
                   <div className="min-w-0 flex-1">
-                    <time className="text-xs text-gray-400">{formatDate(item.created)}</time>
+                    <div className="flex items-center gap-2 text-xs text-gray-400">
+                      <time>{formatDate(item.created)}</time>
+                      {item.readTime > 0 && (
+                        <>
+                          <span>·</span>
+                          <span className="inline-flex items-center gap-1"><Clock size={12} />{item.readTime} 分钟阅读</span>
+                        </>
+                      )}
+                    </div>
                     <h2 className="mt-2 text-lg font-semibold leading-7 text-gray-900 dark:text-gray-100">{item.title}</h2>
                     <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-500">{item.digest}</p>
                   </div>

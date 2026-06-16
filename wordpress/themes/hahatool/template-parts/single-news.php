@@ -9,7 +9,7 @@ $cover = hh_meta($id, 'cover');
   <article class="panel" style="padding:0;overflow:hidden">
     <?php if ($cover): ?><img src="<?php echo esc_url($cover); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy" style="width:100%;aspect-ratio:2/1;object-fit:cover"><?php endif; ?>
     <div style="padding:32px">
-      <time class="muted"><?php echo esc_html(get_the_date('Y-m-d')); ?></time>
+      <div class="news-meta"><time><?php echo esc_html(get_the_date('Y-m-d')); ?></time><span>·</span><span class="rt"><?php echo hh_icon('clock', 13); ?><?php echo (int) hahatool_read_time(get_the_content()); ?> 分钟阅读</span></div>
       <h1 style="font-size:28px;margin:8px 0 0"><?php the_title(); ?></h1>
       <div class="prose" style="margin-top:20px"><?php the_content(); ?></div>
     </div>

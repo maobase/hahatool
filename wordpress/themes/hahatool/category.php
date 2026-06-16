@@ -53,14 +53,14 @@ $paged = max(1, (int)get_query_var('paged'));
           <span style="position:relative;display:block;padding:96px 28px 28px">
             <span class="chip chip-brand" style="background:rgba(124,58,237,.3);color:#ddd6fe">头条</span>
             <span style="display:block;font-size:22px;font-weight:700;margin-top:12px"><?php echo esc_html(get_the_title($headline)); ?></span>
-            <span class="muted" style="display:block;margin-top:8px"><?php echo esc_html(get_the_date('Y-m-d', $headline)); ?></span>
+            <span class="muted" style="display:flex;align-items:center;gap:8px;margin-top:8px"><time><?php echo esc_html(get_the_date('Y-m-d', $headline)); ?></time><span>·</span><span style="display:inline-flex;align-items:center;gap:3px"><?php echo hh_icon('clock', 12); ?><?php echo (int) hahatool_read_time($headline->post_content); ?> 分钟阅读</span></span>
           </span>
         </a>
       <?php endif; ?>
       <div style="margin-top:16px;display:flex;flex-direction:column;gap:16px">
         <?php foreach ($news_posts as $np): $cover = hh_meta($np->ID, 'cover'); ?>
           <a class="news-item" href="<?php echo esc_url(get_permalink($np)); ?>">
-            <div class="body"><time><?php echo esc_html(get_the_date('Y-m-d', $np)); ?></time><h3><?php echo esc_html(get_the_title($np)); ?></h3><p><?php echo esc_html(wp_trim_words(wp_strip_all_tags($np->post_content), 50)); ?></p></div>
+            <div class="body"><div class="news-meta"><time><?php echo esc_html(get_the_date('Y-m-d', $np)); ?></time><span>·</span><span class="rt"><?php echo hh_icon('clock', 12); ?><?php echo (int) hahatool_read_time($np->post_content); ?> 分钟阅读</span></div><h3><?php echo esc_html(get_the_title($np)); ?></h3><p><?php echo esc_html(wp_trim_words(wp_strip_all_tags($np->post_content), 50)); ?></p></div>
             <?php if ($cover): ?><img class="thumb" src="<?php echo esc_url($cover); ?>" alt="<?php echo esc_attr(get_the_title($np)); ?>" loading="lazy"><?php endif; ?>
           </a>
         <?php endforeach; ?>
