@@ -29,10 +29,10 @@ function pk_win($a, $b, $hi = true) {
     <div class="empty" style="margin-top:24px">暂无足够的工具数据可供对比。</div>
   <?php else: ?>
   <form method="get" action="<?php echo esc_url(home_url('/compare/')); ?>" class="panel" style="margin-top:20px;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
-    <div style="flex:1;min-width:160px"><label class="muted" style="display:block;margin-bottom:4px"><span style="color:var(--brand-600)">●</span> 选手 A</label>
+    <div style="flex:1;min-width:160px"><label class="muted" style="display:block;margin-bottom:4px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--brand-600);vertical-align:middle"></span> 选手 A</label>
       <select name="a" style="width:100%;padding:10px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text)"><?php foreach ($opts as $t): ?><option value="<?php echo esc_attr($t->post_name); ?>" <?php selected($t->ID, $A->ID); ?>><?php echo esc_html($t->post_title); ?></option><?php endforeach; ?></select></div>
     <b class="display muted">VS</b>
-    <div style="flex:1;min-width:160px"><label class="muted" style="display:block;margin-bottom:4px"><span style="color:#f59e0b">●</span> 选手 B</label>
+    <div style="flex:1;min-width:160px"><label class="muted" style="display:block;margin-bottom:4px"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f59e0b;vertical-align:middle"></span> 选手 B</label>
       <select name="b" style="width:100%;padding:10px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text)"><?php foreach ($opts as $t): ?><option value="<?php echo esc_attr($t->post_name); ?>" <?php selected($t->ID, $B->ID); ?>><?php echo esc_html($t->post_title); ?></option><?php endforeach; ?></select></div>
     <button class="btn" type="submit">开始对比</button>
   </form>

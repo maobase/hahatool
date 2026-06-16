@@ -220,9 +220,10 @@ main{padding:40px 0;}
 
 /* 星级 */
 .stars{display:inline-flex;align-items:center;gap:4px;font-size:12px;}
-.stars .bar{position:relative;display:inline-block;height:13px;}
+.stars .bar{position:relative;display:inline-block;height:14px;}
+.stars .bar .bg,.stars .bar .fg{display:flex;}
 .stars .bar .bg{color:#e5e7eb;}
-.stars .bar .fg{position:absolute;left:0;top:0;overflow:hidden;color:#f59e0b;white-space:nowrap;}
+.stars .bar .fg{position:absolute;left:0;top:0;overflow:hidden;color:#f59e0b;}
 .stars b{color:#f59e0b;font-size:12px;}
 
 /* ============================================================

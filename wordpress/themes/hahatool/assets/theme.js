@@ -93,7 +93,7 @@
       b.addEventListener('click', function (e) {
         e.preventDefault();
         var text = b.getAttribute('data-copy');
-        var done = function () { b.classList.add('done'); var o = b.textContent; b.textContent = '✓ 已复制'; setTimeout(function () { b.classList.remove('done'); b.textContent = o; }, 2000); };
+        var done = function () { b.classList.add('done'); var o = b.innerHTML; b.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-.15em"><polyline points="20 6 9 17 4 12"/></svg> 已复制'; setTimeout(function () { b.classList.remove('done'); b.innerHTML = o; }, 2000); };
         if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, done);
         else { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove(); done(); }
       });

@@ -22,6 +22,7 @@ function hh_icon($name, $size = 14, $stroke = 2) {
         'arrow-up-right' => '<line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>',
         'chevron-left' => '<polyline points="15 18 9 12 15 6"/>',
         'chevron-right' => '<polyline points="9 18 15 12 9 6"/>',
+        'arrow-right' => '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
         'search'   => '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
         'zap'      => '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
         'chart'    => '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
@@ -163,9 +164,11 @@ function hahatool_stars($rating, $show = true) {
     $r = (float)$rating;
     if (!$r) return '';
     $pct = min(100, $r / 5 * 100);
-    $full = '★★★★★';
-    $out = '<span class="stars"><span class="bar"><span class="bg">' . $full . '</span>';
-    $out .= '<span class="fg" style="width:' . $pct . '%">' . $full . '</span></span>';
+    // 五角星用 SVG（与无头版 lucide Star 一致，符合「图标用 SVG 不用字符」标准）
+    $star = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:block;flex-shrink:0"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+    $five = str_repeat($star, 5);
+    $out = '<span class="stars"><span class="bar"><span class="bg">' . $five . '</span>';
+    $out .= '<span class="fg" style="width:' . $pct . '%">' . $five . '</span></span>';
     if ($show) $out .= '<b>' . number_format($r, 1) . '</b>';
     return $out . '</span>';
 }
@@ -227,7 +230,7 @@ function hahatool_render_promo($slot, $posts) {
             <?php echo hahatool_logo($id, 56); ?>
             <div><h3><?php echo esc_html(get_the_title($id)); ?></h3><p><?php echo esc_html(hh_meta($id, 'tagline')); ?></p></div>
             <div class="promo-actions">
-                <a class="btn" href="<?php echo esc_url(hh_meta($id, 'url')); ?>" target="_blank" rel="noopener nofollow">立即体验 →</a>
+                <a class="btn" href="<?php echo esc_url(hh_meta($id, 'url')); ?>" target="_blank" rel="noopener nofollow">立即体验<?php echo hh_icon('arrow-right', 15); ?></a>
                 <a class="btn btn-ghost" href="<?php echo esc_url(get_permalink($id)); ?>">详情</a>
             </div>
         </div>

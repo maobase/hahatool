@@ -89,7 +89,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
               <div><h3 style="font-size:20px"><?php echo esc_html(get_the_title($bid)); ?></h3><p style="margin:4px 0 0;color:rgba(255,255,255,.8);font-size:14px;max-width:380px" class="clamp2"><?php echo esc_html(hh_meta($bid, 'tagline')); ?></p></div>
             </div>
             <div style="margin-top:20px;display:flex;gap:12px">
-              <a class="btn" style="background:#fff;color:var(--brand-700)" href="<?php echo esc_url(hh_meta($bid, 'url')); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$bid; ?>">立即体验 →</a>
+              <a class="btn" style="background:#fff;color:var(--brand-700)" href="<?php echo esc_url(hh_meta($bid, 'url')); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$bid; ?>">立即体验<?php echo hh_icon('arrow-right', 15); ?></a>
               <a class="btn btn-ghost" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)" href="<?php echo esc_url(get_permalink($bid)); ?>">查看详情</a>
             </div>
           </div>
@@ -100,7 +100,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
 
     <?php if ($featured): ?>
     <section class="section" id="featured">
-      <div class="section-head"><div><h2>编辑精选</h2><div class="sub">运营团队为你挑选的优质 AI 工具</div></div><a class="more" href="<?php echo esc_url(home_url('/tools/')); ?>">查看全部 ›</a></div>
+      <div class="section-head"><div><h2>编辑精选</h2><div class="sub">运营团队为你挑选的优质 AI 工具</div></div><a class="more" href="<?php echo esc_url(home_url('/tools/')); ?>">查看全部<?php echo hh_icon('chevron-right', 16); ?></a></div>
       <div class="grid">
         <?php foreach (array_slice($featured, 0, 8) as $p) hahatool_tool_card($p); wp_reset_postdata(); ?>
       </div>
@@ -108,7 +108,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
     <?php endif; ?>
 
     <section class="section" id="trending">
-      <div class="section-head"><div><h2>增长最快</h2><div class="sub">本月访问量增速最高的黑马工具</div></div><a class="more" href="<?php echo esc_url(home_url('/ranking/?by=growth')); ?>">查看增长榜 ›</a></div>
+      <div class="section-head"><div><h2>增长最快</h2><div class="sub">本月访问量增速最高的黑马工具</div></div><a class="more" href="<?php echo esc_url(home_url('/ranking/?by=growth')); ?>">查看增长榜<?php echo hh_icon('chevron-right', 16); ?></a></div>
       <div class="grid">
         <?php foreach ($trending as $i => $p) hahatool_tool_card($p, 'NO.' . ($i + 1)); wp_reset_postdata(); ?>
       </div>
@@ -119,7 +119,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
     <?php endif; ?>
 
     <section class="section">
-      <div class="section-head"><div><h2>最新收录</h2><div class="sub">刚刚加入 HahaTool 的新工具</div></div><a class="more" href="<?php echo esc_url(home_url('/tools/')); ?>">查看全部 ›</a></div>
+      <div class="section-head"><div><h2>最新收录</h2><div class="sub">刚刚加入 HahaTool 的新工具</div></div><a class="more" href="<?php echo esc_url(home_url('/tools/')); ?>">查看全部<?php echo hh_icon('chevron-right', 16); ?></a></div>
       <div class="grid">
         <?php foreach (array_slice($latest, 0, 8) as $p) hahatool_tool_card($p); wp_reset_postdata(); ?>
       </div>
@@ -129,14 +129,14 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
       $cq = hahatool_tools(['posts_per_page' => 4, 'category__and' => [], 'cat' => $cat->term_id]);
       if (!$cq->posts) continue; ?>
       <section class="section" id="cat-<?php echo esc_attr($cat->slug); ?>">
-        <div class="section-head"><div><h2><?php echo esc_html($cat->name); ?></h2><div class="sub"><?php echo esc_html($cat->description); ?></div></div><a class="more" href="<?php echo esc_url(get_category_link($cat)); ?>">全部 <?php echo (int)$cat->count; ?> 款 ›</a></div>
+        <div class="section-head"><div><h2><?php echo esc_html($cat->name); ?></h2><div class="sub"><?php echo esc_html($cat->description); ?></div></div><a class="more" href="<?php echo esc_url(get_category_link($cat)); ?>">全部 <?php echo (int)$cat->count; ?> 款<?php echo hh_icon('chevron-right', 16); ?></a></div>
         <div class="grid"><?php foreach ($cq->posts as $p) hahatool_tool_card($p); wp_reset_postdata(); ?></div>
       </section>
     <?php endforeach; ?>
 
     <?php if ($hot_prompts): ?>
     <section class="section">
-      <div class="section-head"><div><h2>热门提示词</h2><div class="sub">复制即用的高质量中文 Prompt</div></div><a class="more" href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>">进入提示词库 ›</a></div>
+      <div class="section-head"><div><h2>热门提示词</h2><div class="sub">复制即用的高质量中文 Prompt</div></div><a class="more" href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>">进入提示词库<?php echo hh_icon('chevron-right', 16); ?></a></div>
       <div class="grid grid-3"><?php foreach ($hot_prompts as $p) hahatool_prompt_card($p); wp_reset_postdata(); ?></div>
     </section>
     <?php endif; ?>
@@ -152,7 +152,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
 
     <?php if ($news): ?>
     <section class="section">
-      <div class="section-head"><div><h2>AI 资讯</h2><div class="sub">行业新闻与趋势解读</div></div><a class="more" href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">查看全部 ›</a></div>
+      <div class="section-head"><div><h2>AI 资讯</h2><div class="sub">行业新闻与趋势解读</div></div><a class="more" href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">查看全部<?php echo hh_icon('chevron-right', 16); ?></a></div>
       <div class="grid grid-3">
         <?php foreach ($news as $p): $nc = hh_meta($p->ID, 'cover'); ?>
           <a class="card news-card" href="<?php echo esc_url(get_permalink($p)); ?>">
