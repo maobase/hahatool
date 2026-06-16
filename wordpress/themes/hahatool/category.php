@@ -25,7 +25,7 @@ $paged = max(1, (int)get_query_var('paged'));
   <p class="muted" style="text-align:center;margin-top:40px;font-size:12px">有好用的提示词想分享？通过 <a href="<?php echo esc_url(home_url('/submit/')); ?>" style="color:var(--brand-600)">提交页</a> 投稿给我们</p>
 
 <?php elseif ($slug === 'ai-flash'): /* 快讯时间线（按天分组）*/ ?>
-  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="color:var(--brand-500)"><?php echo hh_icon('zap', 26); ?></span>AI 快讯</h1>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:var(--brand-600);color:#fff"><?php echo hh_icon('zap', 18); ?></span>AI 快讯</h1>
   <p class="muted">行业即时短讯 · 按时间线更新</p>
   <div style="margin-top:28px;max-width:720px">
     <?php

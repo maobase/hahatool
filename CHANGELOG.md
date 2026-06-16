@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.23] - 2026-06-16
+
+### 修复（快讯模块打磨：暗色徽章 + 标题图标 —— 参考 JustNews）
+- **快讯日期徽章暗色不可见 Bug**：`hahatool_flash_timeline` 的日期徽章硬编码 `#111827`，而暗色模式 `--surface` 恰为 `#111827`，徽章与卡面同色导致**暗色下完全不可见**。改为 `.flash-day` 类，暗色下用 `var(--brand-600)`（对齐无头版 `dark:bg-brand-600`）。影响资讯侧栏与 `/flash` 全部快讯时间线。
+- **`/flash` 标题图标对齐**：裸 `brand-500` zap 图标 → `brand-600` 圆角方块白色图标，对齐无头版 `/flash`（与 `/prompts` 风格统一）。
+- 时间线连接线 + 节点圆点经核对两版已一致（`.flash` `border-left` + `.it::before` 圆点 ≈ 无头 `border-l-2` + 绝对定位圆点）。
+- 实测：`.flash-day` 类生效、零 `#111827` 硬编码徽章残留、`/flash` 标题 zap 入 chip、`/flash` 与 `/news` 均 200 零 warning。
+- 队列（下轮）：`/news`、`/favorites` 标题图标 chip 化（含无头版 `/news` 当前无 chip），需前端重建，作专项「频道页标题一致性」迭代；以及 JustNews 招牌 **专题（Special Topics）** 系统。
+
 ## [v1.6.22] - 2026-06-16
 
 ### 优化（资讯杂志化迭代 3：首页资讯板块「头条+列表」布局 —— 参考 JustNews）

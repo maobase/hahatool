@@ -302,7 +302,7 @@ function hahatool_flash_timeline($posts, $compact = false) {
     }
     echo '<div style="display:flex;flex-direction:column;gap:22px">';
     foreach ($groups as $day => $items) {
-        echo '<section><h3 style="font-size:14px"><span style="background:#111827;color:#fff;padding:4px 10px;border-radius:8px" class="display">' . esc_html($day) . '</span></h3>';
+        echo '<section><h3 style="font-size:14px"><span class="display flash-day">' . esc_html($day) . '</span></h3>';
         echo '<div class="flash" style="margin-top:12px">';
         foreach ($items as $p) {
             echo '<div class="it"><time>' . esc_html(get_the_date('H:i', $p)) . '</time><a href="' . esc_url(get_permalink($p)) . '"><p>' . esc_html(get_the_title($p)) . '</p>';

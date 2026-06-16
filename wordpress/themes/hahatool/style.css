@@ -370,6 +370,9 @@ main{padding:40px 0;}
 .flash .it::before{content:"";position:absolute;left:-25px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--brand-400);border:2px solid var(--surface);}
 .flash time{font-family:var(--font-display);font-size:12px;font-weight:600;color:var(--brand-500);}
 .flash p{margin:2px 0 0;font-size:14px;font-weight:500;}
+/* 快讯日期徽章：暗色下改品牌色，避免与卡面 #111827 同色不可见（对齐无头版 dark:bg-brand-600）*/
+.flash-day{background:#111827;color:#fff;padding:4px 10px;border-radius:8px;}
+[data-mode="dark"] .flash-day{background:var(--brand-600);}
 
 /* 评论 */
 .comment{background:var(--surface-2);border-radius:12px;padding:14px;margin-top:12px;}
