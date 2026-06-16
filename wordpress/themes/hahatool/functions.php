@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.0.0');
+define('HAHATOOL_VERSION', '1.6.11');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -20,8 +20,8 @@ add_action('after_setup_theme', function () {
 });
 
 add_action('wp_enqueue_scripts', function () {
+    // 字体自托管在 style.css 的 @font-face（无第三方请求），版本号随主题更新刷新缓存
     wp_enqueue_style('hahatool', get_stylesheet_uri(), [], HAHATOOL_VERSION);
-    wp_enqueue_style('hahatool-font', 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap', [], null);
     wp_enqueue_script('hahatool', get_template_directory_uri() . '/assets/theme.js', [], HAHATOOL_VERSION, true);
     wp_localize_script('hahatool', 'HAHATOOL', [
         'restUrl' => esc_url_raw(rest_url()),
