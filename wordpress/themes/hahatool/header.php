@@ -29,7 +29,7 @@
       <a href="<?php echo esc_url(home_url('/news/')); ?>">AI资讯</a>
       <?php $hh_nav_cats = get_categories(['hide_empty' => true, 'exclude' => implode(',', hahatool_reserved_ids())]); if ($hh_nav_cats): ?>
       <span class="nav-dropdown">
-        <button type="button" class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">分类 ▾</button>
+        <button type="button" class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">分类<?php echo hh_icon('chevron-down', 14); ?></button>
         <div class="nav-dropdown-menu">
           <?php foreach ($hh_nav_cats as $hc): ?>
             <a href="<?php echo esc_url(get_category_link($hc)); ?>"><?php echo esc_html($hc->name); ?><span><?php echo (int)$hc->count; ?></span></a>

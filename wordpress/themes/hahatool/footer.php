@@ -11,16 +11,22 @@
       <h4>探索</h4>
       <ul>
         <li><a href="<?php echo esc_url(home_url('/tools/')); ?>">全部工具</a></li>
-        <li><a href="<?php echo esc_url(home_url('/ranking/')); ?>">排行榜</a></li>
-        <li><a href="<?php echo esc_url(home_url('/compare/')); ?>">工具 PK</a></li>
-        <li><a href="<?php echo esc_url(home_url('/prompts/')); ?>">提示词库</a></li>
+        <li><a href="<?php echo esc_url(home_url('/ranking/')); ?>">流量排行榜</a></li>
+        <li><a href="<?php echo esc_url(home_url('/ranking/?by=growth')); ?>">增长黑马榜</a></li>
+        <li><a href="<?php echo esc_url(home_url('/compare/')); ?>">工具 PK 对比</a></li>
+        <li><a href="<?php echo esc_url(home_url('/prompts/')); ?>">AI 提示词库</a></li>
+        <li><a href="<?php echo esc_url(home_url('/favorites/')); ?>">我的收藏</a></li>
+        <li><a href="<?php echo esc_url(home_url('/flash/')); ?>">AI 快讯</a></li>
+        <li><a href="<?php echo esc_url(home_url('/news/')); ?>">AI 资讯</a></li>
       </ul>
     </div>
     <div>
-      <h4>资讯</h4>
+      <h4>热门分类</h4>
       <ul>
-        <li><a href="<?php echo esc_url(home_url('/flash/')); ?>">AI 快讯</a></li>
-        <li><a href="<?php echo esc_url(home_url('/news/')); ?>">AI 资讯</a></li>
+        <?php $hh_foot_cats = get_categories(['hide_empty' => true, 'exclude' => implode(',', hahatool_reserved_ids()), 'number' => 6, 'orderby' => 'count', 'order' => 'DESC']); ?>
+        <?php foreach ($hh_foot_cats as $hc): ?>
+          <li><a href="<?php echo esc_url(get_category_link($hc)); ?>"><?php echo esc_html($hc->name); ?></a></li>
+        <?php endforeach; ?>
       </ul>
     </div>
     <div>

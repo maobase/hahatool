@@ -81,7 +81,9 @@ h1,h2,h3,h4{margin:0;line-height:1.25;}
 .nav-links .menu-only{display:none;} /* 仅在移动菜单显示（如提交工具，桌面用右侧按钮） */
 /* 分类下拉（对齐无头版）*/
 .nav-dropdown{position:relative;}
-.nav-dropdown-btn{padding:8px 10px;border-radius:10px;font-size:14px;font-weight:500;color:var(--text-2);background:none;border:none;cursor:pointer;white-space:nowrap;}
+.nav-dropdown-btn{padding:8px 10px;border-radius:10px;font-size:14px;font-weight:500;color:var(--text-2);background:none;border:none;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:3px;}
+.nav-dropdown-btn svg{transition:transform .15s;}
+.nav-dropdown:hover .nav-dropdown-btn svg,.nav-dropdown:focus-within .nav-dropdown-btn svg{transform:rotate(180deg);}
 .nav-dropdown-btn:hover{color:var(--brand-700);background:var(--brand-50);}
 [data-mode="dark"] .nav-dropdown-btn:hover{color:var(--brand-300);background:rgba(124,58,237,.15);}
 .nav-dropdown-menu{position:absolute;left:0;top:calc(100% + 6px);z-index:60;width:240px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:8px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:1fr 1fr;gap:2px;opacity:0;visibility:hidden;transform:translateY(-4px);transition:.15s;}
