@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.20] - 2026-06-16
+
+### 修复（列表页分页统一 —— 对齐无头版单一分页组件）
+迭代起点：开始以 JustNews（https://demo.wpcom.cn/justnews）杂志风格为参考，逐板块打磨资讯/专题/快讯/列表页。本轮先收口「列表页」的分页不一致：
+- 主题版此前有**三套**分页：`/tools` 自定义平铺页码（无上下页、无窗口化）、`the_posts_pagination`（快讯/资讯）、`paginate_links`（分类/标签/首页索引）；无头版统一用一个 `Pagination` 组件（chevron 上下页 + 当前页 ±2 窗口 + 首末页省略号）。
+- 新增 `hahatool_pagination($current, $total, $href_fn)` 统一助手，视觉对齐无头版（chevron SVG、`.pg` 36×36 圆角、当前页 brand 底、`…` 省略号）。
+- 全部 6 处列表分页改用该助手：`/tools`（查询参数 `paged`）、分类快讯/资讯、工具分类、标签、首页索引（后五者用 `get_pagenum_link` 适配 WP 路径式分页）。
+- 实测：`/tools` 第 1/2 页上下页 chevron + 窗口页码正确；6 条列表路由零 PHP warning、全 200；`/news` 仅 1 页时正确不渲染分页。
+
 ## [v1.6.19] - 2026-06-16
 
 ### 修复（全局组件 Header/Footer/404 两版本一致性）

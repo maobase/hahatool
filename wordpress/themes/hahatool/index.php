@@ -19,7 +19,7 @@ get_header();
         <?php endif;
       endwhile; wp_reset_postdata(); ?>
     </div>
-    <div class="pagination"><?php echo paginate_links(); ?></div>
+    <?php hahatool_pagination(max(1, (int) get_query_var('paged')), $GLOBALS['wp_query']->max_num_pages, 'get_pagenum_link'); ?>
   <?php else: ?>
     <div class="empty" style="margin-top:24px">暂无内容</div>
   <?php endif; ?>

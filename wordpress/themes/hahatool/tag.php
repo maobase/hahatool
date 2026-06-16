@@ -21,7 +21,7 @@ $others = get_tags(['hide_empty' => true, 'exclude' => [$tag->term_id], 'orderby
         if (hahatool_is_tool($p->ID)) hahatool_tool_card($p); wp_reset_postdata();
       endwhile; ?>
     </div>
-    <div class="pagination"><?php echo paginate_links(); ?></div>
+    <?php hahatool_pagination(max(1, (int) get_query_var('paged')), $GLOBALS['wp_query']->max_num_pages, 'get_pagenum_link'); ?>
   <?php else: ?>
     <div class="empty" style="margin-top:24px">该标签下暂无工具</div>
   <?php endif; ?>

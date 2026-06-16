@@ -428,9 +428,14 @@ main{padding:40px 0;}
 
 /* 通用 */
 .empty{text-align:center;padding:64px 24px;color:var(--text-3);border:1px dashed var(--border);border-radius:var(--radius);}
-.pagination{display:flex;gap:6px;justify-content:center;margin-top:32px;}
+.pagination{display:flex;gap:6px;justify-content:center;align-items:center;margin-top:32px;}
+.pagination .pg{display:inline-flex;align-items:center;justify-content:center;height:36px;min-width:36px;padding:0 8px;border-radius:10px;font-size:14px;color:var(--text-2);transition:.15s;}
+.pagination .pg:hover{background:var(--surface-2);}
+.pagination .pg.current{background:var(--brand-600);color:#fff;font-weight:500;}
+.pagination .pg-dots{padding:0 4px;color:var(--text-3);}
+/* 兼容旧 WP 原生分页类（如有遗留） */
 .pagination .page-numbers{padding:8px 12px;border-radius:10px;font-size:14px;color:var(--text-2);}
-.pagination .current{background:var(--brand-600);color:#fff;}
-.pagination a:hover{background:var(--surface-2);}
+.pagination .page-numbers.current{background:var(--brand-600);color:#fff;}
+.pagination a.page-numbers:hover{background:var(--surface-2);}
 .section-title-lg{font-size:28px;font-weight:700;margin-bottom:8px;}
 .muted{color:var(--text-3);font-size:14px;}

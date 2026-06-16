@@ -57,15 +57,10 @@ $link = function ($k, $v) use ($cat, $pricing, $sort, $base) {
     <div class="grid" style="margin-top:24px"><?php foreach (array_slice($tools, 0, 8) as $p) hahatool_tool_card($p); wp_reset_postdata(); ?></div>
     <div style="margin-top:16px"><?php hahatool_render_promo('tools-inline', $promo); ?></div>
     <?php if (count($tools) > 8): ?><div class="grid" style="margin-top:16px"><?php foreach (array_slice($tools, 8) as $p) hahatool_tool_card($p); wp_reset_postdata(); ?></div><?php endif; ?>
-    <?php if ($hh_pages > 1): ?>
-    <nav class="pagination" aria-label="分页">
-      <?php for ($hh_i = 1; $hh_i <= $hh_pages; $hh_i++):
-        $hh_args = array_filter(['cat' => $cat, 'pricing' => $pricing, 'sort' => $sort === 'latest' ? '' : $sort, 'paged' => $hh_i > 1 ? $hh_i : '']);
-        $hh_u = empty($hh_args) ? $base : add_query_arg($hh_args, $base); ?>
-        <a class="page-numbers<?php echo $hh_i === $hh_cur ? ' current' : ''; ?>" href="<?php echo esc_url($hh_u); ?>"><?php echo $hh_i; ?></a>
-      <?php endfor; ?>
-    </nav>
-    <?php endif; ?>
+    <?php hahatool_pagination($hh_cur, $hh_pages, function ($n) use ($cat, $pricing, $sort, $base) {
+      $args = array_filter(['cat' => $cat, 'pricing' => $pricing, 'sort' => $sort === 'latest' ? '' : $sort, 'paged' => $n > 1 ? $n : '']);
+      return empty($args) ? $base : add_query_arg($args, $base);
+    }); ?>
   <?php else: ?>
     <div class="empty" style="margin-top:24px">没有符合条件的工具，换个筛选条件试试。</div>
   <?php endif; ?>

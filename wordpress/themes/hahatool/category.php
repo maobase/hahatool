@@ -34,7 +34,7 @@ $paged = max(1, (int)get_query_var('paged'));
     hahatool_flash_timeline($fp);
     ?>
   </div>
-  <?php the_posts_pagination(['mid_size' => 1]); ?>
+  <?php hahatool_pagination(max(1, (int) get_query_var('paged')), $GLOBALS['wp_query']->max_num_pages, 'get_pagenum_link'); ?>
 
 <?php elseif ($slug === 'ai-news'): /* 资讯列表 + 侧栏 */
   $news_posts = []; while (have_posts()) { the_post(); $news_posts[] = get_post(); }
@@ -65,7 +65,7 @@ $paged = max(1, (int)get_query_var('paged'));
           </a>
         <?php endforeach; ?>
       </div>
-      <?php the_posts_pagination(['mid_size' => 1]); ?>
+      <?php hahatool_pagination(max(1, (int) get_query_var('paged')), $GLOBALS['wp_query']->max_num_pages, 'get_pagenum_link'); ?>
     </div>
     <aside>
       <div class="panel">
@@ -92,7 +92,7 @@ $paged = max(1, (int)get_query_var('paged'));
   <p class="muted"><?php echo esc_html($cat->description ?: '该分类下的 AI 工具'); ?> · 共 <?php echo (int)$cat->count; ?> 款</p>
   <?php if ($q->posts): ?>
     <div class="grid" style="margin-top:24px"><?php foreach ($q->posts as $p) hahatool_tool_card($p); wp_reset_postdata(); ?></div>
-    <div class="pagination"><?php echo paginate_links(['total' => $q->max_num_pages, 'current' => max(1, get_query_var('paged'))]); ?></div>
+    <?php hahatool_pagination(max(1, (int) get_query_var('paged')), $q->max_num_pages, 'get_pagenum_link'); ?>
   <?php else: ?>
     <div class="empty" style="margin-top:24px">该分类下暂无工具</div>
   <?php endif; ?>

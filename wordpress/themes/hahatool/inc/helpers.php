@@ -160,6 +160,34 @@ function hahatool_growth_badge($g) {
     return '<span class="badge ' . ($up ? 'badge-up' : 'badge-down') . '">' . $icon . ($up ? '+' : '') . $g . '%</span>';
 }
 
+/**
+ * 统一分页：chevron 上下页 + 窗口化页码（当前 ±2）+ 首末页与省略号。
+ * 与无头版 Pagination 组件视觉一致。$href_fn(页码) 返回该页 URL。
+ */
+function hahatool_pagination($current, $total, $href_fn) {
+    $total = (int) $total;
+    if ($total <= 1) return;
+    $current = max(1, min($total, (int) $current));
+    $start = max(1, $current - 2);
+    $end = min($total, $current + 2);
+    echo '<nav class="pagination" aria-label="分页">';
+    if ($current > 1) echo '<a class="pg" href="' . esc_url($href_fn($current - 1)) . '" aria-label="上一页">' . hh_icon('chevron-left', 16) . '</a>';
+    if ($start > 1) {
+        echo '<a class="pg" href="' . esc_url($href_fn(1)) . '">1</a>';
+        if ($start > 2) echo '<span class="pg-dots">…</span>';
+    }
+    for ($p = $start; $p <= $end; $p++) {
+        if ($p === $current) echo '<span class="pg current" aria-current="page">' . $p . '</span>';
+        else echo '<a class="pg" href="' . esc_url($href_fn($p)) . '">' . $p . '</a>';
+    }
+    if ($end < $total) {
+        if ($end < $total - 1) echo '<span class="pg-dots">…</span>';
+        echo '<a class="pg" href="' . esc_url($href_fn($total)) . '">' . $total . '</a>';
+    }
+    if ($current < $total) echo '<a class="pg" href="' . esc_url($href_fn($current + 1)) . '" aria-label="下一页">' . hh_icon('chevron-right', 16) . '</a>';
+    echo '</nav>';
+}
+
 /** 星级（双层填充支持小数） */
 function hahatool_stars($rating, $show = true) {
     $r = (float)$rating;
