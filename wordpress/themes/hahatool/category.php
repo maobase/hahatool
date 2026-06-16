@@ -15,13 +15,14 @@ $paged = max(1, (int)get_query_var('paged'));
   $list = $scene ? array_filter($all, fn($p) => hh_meta($p->ID, 'prompt_scene') === $scene) : $all;
   usort($list, fn($a, $b) => (float)hh_meta($b->ID, 'likes') - (float)hh_meta($a->ID, 'likes'));
 ?>
-  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="color:var(--brand-500)"><?php echo hh_icon('wand', 26); ?></span>AI 提示词库</h1>
-  <p class="muted">高质量中文提示词，按热度排序，点「复制」直接粘贴给任何 AI 使用</p>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:var(--brand-600);color:#fff"><?php echo hh_icon('wand', 18); ?></span>AI 提示词库</h1>
+  <p class="muted">高质量中文提示词，按热度排序，点击「复制」直接粘贴给任何 AI 使用</p>
   <div class="filters" style="margin-top:20px">
     <a class="<?php echo $scene ? '' : 'on'; ?>" href="<?php echo esc_url(get_category_link($cat)); ?>">全部</a>
     <?php foreach ($scenes as $s): ?><a class="<?php echo $scene === $s ? 'on' : ''; ?>" href="<?php echo esc_url(add_query_arg('scene', urlencode($s), get_category_link($cat))); ?>"><?php echo esc_html($s); ?></a><?php endforeach; ?>
   </div>
   <div class="grid grid-3" style="margin-top:24px"><?php foreach ($list as $p) hahatool_prompt_card($p); ?></div>
+  <p class="muted" style="text-align:center;margin-top:40px;font-size:12px">有好用的提示词想分享？通过 <a href="<?php echo esc_url(home_url('/submit/')); ?>" style="color:var(--brand-600)">提交页</a> 投稿给我们</p>
 
 <?php elseif ($slug === 'ai-flash'): /* 快讯时间线（按天分组）*/ ?>
   <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="color:var(--brand-500)"><?php echo hh_icon('zap', 26); ?></span>AI 快讯</h1>

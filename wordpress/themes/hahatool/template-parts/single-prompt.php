@@ -9,7 +9,7 @@ $related = array_filter($related, fn($p) => $p->ID !== $id && hh_meta($p->ID, 'p
 $related = array_slice(array_values($related), 0, 3);
 ?>
 <div class="wrap" style="padding-top:32px;max-width:840px">
-  <nav class="crumb"><a href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>">‹ 返回提示词库</a></nav>
+  <nav class="crumb"><a href="<?php echo esc_url(get_category_link_safe('ai-prompts')); ?>" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('chevron-left', 16); ?>返回提示词库</a></nav>
   <div class="panel">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
       <h1 style="font-size:26px"><?php the_title(); ?></h1>
@@ -28,7 +28,7 @@ $related = array_slice(array_values($related), 0, 3);
   <?php if ($related): ?>
   <section class="section" style="margin-top:36px">
     <h2 style="font-size:20px;margin-bottom:16px">同场景提示词</h2>
-    <div class="grid grid-3"><?php foreach ($related as $p) hahatool_prompt_card($p); ?></div>
+    <div class="grid grid-2"><?php foreach ($related as $p) hahatool_prompt_card($p); ?></div>
   </section>
   <?php endif; ?>
 </div>
