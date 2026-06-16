@@ -17,7 +17,7 @@ $trending = array_slice($tools, 0, 4);
 $latest = $all->posts; // 已按日期倒序
 
 $flash = hahatool_channel('ai-flash', 8)->posts;
-$news = hahatool_channel('ai-news', 3)->posts;
+$news = hahatool_channel('ai-news', 5)->posts;
 $prompts_q = hahatool_channel('ai-prompts', 100)->posts;
 usort($prompts_q, fn($a, $b) => (float)hh_meta($b->ID, 'likes') - (float)hh_meta($a->ID, 'likes'));
 $hot_prompts = array_slice($prompts_q, 0, 3);
@@ -153,17 +153,29 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
     <?php if ($news): ?>
     <section class="section">
       <div class="section-head"><div><h2>AI 资讯</h2><div class="sub">行业新闻与趋势解读</div></div><a class="more" href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">查看全部<?php echo hh_icon('chevron-right', 16); ?></a></div>
-      <div class="grid grid-3">
-        <?php foreach ($news as $p): $nc = hh_meta($p->ID, 'cover'); ?>
-          <a class="card news-card" href="<?php echo esc_url(get_permalink($p)); ?>">
-            <?php if ($nc): ?><img class="news-cover" src="<?php echo esc_url($nc); ?>" alt="<?php echo esc_attr(get_the_title($p)); ?>" loading="lazy"><?php endif; ?>
-            <div class="news-body">
-              <div class="news-meta"><time><?php echo esc_html(get_the_date('Y-m-d', $p)); ?></time><span>·</span><span class="rt"><?php echo hh_icon('clock', 12); ?><?php echo (int) hahatool_read_time($p->post_content); ?> 分钟阅读</span></div>
-              <h3 style="margin-top:8px"><?php echo esc_html(get_the_title($p)); ?></h3>
-              <p class="tagline"><?php echo esc_html(wp_trim_words(wp_strip_all_tags($p->post_content), 40)); ?></p>
-            </div>
-          </a>
-        <?php endforeach; ?>
+      <div class="news-feature-grid">
+        <?php $feat = $news[0]; $fc = hh_meta($feat->ID, 'cover'); ?>
+        <a class="card news-card" href="<?php echo esc_url(get_permalink($feat)); ?>">
+          <?php if ($fc): ?><img class="news-cover" style="aspect-ratio:16/9" src="<?php echo esc_url($fc); ?>" alt="<?php echo esc_attr(get_the_title($feat)); ?>" loading="lazy"><?php endif; ?>
+          <div class="news-body">
+            <div class="news-meta"><time><?php echo esc_html(get_the_date('Y-m-d', $feat)); ?></time><span>·</span><span class="rt"><?php echo hh_icon('clock', 12); ?><?php echo (int) hahatool_read_time($feat->post_content); ?> 分钟阅读</span></div>
+            <h3 style="font-size:18px;margin-top:8px"><?php echo esc_html(get_the_title($feat)); ?></h3>
+            <p class="tagline"><?php echo esc_html(wp_trim_words(wp_strip_all_tags($feat->post_content), 40)); ?></p>
+          </div>
+        </a>
+        <?php if (count($news) > 1): ?>
+        <div class="news-list">
+          <?php foreach (array_slice($news, 1, 4) as $p): $nc = hh_meta($p->ID, 'cover'); ?>
+            <a class="news-list-item" href="<?php echo esc_url(get_permalink($p)); ?>">
+              <?php if ($nc): ?><img class="news-list-thumb" src="<?php echo esc_url($nc); ?>" alt="<?php echo esc_attr(get_the_title($p)); ?>" loading="lazy"><?php endif; ?>
+              <div style="min-width:0;flex:1">
+                <h4><?php echo esc_html(get_the_title($p)); ?></h4>
+                <div class="news-meta" style="margin-top:4px"><time><?php echo esc_html(get_the_date('Y-m-d', $p)); ?></time><span>·</span><span class="rt"><?php echo hh_icon('clock', 12); ?><?php echo (int) hahatool_read_time($p->post_content); ?> 分钟阅读</span></div>
+              </div>
+            </a>
+          <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
       </div>
     </section>
     <?php endif; ?>

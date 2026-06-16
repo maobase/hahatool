@@ -26,7 +26,7 @@ export default async function HomePage() {
   const [tools, categories, news, tags, flash, prompts] = await Promise.all([
     getAllTools(),
     getToolCategories(),
-    getNews(1, 3),
+    getNews(1, 5),
     getTags(),
     getFlash(1, 6),
     getPrompts(),
@@ -294,36 +294,61 @@ export default async function HomePage() {
               </section>
             )}
 
-            {/* AI 资讯 */}
+            {/* AI 资讯（头条大图 + 紧凑列表，杂志式布局） */}
             {news.items.length > 0 && (
               <section>
                 <SectionHeader title="AI 资讯" subtitle="行业新闻与趋势解读" moreHref="/news" />
-                <div className="grid gap-4 md:grid-cols-3">
-                  {news.items.map((item) => (
-                    <Link
-                      key={item.cid}
-                      href={`/news/${item.slug}`}
-                      className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
-                    >
-                      {item.cover && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={item.cover} alt={item.title} loading="lazy" className="aspect-[2/1] w-full object-cover" />
-                      )}
-                      <div className="p-5">
-                        <div className="flex items-center gap-2 text-xs text-gray-400">
-                          <time>{formatDate(item.created)}</time>
-                          {item.readTime > 0 && (
-                            <>
-                              <span>·</span>
-                              <span className="inline-flex items-center gap-1"><Clock size={12} />{item.readTime} 分钟阅读</span>
-                            </>
-                          )}
-                        </div>
-                        <h3 className="mt-2 line-clamp-2 font-semibold leading-6 text-gray-900 dark:text-gray-100">{item.title}</h3>
-                        <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-500">{item.digest}</p>
+                <div className="grid gap-5 lg:grid-cols-2">
+                  {/* 头条 */}
+                  <Link
+                    href={`/news/${news.items[0].slug}`}
+                    className="group overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
+                  >
+                    {news.items[0].cover && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={news.items[0].cover} alt={news.items[0].title} loading="lazy" className="aspect-[16/9] w-full object-cover" />
+                    )}
+                    <div className="p-5">
+                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <time>{formatDate(news.items[0].created)}</time>
+                        {news.items[0].readTime > 0 && (
+                          <>
+                            <span>·</span>
+                            <span className="inline-flex items-center gap-1"><Clock size={12} />{news.items[0].readTime} 分钟阅读</span>
+                          </>
+                        )}
                       </div>
-                    </Link>
-                  ))}
+                      <h3 className="mt-2 line-clamp-2 text-lg font-bold leading-7 text-gray-900 dark:text-gray-100 group-hover:text-brand-700 dark:group-hover:text-brand-300">{news.items[0].title}</h3>
+                      <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-500">{news.items[0].digest}</p>
+                    </div>
+                  </Link>
+                  {/* 列表 */}
+                  <div className="divide-y divide-gray-100 dark:divide-gray-800 overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm">
+                    {news.items.slice(1, 5).map((item) => (
+                      <Link
+                        key={item.cid}
+                        href={`/news/${item.slug}`}
+                        className="group flex gap-4 p-4 transition hover:bg-brand-50/50 dark:hover:bg-brand-900/20"
+                      >
+                        {item.cover && (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={item.cover} alt={item.title} loading="lazy" className="h-16 w-24 shrink-0 rounded-lg object-cover" />
+                        )}
+                        <div className="min-w-0 flex-1">
+                          <h4 className="line-clamp-2 text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 group-hover:text-brand-700 dark:group-hover:text-brand-300">{item.title}</h4>
+                          <div className="mt-1 flex items-center gap-2 text-xs text-gray-400">
+                            <time>{formatDate(item.created)}</time>
+                            {item.readTime > 0 && (
+                              <>
+                                <span>·</span>
+                                <span className="inline-flex items-center gap-1"><Clock size={12} />{item.readTime} 分钟阅读</span>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </section>
             )}
