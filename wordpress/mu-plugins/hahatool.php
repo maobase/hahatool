@@ -59,6 +59,28 @@ add_action('rest_api_init', function () {
     ]);
 });
 
+/**
+ * 专题（Special Topics）自定义分类法 —— 跨分类的策划合集（一篇可属多个专题）。
+ * 归档 URL：/topic/<slug>/；REST：/wp-json/wp/v2/topic。封面图存 term meta `topic_cover`。
+ */
+add_action('init', function () {
+    register_taxonomy('topic', 'post', [
+        'labels' => ['name' => '专题', 'singular_name' => '专题', 'menu_name' => '专题'],
+        'public' => true,
+        'hierarchical' => false,
+        'show_in_rest' => true,
+        'show_admin_column' => true,
+        'rewrite' => ['slug' => 'topic'],
+    ]);
+    register_term_meta('topic', 'topic_cover', [
+        'type' => 'string',
+        'single' => true,
+        'show_in_rest' => true,
+        'sanitize_callback' => 'esc_url_raw',
+        'auth_callback' => fn() => current_user_can('manage_categories'),
+    ]);
+});
+
 /** 允许匿名评论（前台评论框免登录，仍受 WP 审核设置约束） */
 add_filter('rest_allow_anonymous_comments', '__return_true');
 

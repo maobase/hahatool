@@ -18,6 +18,7 @@ const NAV = [
   { href: '/prompts', label: '提示词' },
   { href: '/flash', label: 'AI快讯' },
   { href: '/news', label: 'AI资讯' },
+  { href: '/topics', label: '专题' },
 ];
 
 export default function Header({ categories }: { categories: Category[] }) {

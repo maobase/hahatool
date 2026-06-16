@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.23');
+define('HAHATOOL_VERSION', '1.6.24');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -37,6 +37,7 @@ function hahatool_routes() {
     add_rewrite_rule('^submit/?$', 'index.php?hh_page=submit', 'top');
     add_rewrite_rule('^compare/?$', 'index.php?hh_page=compare', 'top');
     add_rewrite_rule('^favorites/?$', 'index.php?hh_page=favorites', 'top');
+    add_rewrite_rule('^topics/?$', 'index.php?hh_page=topics', 'top');
     // 频道清爽 URL 别名，与无头版一致（/prompts /flash /news → 对应分类归档）
     add_rewrite_rule('^prompts/?$', 'index.php?category_name=ai-prompts', 'top');
     add_rewrite_rule('^flash/?$', 'index.php?category_name=ai-flash', 'top');
@@ -85,6 +86,7 @@ add_filter('document_title_parts', function ($parts) {
         'compare'   => 'AI 工具 PK 对比',
         'submit'    => '提交工具',
         'favorites' => '我的收藏',
+        'topics'    => '专题合集',
     ];
     $vp = get_query_var('hh_page');
     if ($vp && isset($vmap[$vp])) {
@@ -108,6 +110,7 @@ function hahatool_meta_description() {
         'compare'   => '任选两款 AI 工具，能力雷达、流量、评分、定价一屏对比。',
         'submit'    => '向 HahaTool 提交你的 AI 工具，在线表单免费收录。',
         'favorites' => '我的 AI 工具收藏夹（本机保存，无需登录）。',
+        'topics'    => '精心策划的 AI 工具专题合集，按场景与主题归类，快速找到同类好工具。',
     ];
     $vp = get_query_var('hh_page');
     if ($vp && isset($vmap[$vp])) return $vmap[$vp];

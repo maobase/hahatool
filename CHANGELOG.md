@@ -2,6 +2,17 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.24] - 2026-06-16
+
+### 新增（迭代 5：专题 Special Topics —— JustNews 招牌模块，两版同步）
+用户点名的「专题列表」此前两版皆缺。本轮落地完整可导航的专题系统：
+- **数据模型**：mu-plugin 注册 `topic` 自定义分类法（public、show_in_rest、归档 `/topic/<slug>/`）+ 封面 term meta `topic_cover`。
+- **种子**：`scripts/seed-topics.php`（幂等，wp-cli `eval-file`）创建 3 个专题（AI 视频创作 / AI 编程提效 / AI 写作助手）并关联现有工具（5/4/5）。
+- **WordPress 主题**：`/topics` 专题列表（封面卡网格）+ `taxonomy-topic.php` 专题归档（封面大图头 + 工具卡网格 + 统一分页）+ 顶栏/页脚导航「专题」+ 标题/描述 SEO + 新增 `layers` 图标与 `.topic-hero/.topic-grid/.topic-card` 样式。
+- **无头前台**：`Topic` 类型 + `getTopics()/getTopicBySlug()` API（读 `topic_cover` term meta）+ `/topics` 列表页 + `/topic/[slug]` 详情页（封面头 + ToolGrid）+ 顶栏/页脚导航「专题」。
+- 实测：WP `/topics`（3 卡）、`/topic/ai-video-create`（hero + 5 工具卡）、导航均 200 渲染、全 lint 通过；无头 `/topic/ai-video-create`（动态，200 + 5 工具卡 + 导航）即时可用；`/topics`（静态 ISR）回填后渲染 3 专题卡。
+- 后续：首页「精选专题」卡片板块（JustNews 专题介绍模块）作下轮。
+
 ## [v1.6.23] - 2026-06-16
 
 ### 修复（快讯模块打磨：暗色徽章 + 标题图标 —— 参考 JustNews）

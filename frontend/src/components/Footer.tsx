@@ -27,6 +27,7 @@ export default function Footer({ categories }: { categories: Category[] }) {
             <li><Link href="/ranking?by=growth" className="hover:text-brand-600 dark:hover:text-brand-400">增长黑马榜</Link></li>
             <li><Link href="/compare" className="hover:text-brand-600 dark:hover:text-brand-400">工具 PK 对比</Link></li>
             <li><Link href="/prompts" className="hover:text-brand-600 dark:hover:text-brand-400">AI 提示词库</Link></li>
+            <li><Link href="/topics" className="hover:text-brand-600 dark:hover:text-brand-400">专题合集</Link></li>
             <li><Link href="/favorites" className="hover:text-brand-600 dark:hover:text-brand-400">我的收藏</Link></li>
             <li><Link href="/flash" className="hover:text-brand-600 dark:hover:text-brand-400">AI 快讯</Link></li>
             <li><Link href="/news" className="hover:text-brand-600 dark:hover:text-brand-400">AI 资讯</Link></li>

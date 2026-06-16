@@ -15,6 +15,7 @@
         <li><a href="<?php echo esc_url(home_url('/ranking/?by=growth')); ?>">增长黑马榜</a></li>
         <li><a href="<?php echo esc_url(home_url('/compare/')); ?>">工具 PK 对比</a></li>
         <li><a href="<?php echo esc_url(home_url('/prompts/')); ?>">AI 提示词库</a></li>
+        <li><a href="<?php echo esc_url(home_url('/topics/')); ?>">专题合集</a></li>
         <li><a href="<?php echo esc_url(home_url('/favorites/')); ?>">我的收藏</a></li>
         <li><a href="<?php echo esc_url(home_url('/flash/')); ?>">AI 快讯</a></li>
         <li><a href="<?php echo esc_url(home_url('/news/')); ?>">AI 资讯</a></li>

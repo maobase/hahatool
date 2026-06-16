@@ -1,4 +1,14 @@
 /** 分类（WordPress category） */
+/** 专题（topic 分类法）—— 策划的工具合集 */
+export interface Topic {
+  mid: number;
+  name: string;
+  slug: string;
+  description: string;
+  cover: string;
+  count: number;
+}
+
 export interface Category {
   mid: number;
   name: string;

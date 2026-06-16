@@ -1,4 +1,4 @@
-import type { Category, NewsItem, PromptItem, Tag, Tool, WpPost } from './types';
+import type { Category, NewsItem, PromptItem, Tag, Tool, Topic, WpPost } from './types';
 
 /**
  * WordPress REST API 客户端（仅在服务端调用）。
@@ -237,6 +237,31 @@ export async function getToolsByCategory(slug: string, page = 1, pageSize = 24):
   });
   if (!data) return { tools: [], pages: 0, count: 0 };
   return { tools: data.filter(isTool).map(toTool), pages: totalPages, count: total };
+}
+
+// ---------------- 专题（Special Topics）----------------
+
+export async function getTopics(): Promise<Topic[]> {
+  const { data } = await apiGet<any[]>('wp/v2/topic', { per_page: 100, hide_empty: 'true' });
+  if (!data) return [];
+  return data
+    .map((t) => ({
+      mid: Number(t.id),
+      name: decodeEntities(String(t.name)),
+      slug: t.slug,
+      description: decodeEntities(t.description ?? ''),
+      cover: t.meta?.topic_cover ?? '',
+      count: Number(t.count) || 0,
+    }))
+    .sort((a, b) => b.count - a.count);
+}
+
+export async function getTopicBySlug(slug: string): Promise<{ topic: Topic; tools: Tool[] } | null> {
+  const topic = (await getTopics()).find((t) => t.slug === slug);
+  if (!topic) return null;
+  const { data } = await apiGet<WpPost[]>('wp/v2/posts', { topic: topic.mid, per_page: 100, _embed: 'wp:term' });
+  const tools = (data ?? []).filter(isTool).map(toTool);
+  return { topic, tools };
 }
 
 export async function searchPosts(keyword: string, page = 1, pageSize = 24): Promise<{ tools: Tool[]; prompts: PromptItem[]; news: NewsItem[]; pages: number; count: number }> {
