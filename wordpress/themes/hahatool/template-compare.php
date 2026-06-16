@@ -22,7 +22,7 @@ function pk_win($a, $b, $hi = true) {
 }
 ?>
 <div class="wrap" style="padding-top:40px;max-width:1000px">
-  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="color:var(--brand-500)"><?php echo hh_icon('swords', 26); ?></span>工具 PK</h1>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:#111827;color:#fff"><?php echo hh_icon('swords', 18); ?></span>工具 PK</h1>
   <p class="muted">任选两款工具，能力雷达、流量与定价一屏对比</p>
 
   <?php if (!$A || !$B): ?>
@@ -42,6 +42,7 @@ function pk_win($a, $b, $hi = true) {
       <div class="card" style="border:2px solid <?php echo $col; ?>">
         <div class="card-top"><?php echo hahatool_logo($T->ID, 52); ?><div><div style="display:flex;gap:8px;align-items:center"><span class="badge display" style="background:<?php echo $col; ?>;color:#fff"><?php echo $side; ?></span><a href="<?php echo esc_url(get_permalink($T)); ?>"><b><?php echo esc_html($T->post_title); ?></b></a></div><?php echo hahatool_stars(hh_meta($T->ID, 'rating')); ?></div><span class="spacer"><?php echo hahatool_growth_badge(hh_meta($T->ID, 'growth')); ?></span></div>
         <p class="tagline"><?php echo esc_html(hh_meta($T->ID, 'tagline')); ?></p>
+        <a href="<?php echo esc_url(hh_meta($T->ID, 'url')); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$T->ID; ?>" style="margin-top:12px;display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:500;color:var(--brand-600)">访问官网<?php echo hh_icon('arrow-up-right', 14); ?></a>
       </div>
     <?php endforeach; ?>
   </div>
@@ -61,15 +62,23 @@ function pk_win($a, $b, $hi = true) {
         <thead><tr style="color:var(--text-3);font-size:12px;text-align:left"><th style="padding:6px 0;width:72px">指标</th><th style="color:<?php echo $CA; ?>"><?php echo esc_html($A->post_title); ?></th><th style="color:<?php echo $CB; ?>"><?php echo esc_html($B->post_title); ?></th></tr></thead>
         <tbody>
           <?php
+          $ga = (float)hh_meta($A->ID, 'growth'); $gb = (float)hh_meta($B->ID, 'growth');
+          $catNames = fn($id) => implode(' / ', array_map(fn($c) => $c->name, array_filter(get_the_category($id), fn($c) => !in_array($c->slug, HAHATOOL_RESERVED, true)))) ?: '—';
+          $tagNames = fn($id) => ($ts = get_the_tags($id)) ? implode(' ', array_map(fn($t) => '#' . $t->name, $ts)) : '—';
+          ?>
+          <tr style="border-top:1px solid var(--border-2)"><td style="padding:10px 0;color:var(--text-3);vertical-align:top">评分</td><td style="vertical-align:top"><?php echo hahatool_stars(hh_meta($A->ID, 'rating')); echo pk_win((float)hh_meta($A->ID, 'rating'), (float)hh_meta($B->ID, 'rating')); ?></td><td style="vertical-align:top"><?php echo hahatool_stars(hh_meta($B->ID, 'rating')); ?></td></tr>
+          <?php
           $rows = [
-            ['评分', number_format((float)hh_meta($A->ID, 'rating'), 1), number_format((float)hh_meta($B->ID, 'rating'), 1), (float)hh_meta($A->ID, 'rating'), (float)hh_meta($B->ID, 'rating')],
             ['月访问量', hahatool_count(hh_meta($A->ID, 'monthly_visits')), hahatool_count(hh_meta($B->ID, 'monthly_visits')), (float)hh_meta($A->ID, 'monthly_visits'), (float)hh_meta($B->ID, 'monthly_visits')],
-            ['月增长率', hh_meta($A->ID, 'growth') . '%', hh_meta($B->ID, 'growth') . '%', (float)hh_meta($A->ID, 'growth'), (float)hh_meta($B->ID, 'growth')],
+            ['月增长率', ($ga > 0 ? '+' : '') . $ga . '%', ($gb > 0 ? '+' : '') . $gb . '%', $ga, $gb],
             ['收藏数', hahatool_count(hh_meta($A->ID, 'likes')), hahatool_count(hh_meta($B->ID, 'likes')), (float)hh_meta($A->ID, 'likes'), (float)hh_meta($B->ID, 'likes')],
             ['定价模式', hh_meta($A->ID, 'pricing', '—'), hh_meta($B->ID, 'pricing', '—'), null, null],
+            ['分类', $catNames($A->ID), $catNames($B->ID), null, null],
+            ['标签', $tagNames($A->ID), $tagNames($B->ID), null, null],
+            ['收录时间', get_the_date('Y-m-d', $A), get_the_date('Y-m-d', $B), null, null],
           ];
           foreach ($rows as $r): ?>
-            <tr style="border-top:1px solid var(--border-2)"><td style="padding:10px 0;color:var(--text-3)"><?php echo esc_html($r[0]); ?></td><td class="tnum" style="font-weight:500"><?php echo esc_html($r[1]); echo $r[3] !== null ? pk_win($r[3], $r[4]) : ''; ?></td><td class="tnum" style="font-weight:500"><?php echo esc_html($r[2]); ?></td></tr>
+            <tr style="border-top:1px solid var(--border-2)"><td style="padding:10px 0;color:var(--text-3);vertical-align:top"><?php echo esc_html($r[0]); ?></td><td class="tnum" style="font-weight:500;vertical-align:top"><?php echo esc_html($r[1]); echo $r[3] !== null ? pk_win($r[3], $r[4]) : ''; ?></td><td class="tnum" style="font-weight:500;vertical-align:top"><?php echo esc_html($r[2]); ?></td></tr>
           <?php endforeach; ?>
         </tbody>
       </table>
