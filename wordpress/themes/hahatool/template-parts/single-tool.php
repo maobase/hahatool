@@ -2,6 +2,7 @@
 /** 工具详情 */
 if (!defined('ABSPATH')) exit;
 $id = get_the_ID();
+$slug = get_post_field('post_name', $id);
 $url = hh_meta($id, 'url');
 $cats = array_filter(get_the_category($id), fn($c) => !in_array($c->slug, HAHATOOL_RESERVED, true));
 $main = $cats ? reset($cats) : null;
@@ -57,10 +58,10 @@ $breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 
           </div>
         </div>
         <div class="detail-stats">
-          <span><?php echo hh_icon('bookmark', 15); ?> <?php echo hahatool_count(hh_meta($id, 'likes')); ?> 收藏</span>
-          <span><?php echo hh_icon('trending', 15); ?> 月访问 <?php echo hahatool_count(hh_meta($id, 'monthly_visits')); ?></span>
-          <?php if ((int)hh_meta($id, 'views')): ?><span><?php echo hh_icon('eye', 15); ?> <?php echo hahatool_count(hh_meta($id, 'views')); ?> 浏览</span><?php endif; ?>
-          <span><?php echo hh_icon('calendar', 15); ?> <?php echo esc_html(get_the_date('Y-m-d')); ?> 收录</span>
+          <span><span style="color:var(--brand-500)"><?php echo hh_icon('bookmark', 15); ?></span> <?php echo hahatool_count(hh_meta($id, 'likes')); ?> 收藏</span>
+          <span><span style="color:#10b981"><?php echo hh_icon('trending', 15); ?></span> 月访问 <?php echo hahatool_count(hh_meta($id, 'monthly_visits')); ?></span>
+          <span><span style="color:var(--text-3)"><?php echo hh_icon('calendar', 15); ?></span> <?php echo esc_html(get_the_date('Y-m-d')); ?> 收录</span>
+          <?php if ((int)hh_meta($id, 'views')): ?><span><span style="color:#0ea5e9"><?php echo hh_icon('eye', 15); ?></span> <?php echo hahatool_count(hh_meta($id, 'views')); ?> 浏览</span><?php endif; ?>
           <?php echo hahatool_pricing_badge(hh_meta($id, 'pricing')); ?>
         </div>
       </div>
@@ -134,7 +135,10 @@ $breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 
 
       <?php if (count($scores) >= 3): ?>
       <div class="panel" style="margin-top:24px">
-        <h2 style="font-size:16px;margin-bottom:8px">能力雷达</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <h2 style="font-size:16px">能力雷达</h2>
+          <a href="<?php echo esc_url(home_url('/compare/?a=' . $slug)); ?>" style="font-size:12px;color:var(--brand-600)">发起 PK →</a>
+        </div>
         <div class="radar-wrap"><?php echo hahatool_radar_svg($scores, 280); ?></div>
       </div>
       <?php endif; ?>
@@ -146,13 +150,16 @@ $breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 
         <h2 style="font-size:16px;margin-bottom:10px"><?php the_title(); ?> 的替代品 <span class="muted">按流量</span></h2>
         <div class="rank-list">
           <?php foreach ($alt as $i => $t): ?>
-          <a class="rank-item" href="<?php echo esc_url(get_permalink($t)); ?>">
+          <div class="rank-item" style="position:relative">
+            <a href="<?php echo esc_url(get_permalink($t)); ?>" aria-label="查看 <?php echo esc_attr(get_the_title($t)); ?> 详情" style="position:absolute;inset:0;border-radius:12px;z-index:0"></a>
             <span class="num"><?php echo $i + 1; ?></span>
             <?php echo hahatool_logo($t->ID, 36); ?>
             <span style="min-width:0;flex:1"><span style="display:block;font-weight:500;font-size:14px" class="truncate"><?php echo esc_html(get_the_title($t)); ?></span><span class="muted" style="font-size:12px">月访问 <?php echo hahatool_count(hh_meta($t->ID, 'monthly_visits')); ?></span></span>
-          </a>
+            <a href="<?php echo esc_url(home_url('/compare/?a=' . $slug . '&b=' . $t->post_name)); ?>" class="alt-pk" style="position:relative;z-index:1;flex-shrink:0;padding:4px 10px;border-radius:999px;background:var(--surface-2);color:var(--text-3);font-size:11px;font-weight:500" aria-label="<?php echo esc_attr(get_the_title() . ' 与 ' . get_the_title($t) . ' 对比'); ?>">PK</a>
+          </div>
           <?php endforeach; ?>
         </div>
+        <?php if ($main): ?><a href="<?php echo esc_url(get_category_link($main)); ?>" style="margin-top:12px;display:block;text-align:center;font-size:14px;color:var(--brand-600)">查看<?php echo esc_html($main->name); ?>全部工具 →</a><?php endif; ?>
       </div>
       <?php endif; ?>
     </aside>

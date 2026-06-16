@@ -319,6 +319,8 @@ main{padding:40px 0;}
 [data-mode="dark"] .rank-item:hover{background:rgba(124,58,237,.12);}
 .rank-item .num{width:20px;text-align:center;font-family:var(--font-display);font-weight:700;color:var(--text-3);}
 .rank-item .logo{width:36px;height:36px;}
+.alt-pk{transition:.15s;}
+.alt-pk:hover{background:var(--brand-600)!important;color:#fff!important;}
 /* 排行榜列表（第 4 名起）：桌面三列数据 + 列头，移动端仅留排名/工具，与无头版一致 */
 .rk-head{display:flex;align-items:center;gap:16px;margin-top:24px;padding:0 14px 8px;font-size:12px;font-weight:500;color:var(--text-3);}
 .rk-list{margin-top:8px;display:flex;flex-direction:column;gap:8px;}
