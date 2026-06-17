@@ -45,9 +45,9 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
       <?php endforeach; ?>
     </div>
     <div class="hero-stats">
-      <div><div class="n tnum"><?php echo count($all->posts); ?><span>+</span></div><div class="l">收录工具</div></div>
-      <div><div class="n tnum"><?php echo count($tool_cats); ?><span>+</span></div><div class="l">工具分类</div></div>
-      <div><div class="n tnum"><?php echo $weekly_new; ?><span>+</span></div><div class="l">本周新增</div></div>
+      <div><div class="n tnum"><?php echo count($all->posts); ?><?php if (count($all->posts) > 0): ?><span>+</span><?php endif; ?></div><div class="l">收录工具</div></div>
+      <div><div class="n tnum"><?php echo count($tool_cats); ?><?php if (count($tool_cats) > 0): ?><span>+</span><?php endif; ?></div><div class="l">工具分类</div></div>
+      <div><div class="n tnum"><?php echo $weekly_new; ?><?php if ($weekly_new > 0): ?><span>+</span><?php endif; ?></div><div class="l">本周新增</div></div>
     </div>
   </div>
 </section>

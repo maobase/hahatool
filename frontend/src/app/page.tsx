@@ -110,7 +110,7 @@ export default async function HomePage() {
               <div key={s.label} className="px-4 text-center">
                 <dd className="font-display text-3xl font-bold tabular-nums text-white sm:text-4xl">
                   {s.value}
-                  <span className="text-brand-400">+</span>
+                  {s.value > 0 && <span className="text-brand-400">+</span>}
                 </dd>
                 <dt className="mt-1 text-xs text-gray-400">{s.label}</dt>
               </div>
