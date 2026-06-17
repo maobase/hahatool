@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Clock, Newspaper, Zap } from 'lucide-react';
-import { getAllTools, getFlash, getNews, pickPromo } from '@/lib/api';
+import { getAllTools, getFlash, getHotNews, getNews, pickPromo } from '@/lib/api';
 import AdSlot from '@/components/AdSlot';
 import { formatCount, formatDate } from '@/lib/format';
 import EmptyState from '@/components/EmptyState';
 import FlashTimeline from '@/components/FlashTimeline';
+import HotNewsWidget from '@/components/HotNewsWidget';
 import Pagination from '@/components/Pagination';
 import ToolLogo from '@/components/ToolLogo';
 
@@ -23,10 +24,11 @@ export default async function NewsPage({
 }) {
   const { page: pageParam } = await searchParams;
   const page = Math.max(1, Number(pageParam) || 1);
-  const [{ items, pages }, flash, tools] = await Promise.all([
+  const [{ items, pages }, flash, tools, hotNews] = await Promise.all([
     getNews(page, 10),
     getFlash(1, 6),
     getAllTools(),
+    getHotNews(5),
   ]);
   const [headline, ...rest] = items;
   const hotTools = [...tools].sort((a, b) => b.monthlyVisits - a.monthlyVisits).slice(0, 5);
@@ -143,6 +145,8 @@ export default async function NewsPage({
               <FlashTimeline items={flash.items} compact />
             </div>
           </div>
+
+          <HotNewsWidget items={hotNews} />
 
           {hotTools.length > 0 && (
             <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm">

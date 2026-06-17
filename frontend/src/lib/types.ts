@@ -109,5 +109,7 @@ export interface NewsItem {
   cover: string;
   /** 预计阅读时长（分钟） */
   readTime: number;
+  /** 站内浏览量（用于热门资讯榜排序） */
+  views: number;
   contentHtml?: string;
 }

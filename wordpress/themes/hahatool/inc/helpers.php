@@ -350,6 +350,29 @@ function hahatool_radar_dual($a, $b, $size = 300, $ca = 'var(--brand-600)', $cb 
     return $svg . '</svg>';
 }
 
+/** 热门资讯榜面板（按站内浏览量 views 排序）—— 资讯侧栏复用 */
+function hahatool_hot_news_panel($limit = 5) {
+    $q = new WP_Query([
+        'post_type' => 'post',
+        'category_name' => 'ai-news',
+        'posts_per_page' => $limit,
+        'meta_key' => 'views',
+        'orderby' => 'meta_value_num',
+        'order' => 'DESC',
+        'no_found_rows' => true,
+    ]);
+    if (!$q->have_posts()) return;
+    echo '<div class="panel" style="margin-top:24px"><h2 style="font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:5px"><span style="color:#f97316">' . hh_icon('flame', 16) . '</span>热门资讯</h2><div class="rank-list">';
+    $i = 0;
+    while ($q->have_posts()) {
+        $q->the_post();
+        $i++;
+        echo '<a class="rank-item" href="' . esc_url(get_permalink()) . '"><span class="num">' . $i . '</span><span class="clamp2" style="flex:1;min-width:0;font-size:13px;font-weight:500;line-height:1.4">' . esc_html(get_the_title()) . '</span><span class="muted tnum" style="flex-shrink:0;font-size:12px;display:inline-flex;align-items:center;gap:3px">' . hh_icon('eye', 12) . hahatool_count(hh_meta(get_the_ID(), 'views')) . '</span></a>';
+    }
+    wp_reset_postdata();
+    echo '</div></div>';
+}
+
 /** 取运营位工具（promo 字段） */
 function hahatool_promo($slot, $limit = 1, $exclude = 0) {
     $q = hahatool_tools([

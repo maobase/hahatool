@@ -2,10 +2,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Clock, Zap } from 'lucide-react';
-import { getAllTools, getFlash, getNews, getNewsBySlug } from '@/lib/api';
+import { getAllTools, getFlash, getHotNews, getNews, getNewsBySlug } from '@/lib/api';
 import { formatCount, formatDate } from '@/lib/format';
 import FlashTimeline from '@/components/FlashTimeline';
+import HotNewsWidget from '@/components/HotNewsWidget';
 import ToolLogo from '@/components/ToolLogo';
+import TrackView from '@/components/TrackView';
 
 export const revalidate = 60;
 
@@ -17,11 +19,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [item, list, flash, tools] = await Promise.all([
+  const [item, list, flash, tools, hotNews] = await Promise.all([
     getNewsBySlug(slug),
     getNews(1, 50),
     getFlash(1, 6),
     getAllTools(),
+    getHotNews(5),
   ]);
   if (!item || !item.contentHtml) notFound();
 
@@ -34,6 +37,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+      <TrackView cid={item.cid} />
       <Link href="/news" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-brand-600 dark:hover:text-brand-400">
         <ChevronLeft size={16} />
         返回资讯列表
@@ -137,6 +141,8 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
               <FlashTimeline items={flash.items} compact />
             </div>
           </div>
+
+          <HotNewsWidget items={hotNews} />
 
           {hotTools.length > 0 && (
             <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm">

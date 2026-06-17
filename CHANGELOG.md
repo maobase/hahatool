@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.31] - 2026-06-18
+
+### 新增（迭代 12：热门资讯榜侧栏组件 + 资讯浏览量 —— JustNews 排行模块）
+内容变丰富后补齐 JustNews 招牌的侧栏排行组件，资讯有了真实的「热度」信号：
+- **资讯浏览量**：扩展站内浏览上报到资讯文章（WP `wp_footer` 钩子对 ai-news 也输出 `__HAHATOOL_TRACK__`，无头版资讯详情加 `<TrackView>`），`views` meta 累计；并 seed 10 篇资讯初始浏览量使排行即时有意义。
+- **热门资讯榜**（按 `views` 排序，Top 5）：主题版新增 `hahatool_hot_news_panel()` 助手，无头版新增 `HotNewsWidget` 组件 + `getHotNews()` API（`NewsItem.views` 入 `toNews`）。
+- 资讯列表页 `/news` 与资讯详情侧栏均加入该榜（快讯 → **热门资讯** → 本周热门工具）。
+- 实测：WP `/news`+详情 热门资讯榜 5 条带浏览量眼睛图标、200 零 warning；无头 `/news`+`/news/<slug>` 榜渲染（flame 标题 + eye 浏览量）、200，构建通过。
+
 ## [v1.6.30] - 2026-06-17
 
 ### 内容（迭代 11：补充资讯/快讯种子，让杂志式板块更饱满）

@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.28');
+define('HAHATOOL_VERSION', '1.6.31');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -168,10 +168,14 @@ add_action('wp_head', function () {
     }
 }, 5);
 
-/** 工具详情页：输出站内浏览自增信号（theme.js 调用 REST /hahatool/v1/track） */
+/** 工具/资讯详情页：输出站内浏览自增信号（theme.js 调用 REST /hahatool/v1/track） */
 add_action('wp_footer', function () {
-    if (is_singular('post') && hahatool_is_tool(get_queried_object_id())) {
-        echo '<script>window.__HAHATOOL_TRACK__=' . (int)get_queried_object_id() . ';</script>';
+    if (!is_singular('post')) return;
+    $id = get_queried_object_id();
+    // 工具与资讯文章都累计 views（资讯用于「热门资讯榜」排序）
+    $is_news = has_category('ai-news', $id);
+    if (hahatool_is_tool($id) || $is_news) {
+        echo '<script>window.__HAHATOOL_TRACK__=' . (int)$id . ';</script>';
     }
 });
 

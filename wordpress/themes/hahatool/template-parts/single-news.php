@@ -56,6 +56,7 @@ $hot = array_slice($hot, 0, 5);
         <div style="display:flex;justify-content:space-between;align-items:center"><h2 style="font-size:16px;display:flex;align-items:center;gap:5px"><?php echo hh_icon('zap', 16); ?>AI 快讯</h2><a class="muted" style="font-size:12px" href="<?php echo esc_url(get_category_link_safe('ai-flash')); ?>">全部 →</a></div>
         <div style="margin-top:14px"><?php hahatool_flash_timeline($side_flash, true); ?></div>
       </div>
+      <?php hahatool_hot_news_panel(); ?>
       <?php if ($hot): ?>
       <div class="panel" style="margin-top:24px">
         <h2 style="font-size:16px;margin-bottom:10px">本周热门工具</h2>
