@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.39] - 2026-06-18
+
+### 新增（迭代 20：专题详情结构化数据 CollectionPage —— 结构化数据收口）
+专题页此前有 meta + OG 但无结构化数据。两版补 **CollectionPage + ItemList**（专题=工具合集，列出成员工具）+ **BreadcrumbList**（首页/专题/名称）。
+- 主题版 `taxonomy-topic.php` 用 `$wp_query->posts` 构造 ItemList；无头版 `topic/[slug]` 用 `tools` 数组构造。
+- 至此结构化数据全覆盖：工具 `SoftwareApplication`、资讯 `NewsArticle`、专题 `CollectionPage+ItemList`，均配 `BreadcrumbList`。
+- 实测：WP 与无头版专题详情均输出 CollectionPage(含 5 工具 ItemList)+BreadcrumbList、JSON 合法、200、构建通过。
+
 ## [v1.6.38] - 2026-06-18
 
 ### 修复（迭代 19：资讯/专题详情 OG 社交卡片补全）

@@ -4,7 +4,28 @@ if (!defined('ABSPATH')) exit;
 get_header();
 $term = get_queried_object();
 $cover = $term ? get_term_meta($term->term_id, 'topic_cover', true) : '';
+
+// 结构化数据：CollectionPage + ItemList（专题=工具合集）+ 面包屑
+$tax_items = [];
+foreach ($GLOBALS['wp_query']->posts as $tax_i => $tax_p) {
+    $tax_items[] = ['@type' => 'ListItem', 'position' => $tax_i + 1, 'name' => get_the_title($tax_p), 'url' => get_permalink($tax_p)];
+}
+$tax_ld = array_filter([
+    '@context' => 'https://schema.org',
+    '@type' => 'CollectionPage',
+    'name' => $term->name,
+    'description' => $term->description ?: null,
+    'url' => get_term_link($term),
+    'mainEntity' => $tax_items ? ['@type' => 'ItemList', 'itemListElement' => $tax_items] : null,
+]);
+$tax_crumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => [
+    ['@type' => 'ListItem', 'position' => 1, 'name' => '首页', 'item' => home_url('/')],
+    ['@type' => 'ListItem', 'position' => 2, 'name' => '专题', 'item' => home_url('/topics/')],
+    ['@type' => 'ListItem', 'position' => 3, 'name' => $term->name, 'item' => get_term_link($term)],
+]];
 ?>
+<script type="application/ld+json"><?php echo wp_json_encode($tax_ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
+<script type="application/ld+json"><?php echo wp_json_encode($tax_crumb, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
 <div class="wrap" style="padding-top:32px">
   <nav class="crumb"><a href="<?php echo esc_url(home_url('/topics/')); ?>" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('chevron-left', 16); ?>全部专题</a></nav>
   <header class="topic-hero"<?php if ($cover): ?> style="background-image:linear-gradient(120deg,rgba(3,7,18,.62),rgba(3,7,18,.86)),url('<?php echo esc_url($cover); ?>')"<?php endif; ?>>

@@ -32,8 +32,33 @@ export default async function TopicDetailPage({ params }: { params: Promise<{ sl
   if (!data) notFound();
   const { topic, tools } = data;
 
+  // 结构化数据：CollectionPage + ItemList（专题=工具合集）+ 面包屑
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/+$/, '');
+  const collectionLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: topic.name,
+    description: topic.description,
+    url: `${siteUrl}/topic/${topic.slug}`,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: tools.map((t, i) => ({ '@type': 'ListItem', position: i + 1, name: t.title, url: `${siteUrl}/tool/${t.slug}` })),
+    },
+  };
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '首页', item: `${siteUrl}/` },
+      { '@type': 'ListItem', position: 2, name: '专题', item: `${siteUrl}/topics` },
+      { '@type': 'ListItem', position: 3, name: topic.name, item: `${siteUrl}/topic/${topic.slug}` },
+    ],
+  };
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <Link href="/topics" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-brand-600 dark:hover:text-brand-400">
         <ChevronLeft size={16} />
         全部专题
