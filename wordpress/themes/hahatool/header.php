@@ -10,6 +10,7 @@
     (function(){try{var t=JSON.parse(localStorage.getItem('hahatool:theme')||'{}');var m=t.mode||'light';var d=m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);var e=document.documentElement;e.setAttribute('data-mode',d?'dark':'light');if(t.accent)e.setAttribute('data-accent',t.accent);}catch(e){}})();</script>
 </head>
 <body <?php body_class(); ?>>
+<a class="skip-link" href="#main-content">跳到主要内容</a>
 <header class="site-header">
   <div class="wrap nav">
     <a class="brand" href="<?php echo esc_url(home_url('/')); ?>">
@@ -68,3 +69,4 @@
     </div>
   </div>
 </header>
+<span id="main-content" tabindex="-1"></span>

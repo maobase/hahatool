@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.40] - 2026-06-18
+
+### 新增（迭代 21：无障碍审计 + 跳到主要内容链接）
+系统性 a11y 审计：图片 `alt`、图标按钮 `aria-label`、`:focus-visible` 焦点环、`prefers-reduced-motion`（快讯跑马灯）经核查**均已具备**。唯一标准缺口——**跳到主要内容（skip link）**缺失，两版补齐：
+- 主题版 `header.php` body 首元素加 `.skip-link`（默认屏外、聚焦时显示品牌色按钮）+ 头部后置 `#main-content` 目标。
+- 无头版 `layout.tsx` 加 `sr-only focus:not-sr-only` 跳转链接 + `<main id="main">`。
+- 键盘/读屏用户首次 Tab 即可一键跳过导航直达正文。
+- 实测：WP skip-link + `#main-content`、无头 skip link + `<main id="main">` 均渲染，构建通过。
+
 ## [v1.6.39] - 2026-06-18
 
 ### 新增（迭代 20：专题详情结构化数据 CollectionPage —— 结构化数据收口）
