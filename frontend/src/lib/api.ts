@@ -142,10 +142,10 @@ function toNews(p: WpPost): NewsItem {
   };
 }
 
-/** 热门资讯榜（按站内浏览量 views 排序） */
-export async function getHotNews(limit = 5): Promise<NewsItem[]> {
+/** 热门资讯榜（按站内浏览量 views 排序）；excludeCid 排除当前文章 */
+export async function getHotNews(limit = 5, excludeCid = 0): Promise<NewsItem[]> {
   const { items } = await getNews(1, 30);
-  return [...items].sort((a, b) => b.views - a.views).slice(0, limit);
+  return [...items].filter((n) => n.cid !== excludeCid).sort((a, b) => b.views - a.views).slice(0, limit);
 }
 
 /** 是否为「工具」文章（有 url 字段且不属于保留分类） */

@@ -19,14 +19,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [item, list, flash, tools, hotNews] = await Promise.all([
+  const [item, list, flash, tools, hotNewsRaw] = await Promise.all([
     getNewsBySlug(slug),
     getNews(1, 50),
     getFlash(1, 6),
     getAllTools(),
-    getHotNews(5),
+    getHotNews(6),
   ]);
   if (!item || !item.contentHtml) notFound();
+  const hotNews = hotNewsRaw.filter((n) => n.cid !== item.cid).slice(0, 5);
 
   // 上一篇/下一篇（列表按时间倒序）
   const idx = list.items.findIndex((n) => n.slug === slug);

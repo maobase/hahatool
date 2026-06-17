@@ -350,9 +350,9 @@ function hahatool_radar_dual($a, $b, $size = 300, $ca = 'var(--brand-600)', $cb 
     return $svg . '</svg>';
 }
 
-/** 热门资讯榜面板（按站内浏览量 views 排序）—— 资讯侧栏复用 */
-function hahatool_hot_news_panel($limit = 5) {
-    $q = new WP_Query([
+/** 热门资讯榜面板（按站内浏览量 views 排序）—— 资讯侧栏复用；$exclude 排除当前文章 */
+function hahatool_hot_news_panel($limit = 5, $exclude = 0) {
+    $args = [
         'post_type' => 'post',
         'category_name' => 'ai-news',
         'posts_per_page' => $limit,
@@ -360,7 +360,9 @@ function hahatool_hot_news_panel($limit = 5) {
         'orderby' => 'meta_value_num',
         'order' => 'DESC',
         'no_found_rows' => true,
-    ]);
+    ];
+    if ($exclude) $args['post__not_in'] = [(int) $exclude];
+    $q = new WP_Query($args);
     if (!$q->have_posts()) return;
     echo '<div class="panel" style="margin-top:24px"><h2 style="font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:5px"><span style="color:#f97316">' . hh_icon('flame', 16) . '</span>热门资讯</h2><div class="rank-list">';
     $i = 0;
