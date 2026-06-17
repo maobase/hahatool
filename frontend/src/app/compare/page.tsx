@@ -16,7 +16,8 @@ export const metadata: Metadata = {
   description: '任选两款 AI 工具，能力雷达、流量、评分、定价一屏对比。',
 };
 
-const COLOR_A = '#7c3aed';
+// 选手 A 用品牌色（随 4 套主题色自适应，对齐 WP 版 var(--brand-600)）；选手 B 用固定琥珀色作对比
+const COLOR_A = 'rgb(var(--brand-600))';
 const COLOR_B = '#f59e0b';
 
 function Winner({ a, b, higherWins = true }: { a: number; b: number; higherWins?: boolean }) {
