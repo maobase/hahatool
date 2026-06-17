@@ -45,7 +45,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
           <article className="overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm">
             {item.cover && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={item.cover} alt={`${item.title} 封面`} className="aspect-[2/1] w-full object-cover" />
+              <img src={item.cover} alt={`${item.title} 封面`} className="aspect-[2/1] w-full bg-gray-100 dark:bg-gray-800 object-cover" />
             )}
             <div className="p-6 sm:p-10">
               <div className="flex items-center gap-2 text-sm text-gray-400">

@@ -337,7 +337,7 @@ export default async function HomePage() {
                   >
                     {news.items[0].cover && (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={news.items[0].cover} alt={news.items[0].title} loading="lazy" className="aspect-[16/9] w-full object-cover" />
+                      <img src={news.items[0].cover} alt={news.items[0].title} loading="lazy" className="aspect-[16/9] w-full bg-gray-100 dark:bg-gray-800 object-cover" />
                     )}
                     <div className="p-5">
                       <div className="flex items-center gap-2 text-xs text-gray-400">
@@ -363,7 +363,7 @@ export default async function HomePage() {
                       >
                         {item.cover && (
                           // eslint-disable-next-line @next/next/no-img-element
-                          <img src={item.cover} alt={item.title} loading="lazy" className="h-16 w-24 shrink-0 rounded-lg object-cover" />
+                          <img src={item.cover} alt={item.title} loading="lazy" className="h-16 w-24 shrink-0 rounded-lg bg-gray-100 dark:bg-gray-800 object-cover" />
                         )}
                         <div className="min-w-0 flex-1">
                           <h4 className="line-clamp-2 text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 group-hover:text-brand-700 dark:group-hover:text-brand-300">{item.title}</h4>

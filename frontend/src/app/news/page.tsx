@@ -117,7 +117,7 @@ export default async function NewsPage({
                       src={item.cover}
                       alt={item.title}
                       loading="lazy"
-                      className="hidden h-24 w-40 shrink-0 rounded-xl object-cover sm:block"
+                      className="hidden h-24 w-40 shrink-0 rounded-xl bg-gray-100 dark:bg-gray-800 object-cover sm:block"
                     />
                   )}
                 </Link>
