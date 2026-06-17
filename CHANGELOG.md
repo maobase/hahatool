@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.36] - 2026-06-18
+
+### 修复（迭代 17：sitemap 补全专题 URL —— SEO）
+专题系统（v1.6.24）的 URL 此前未进无头版 sitemap（专题内容不可被搜索引擎发现）：
+- 无头版 `sitemap.ts` 补 `/topics` 索引 + 各 `/topic/<slug>` 归档（`getTopics()` 并入）。
+- 主题版经核对 `wp-sitemap.xml` 已自动包含 `wp-sitemap-taxonomies-topic-1.xml`（公开分类法自动收录），无需改动。
+- 实测：无头 `/sitemap.xml` 含 `/topics` + 3 个 `/topic/<slug>`、200、构建通过。
+
 ## [v1.6.35] - 2026-06-18
 
 ### 新增（迭代 16：资讯详情结构化数据 NewsArticle —— SEO 深化）
