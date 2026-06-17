@@ -5,7 +5,7 @@ get_header();
 $tools = hahatool_tools(['posts_per_page' => 300])->posts;
 ?>
 <div class="wrap" style="padding-top:40px">
-  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="color:#e11d48"><?php echo hh_icon('heart', 24); ?></span>我的收藏</h1>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:#e11d48;color:#fff"><?php echo hh_icon('heart', 18); ?></span>我的收藏</h1>
   <p class="muted">收藏保存在本机浏览器中，无需登录</p>
 
   <div id="favEmpty" class="empty" style="margin-top:24px;display:none">

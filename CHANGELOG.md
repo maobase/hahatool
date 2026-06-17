@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.26] - 2026-06-17
+
+### 优化（迭代 7：频道页标题图标 chip 一致性 —— 两版同步）
+统一所有频道/落地页标题的图标处理：此前 `/prompts`·`/flash`·`/topics`·`/compare` 已是圆角方块 chip，但 `/news`（无头版无图标、主题版裸图标）与 `/favorites`（两版裸图标）不一致。
+- `/news`：newspaper 图标入 `brand-600` 圆角方块 chip（两版）。
+- `/favorites`：heart 图标入 `rose` 圆角方块 chip（两版，填充心形）。
+- 至此全部频道/落地页标题图标风格统一。
+- 实测：WP `/news` newspaper chip、`/favorites` rose chip，均 200 零 warning；无头版 `/news`（lucide-newspaper chip）、`/favorites`（bg-rose-600 chip）均 200，构建通过。
+
 ## [v1.6.25] - 2026-06-17
 
 ### 新增（迭代 6：首页「精选专题」板块 —— JustNews 专题介绍模块，两版同步）

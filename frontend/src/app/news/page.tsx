@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Clock, Zap } from 'lucide-react';
+import { Clock, Newspaper, Zap } from 'lucide-react';
 import { getAllTools, getFlash, getNews, pickPromo } from '@/lib/api';
 import AdSlot from '@/components/AdSlot';
 import { formatCount, formatDate } from '@/lib/format';
@@ -33,7 +33,12 @@ export default async function NewsPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl">AI 资讯</h1>
+      <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-gray-100 sm:text-3xl">
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white">
+          <Newspaper size={18} />
+        </span>
+        AI 资讯
+      </h1>
       <p className="mt-2 text-sm text-gray-500">行业新闻、趋势解读与工具动态</p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-3">

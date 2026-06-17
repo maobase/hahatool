@@ -42,7 +42,7 @@ $paged = max(1, (int)get_query_var('paged'));
   $side_flash = hahatool_channel('ai-flash', 6)->posts;
   $hot = hahatool_hot_tools(5);
 ?>
-  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="color:var(--brand-500)"><?php echo hh_icon('newspaper', 26); ?></span>AI 资讯</h1>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:var(--brand-600);color:#fff"><?php echo hh_icon('newspaper', 18); ?></span>AI 资讯</h1>
   <p class="muted">行业新闻、趋势解读与工具动态</p>
   <div class="detail-grid" style="margin-top:24px">
     <div>
