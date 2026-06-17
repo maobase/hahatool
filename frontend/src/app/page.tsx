@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { ArrowRight, Clock, Flame, Megaphone, Sparkles } from 'lucide-react';
-import { getAllTools, getFlash, getNews, getPrompts, getTags, getToolCategories, pickPromo } from '@/lib/api';
+import { ArrowRight, Clock, Flame, Layers, Megaphone, Sparkles } from 'lucide-react';
+import { getAllTools, getFlash, getNews, getPrompts, getTags, getToolCategories, getTopics, pickPromo } from '@/lib/api';
 import AdSlot from '@/components/AdSlot';
 import NewsTicker from '@/components/NewsTicker';
 import PromptCard from '@/components/PromptCard';
@@ -23,16 +23,18 @@ function weeklyNew(created: number[]): number {
 }
 
 export default async function HomePage() {
-  const [tools, categories, news, tags, flash, prompts] = await Promise.all([
+  const [tools, categories, news, tags, flash, prompts, topics] = await Promise.all([
     getAllTools(),
     getToolCategories(),
     getNews(1, 5),
     getTags(),
     getFlash(1, 6),
     getPrompts(),
+    getTopics(),
   ]);
   const midPromo = pickPromo(tools, 'home-mid', 1);
   const hotPrompts = [...prompts].sort((a, b) => b.likes - a.likes).slice(0, 3);
+  const homeTopics = topics.slice(0, 3);
 
   const banners = tools.filter((t) => t.banner).slice(0, 2);
   const featured = tools.filter((t) => t.featured).slice(0, 8);
@@ -225,6 +227,35 @@ export default async function HomePage() {
                       </span>
                       <ToolCard tool={tool} />
                     </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 精选专题 */}
+            {homeTopics.length > 0 && (
+              <section>
+                <SectionHeader title="精选专题" subtitle="按场景策划的 AI 工具合集" moreHref="/topics" moreText="全部专题" />
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {homeTopics.map((t) => (
+                    <Link
+                      key={t.slug}
+                      href={`/topic/${t.slug}`}
+                      className="group flex flex-col overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition hover:-translate-y-1 hover:border-brand-300 hover:shadow-md"
+                    >
+                      <div
+                        className="h-32 bg-gradient-to-br from-brand-500 to-brand-800 bg-cover bg-center"
+                        style={t.cover ? { backgroundImage: `url(${t.cover})` } : undefined}
+                      />
+                      <div className="flex flex-1 flex-col gap-1.5 p-5">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-brand-700 dark:group-hover:text-brand-300">{t.name}</h3>
+                        <p className="line-clamp-2 text-sm leading-6 text-gray-500">{t.description}</p>
+                        <span className="mt-auto inline-flex items-center gap-1 pt-2 text-xs text-gray-400">
+                          <Layers size={12} />
+                          {t.count} 个工具
+                        </span>
+                      </div>
+                    </Link>
                   ))}
                 </div>
               </section>

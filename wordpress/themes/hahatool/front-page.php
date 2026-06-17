@@ -22,6 +22,7 @@ $prompts_q = hahatool_channel('ai-prompts', 100)->posts;
 usort($prompts_q, fn($a, $b) => (float)hh_meta($b->ID, 'likes') - (float)hh_meta($a->ID, 'likes'));
 $hot_prompts = array_slice($prompts_q, 0, 3);
 $mid_promo = hahatool_promo('home-mid', 1);
+$home_topics = get_terms(['taxonomy' => 'topic', 'hide_empty' => true, 'number' => 3, 'orderby' => 'count', 'order' => 'DESC']);
 
 $hot_kw = ['AI写作', 'AI绘画', '视频生成', 'AI编程', '数字人', 'AI音乐'];
 $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC', 'number' => 16]);
@@ -113,6 +114,24 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
         <?php foreach ($trending as $i => $p) hahatool_tool_card($p, 'NO.' . ($i + 1)); wp_reset_postdata(); ?>
       </div>
     </section>
+
+    <?php if (!empty($home_topics) && !is_wp_error($home_topics)): ?>
+    <section class="section">
+      <div class="section-head"><div><h2>精选专题</h2><div class="sub">按场景策划的 AI 工具合集</div></div><a class="more" href="<?php echo esc_url(home_url('/topics/')); ?>">全部专题<?php echo hh_icon('chevron-right', 16); ?></a></div>
+      <div class="topic-grid">
+        <?php foreach ($home_topics as $t): $cover = get_term_meta($t->term_id, 'topic_cover', true); ?>
+          <a class="topic-card" href="<?php echo esc_url(get_term_link($t)); ?>">
+            <span class="topic-card-cover"<?php if ($cover): ?> style="background-image:url('<?php echo esc_url($cover); ?>')"<?php endif; ?>></span>
+            <span class="topic-card-body">
+              <span class="topic-card-title"><?php echo esc_html($t->name); ?></span>
+              <span class="topic-card-desc"><?php echo esc_html($t->description); ?></span>
+              <span class="muted" style="font-size:12px;display:inline-flex;align-items:center;gap:4px;margin-top:auto"><?php echo hh_icon('layers', 12); ?><?php echo (int) $t->count; ?> 个工具</span>
+            </span>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    </section>
+    <?php endif; ?>
 
     <?php if ($mid_promo): ?>
       <section class="section"><?php hahatool_render_promo('home-mid', $mid_promo); ?></section>
