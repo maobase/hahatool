@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.38] - 2026-06-18
+
+### 修复（迭代 19：资讯/专题详情 OG 社交卡片补全）
+社交分享卡片完整性核查，补齐缺失的 `og:image` 与文章级描述：
+- **无头版资讯详情**：`generateMetadata` 此前仅设 title → 描述回退站点默认、无 `og:image`。补 description（资讯摘要）+ `openGraph`（type=article + 封面图）+ Twitter 卡片。
+- **无头版专题详情**：`generateMetadata` 补 `openGraph` 封面图（topic cover）+ Twitter 卡片。
+- **主题版专题归档**：`wp_head` OG 钩子补 `is_tax('topic')` 分支，`og:image` 用专题封面（此前仅文章有 OG 图）。
+- 实测：无头资讯详情 `og:image`=文章封面 + `og:type=article`；无头/主题专题详情 `og:image`=专题封面；200、构建通过。
+
 ## [v1.6.37] - 2026-06-18
 
 ### 修复（迭代 18：主题版专题归档页 SEO 标题/描述）

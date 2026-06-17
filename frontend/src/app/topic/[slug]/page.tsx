@@ -12,7 +12,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const data = await getTopicBySlug(slug);
   if (!data) return { title: '专题' };
-  return { title: `${data.topic.name} - 专题`, description: data.topic.description };
+  const title = `${data.topic.name} - 专题`;
+  const image = data.topic.cover || undefined;
+  return {
+    title,
+    description: data.topic.description,
+    openGraph: {
+      title,
+      description: data.topic.description,
+      ...(image && { images: [{ url: image }] }),
+    },
+    ...(image && { twitter: { card: 'summary_large_image', title, images: [image] } }),
+  };
 }
 
 export default async function TopicDetailPage({ params }: { params: Promise<{ slug: string }> }) {

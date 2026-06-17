@@ -14,7 +14,24 @@ export const revalidate = 60;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const item = await getNewsBySlug(slug);
-  return { title: item?.title ?? '资讯详情' };
+  if (!item) return { title: '资讯详情' };
+  const image = item.cover || undefined;
+  return {
+    title: item.title,
+    description: item.digest,
+    openGraph: {
+      title: item.title,
+      description: item.digest,
+      type: 'article',
+      ...(image && { images: [{ url: image }] }),
+    },
+    twitter: {
+      card: image ? 'summary_large_image' : 'summary',
+      title: item.title,
+      description: item.digest,
+      ...(image && { images: [image] }),
+    },
+  };
 }
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {

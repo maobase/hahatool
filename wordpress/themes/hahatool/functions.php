@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.37');
+define('HAHATOOL_VERSION', '1.6.38');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -153,6 +153,9 @@ add_action('wp_head', function () {
         $type = 'article';
         $image = hh_meta($id, 'cover') ?: hh_meta($id, 'screenshot');
         if (!$image && hh_meta($id, 'url')) $image = 'https://s0.wp.com/mshots/v1/' . rawurlencode(hh_meta($id, 'url')) . '?w=1200';
+    } elseif (is_tax('topic')) {
+        // 专题归档：用专题封面作 OG 图
+        $image = get_term_meta(get_queried_object_id(), 'topic_cover', true);
     }
     // 频道页规范链接指向清爽 URL（/prompts /flash /news），避免与 /category/ 重复内容
     if (is_category()) {
