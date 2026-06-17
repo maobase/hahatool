@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.37] - 2026-06-18
+
+### 修复（迭代 18：主题版专题归档页 SEO 标题/描述）
+主题版 `/topic/<slug>` 归档页的 meta 描述此前**回退到站点默认**（"发现最好用的 AI 网站和工具"），未用专题自身描述；文档标题也无「专题」标识。`hahatool_meta_description()`/`document_title_parts` 未处理 `is_tax('topic')`。
+- 补 `is_tax('topic')` 分支：meta 描述用专题 term 描述（回退「…精选 AI 工具专题合集」），标题为「{专题名} - 专题」。
+- 与无头版 `generateMetadata`（`topic.description`）口径一致。
+- 实测：WP `/topic/ai-video-create/` 标题「AI 视频创作 – 专题 – HahaTool」、描述为专题自身文案、lint 通过。
+
 ## [v1.6.36] - 2026-06-18
 
 ### 修复（迭代 17：sitemap 补全专题 URL —— SEO）

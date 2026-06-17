@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.35');
+define('HAHATOOL_VERSION', '1.6.37');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -98,6 +98,8 @@ add_filter('document_title_parts', function ($parts) {
         if (hahatool_is_tool($id) && $tagline) {
             $parts['title'] = get_the_title($id) . ' - ' . $tagline;
         }
+    } elseif (is_tax('topic')) {
+        $parts['title'] = single_term_title('', false) . ' - 专题';
     }
     return $parts;
 }, 20);
@@ -131,6 +133,10 @@ function hahatool_meta_description() {
     if (is_tag()) {
         $t = get_queried_object();
         return $t->name . ' 相关 AI 工具 —— HahaTool 收录整理。';
+    }
+    if (is_tax('topic')) {
+        $t = get_queried_object();
+        return $t->description ?: ($t->name . ' —— 精选 AI 工具专题合集，按场景与主题归类。');
     }
     if (is_search()) return '搜索 AI 工具、提示词与资讯。';
     return get_bloginfo('description');
