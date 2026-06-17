@@ -51,6 +51,15 @@
 
 用户可见功能与体验已完全一致；剩余两项为框架/平台层面的技术差异（非用户可见功能），见上方说明。经 v1.6.0–v1.6.28 的团队打磨 + JustNews 杂志风参考迭代，功能、视觉、无障碍、SEO、性能、安全、响应式各维度均已对齐并通过桌面/移动截图 QA。
 
+## 全量回归认证（v1.6.40，2026-06-18）
+
+经 21 轮 JustNews 参考迭代后的完整回归，两版均健康：
+- **路由**：两版各 14–15 条核心路由（首页/工具库/排行/PK/资讯/快讯/提示词/专题/收藏/提交/各类详情/搜索/sitemap）全部 HTTP 200。
+- **交互端点**：站内浏览上报 `/hahatool/v1/track` 正常自增（资讯 views 实测 +1）、无头 `/api/track` 代理 200、搜索命中正常。
+- **SEO/社交**：结构化数据全覆盖（工具 SoftwareApplication / 资讯 NewsArticle / 专题 CollectionPage+ItemList，均配 BreadcrumbList）；资讯/专题 OG 大图卡；`robots.txt` 两版均含 Sitemap 指令。
+- **无障碍**：alt / 图标 aria-label / `:focus-visible` 焦点环 / `prefers-reduced-motion` / skip-link 跳主内容 均具备。
+- **多维 QA**：桌面浅/深、移动 375px、4 套主题色截图核验均通过，零横向溢出。
+
 ## 已评估为「非问题」
 
 - **无头 RSC 预取报 requestfailed**：导航时中断的 React Server Component 预取，直接请求全部 200，属 Next.js 正常行为。
