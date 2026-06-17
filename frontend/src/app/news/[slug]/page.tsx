@@ -29,6 +29,31 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
   if (!item || !item.contentHtml) notFound();
   const hotNews = hotNewsRaw.filter((n) => n.cid !== item.cid).slice(0, 5);
 
+  // 结构化数据：NewsArticle + 面包屑（资讯 SEO，对齐工具详情做法）
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/+$/, '');
+  const isoDate = new Date(item.created * 1000).toISOString();
+  const newsLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: item.title,
+    datePublished: isoDate,
+    dateModified: isoDate,
+    ...(item.cover && { image: [item.cover] }),
+    description: item.digest,
+    mainEntityOfPage: `${siteUrl}/news/${item.slug}`,
+    author: { '@type': 'Organization', name: 'HahaTool' },
+    publisher: { '@type': 'Organization', name: 'HahaTool' },
+  };
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '首页', item: `${siteUrl}/` },
+      { '@type': 'ListItem', position: 2, name: 'AI 资讯', item: `${siteUrl}/news` },
+      { '@type': 'ListItem', position: 3, name: item.title, item: `${siteUrl}/news/${item.slug}` },
+    ],
+  };
+
   // 上一篇/下一篇（列表按时间倒序）
   const idx = list.items.findIndex((n) => n.slug === slug);
   const newer = idx > 0 ? list.items[idx - 1] : null;
@@ -39,6 +64,8 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <TrackView cid={item.cid} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(newsLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <Link href="/news" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-brand-600 dark:hover:text-brand-400">
         <ChevronLeft size={16} />
         返回资讯列表

@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.35] - 2026-06-18
+
+### 新增（迭代 16：资讯详情结构化数据 NewsArticle —— SEO 深化）
+此前工具详情有 SoftwareApplication + BreadcrumbList JSON-LD，但**资讯文章无任何结构化数据**（新闻类内容的 SEO 短板）。两版补齐：
+- 资讯详情输出 **NewsArticle**（headline / datePublished / dateModified / image / description / mainEntityOfPage / author / publisher）+ **BreadcrumbList**（首页 / AI 资讯 / 标题）。
+- 主题版用 `wp_json_encode`（`get_the_date('c')` ISO 时间）；无头版用 `siteUrl` + `new Date(created*1000).toISOString()`，对齐工具详情写法。
+- 实测：WP 与无头版资讯详情均输出 NewsArticle + BreadcrumbList、JSON 合法、200、构建通过。
+
 ## [v1.6.34] - 2026-06-18
 
 ### 优化（迭代 15：多主题色 QA 验证 + 首页统计「0+」修正）

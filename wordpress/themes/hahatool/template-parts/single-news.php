@@ -8,7 +8,29 @@ $side_flash = hahatool_channel('ai-flash', 6)->posts;
 $hot = hahatool_tools(['posts_per_page' => 200])->posts;
 usort($hot, fn($a, $b) => (float) hh_meta($b->ID, 'monthly_visits') - (float) hh_meta($a->ID, 'monthly_visits'));
 $hot = array_slice($hot, 0, 5);
+
+// 结构化数据：NewsArticle + 面包屑（资讯 SEO，对齐工具详情的 JSON-LD 做法）
+$nl_article = array_filter([
+    '@context' => 'https://schema.org',
+    '@type' => 'NewsArticle',
+    'headline' => get_the_title(),
+    'datePublished' => get_the_date('c'),
+    'dateModified' => get_the_modified_date('c'),
+    'image' => $cover ? [$cover] : null,
+    'description' => mb_substr(wp_strip_all_tags(get_the_excerpt()), 0, 160),
+    'mainEntityOfPage' => get_permalink(),
+    'author' => ['@type' => 'Organization', 'name' => get_bloginfo('name')],
+    'publisher' => ['@type' => 'Organization', 'name' => get_bloginfo('name')],
+]);
+$nl_crumbs = [
+    ['@type' => 'ListItem', 'position' => 1, 'name' => '首页', 'item' => home_url('/')],
+    ['@type' => 'ListItem', 'position' => 2, 'name' => 'AI 资讯', 'item' => get_category_link_safe('ai-news')],
+    ['@type' => 'ListItem', 'position' => 3, 'name' => get_the_title(), 'item' => get_permalink()],
+];
+$nl_breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => $nl_crumbs];
 ?>
+<script type="application/ld+json"><?php echo wp_json_encode($nl_article, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
+<script type="application/ld+json"><?php echo wp_json_encode($nl_breadcrumb, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
 <div class="wrap" style="padding-top:32px">
   <nav class="crumb"><a href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('chevron-left', 16); ?>返回资讯列表</a></nav>
   <div class="detail-grid" style="margin-top:16px">
