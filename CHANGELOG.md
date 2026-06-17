@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.27] - 2026-06-17
+
+### 优化（迭代 8：资讯详情页升级为两栏杂志布局 + 侧栏 —— 参考 JustNews 文章页）
+JustNews 文章页带侧栏排行/推荐组件，而本站资讯详情此前是窄单栏。两版同步升级为杂志式两栏：
+- 资讯详情改为「正文主栏（≈2/3）+ 侧栏」：主栏含封面/正文/上下篇/相关资讯；侧栏含 **AI 快讯时间线** + **本周热门工具榜**（复用列表页侧栏组件，无新增数据）。
+- 主题版复用 `.detail-grid`/`hahatool_flash_timeline`/`.rank-list`；无头版复用 `FlashTimeline`/`ToolLogo`，`getFlash`+`getAllTools` 并入详情页 `Promise.all`。
+- 实测：WP `/ai-video-review/` 两栏 + 侧栏（快讯 + 5 热门工具）、200 零 warning；无头版 `/news/<slug>` `lg:col-span-2` 两栏 + 侧栏（快讯 + 5 热门工具链接）、200，构建通过。
+
 ## [v1.6.26] - 2026-06-17
 
 ### 优化（迭代 7：频道页标题图标 chip 一致性 —— 两版同步）
