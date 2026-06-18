@@ -31,6 +31,7 @@ $nl_breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList
 ?>
 <script type="application/ld+json"><?php echo wp_json_encode($nl_article, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
 <script type="application/ld+json"><?php echo wp_json_encode($nl_breadcrumb, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
+<div class="read-progress" id="readProgress" aria-hidden="true"></div>
 <div class="wrap" style="padding-top:32px">
   <nav class="crumb"><a href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('chevron-left', 16); ?>返回资讯列表</a></nav>
   <div class="detail-grid" style="margin-top:16px">
@@ -40,6 +41,17 @@ $nl_breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList
         <div style="padding:32px">
           <div class="news-meta"><time><?php echo esc_html(get_the_date('Y-m-d')); ?></time><span>·</span><span class="rt"><?php echo hh_icon('clock', 13); ?><?php echo (int) hahatool_read_time(get_the_content()); ?> 分钟阅读</span></div>
           <h1 style="font-size:28px;margin:8px 0 0"><?php the_title(); ?></h1>
+          <?php
+          $share_url = get_permalink();
+          $share_title = get_the_title();
+          $weibo = 'https://service.weibo.com/share/share.php?url=' . rawurlencode($share_url) . '&title=' . rawurlencode($share_title . ' — ' . get_bloginfo('name'));
+          ?>
+          <div class="article-share" data-share-url="<?php echo esc_attr($share_url); ?>" data-share-title="<?php echo esc_attr($share_title); ?>">
+            <span class="muted" style="font-size:13px">分享</span>
+            <a class="share-btn" href="<?php echo esc_url($weibo); ?>" target="_blank" rel="noopener nofollow" aria-label="分享到微博"><?php echo hh_icon('message', 14); ?>微博</a>
+            <button type="button" class="share-btn" data-share-copy aria-label="复制文章链接"><?php echo hh_icon('link', 14); ?>复制链接</button>
+            <button type="button" class="share-btn" data-share-native hidden aria-label="系统分享"><?php echo hh_icon('share', 14); ?>分享</button>
+          </div>
           <div class="prose" style="margin-top:20px"><?php the_content(); ?></div>
         </div>
       </article>

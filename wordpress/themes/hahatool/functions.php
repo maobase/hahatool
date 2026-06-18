@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.50');
+define('HAHATOOL_VERSION', '1.6.52');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -177,6 +177,18 @@ add_action('wp_head', function () {
     if ($image) {
         echo '<meta property="og:image" content="' . esc_url($image) . "\">\n";
         echo '<meta name="twitter:image" content="' . esc_url($image) . "\">\n";
+    }
+    // 文章页补充 OpenGraph article:* 元信息（资讯/提示词/工具详情）—— 利于社媒与新闻聚合识别
+    if (is_singular('post')) {
+        $pid = get_queried_object_id();
+        echo '<meta property="article:published_time" content="' . esc_attr(get_the_date('c', $pid)) . "\">\n";
+        echo '<meta property="article:modified_time" content="' . esc_attr(get_the_modified_date('c', $pid)) . "\">\n";
+        echo '<meta property="article:publisher" content="' . esc_url(home_url('/')) . "\">\n";
+        $cats = get_the_category($pid);
+        if (!empty($cats)) echo '<meta property="article:section" content="' . esc_attr($cats[0]->name) . "\">\n";
+        foreach ((get_the_tags($pid) ?: []) as $tg) {
+            echo '<meta property="article:tag" content="' . esc_attr($tg->name) . "\">\n";
+        }
     }
 }, 5);
 

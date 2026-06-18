@@ -149,6 +149,49 @@
         }).catch(function () {});
       }
     }
+    // 阅读进度条（文章页）：滚动比例 → scaleX，rAF 节流
+    var bar = document.getElementById('readProgress');
+    if (bar) {
+      var ticking = false;
+      var update = function () {
+        var doc = document.documentElement;
+        var max = (doc.scrollHeight - doc.clientHeight);
+        var r = max > 0 ? Math.min(1, Math.max(0, (doc.scrollTop || document.body.scrollTop) / max)) : 0;
+        bar.style.transform = 'scaleX(' + r + ')';
+        ticking = false;
+      };
+      window.addEventListener('scroll', function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+      }, { passive: true });
+      window.addEventListener('resize', update, { passive: true });
+      update();
+    }
+
+    // 文章分享：复制链接 + 系统分享（移动端）
+    var shareWrap = document.querySelector('.article-share');
+    if (shareWrap) {
+      var sUrl = shareWrap.getAttribute('data-share-url') || location.href;
+      var sTitle = shareWrap.getAttribute('data-share-title') || document.title;
+      var copyBtn = shareWrap.querySelector('[data-share-copy]');
+      if (copyBtn) copyBtn.addEventListener('click', function () {
+        var done = function () {
+          copyBtn.classList.add('done');
+          var o = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-.15em"><polyline points="20 6 9 17 4 12"/></svg> 已复制';
+          setTimeout(function () { copyBtn.classList.remove('done'); copyBtn.innerHTML = o; }, 2000);
+        };
+        if (navigator.clipboard) navigator.clipboard.writeText(sUrl).then(done, done);
+        else { var ta = document.createElement('textarea'); ta.value = sUrl; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove(); done(); }
+      });
+      var nativeBtn = shareWrap.querySelector('[data-share-native]');
+      if (nativeBtn && navigator.share) {
+        nativeBtn.hidden = false;
+        nativeBtn.addEventListener('click', function () {
+          navigator.share({ title: sTitle, url: sUrl }).catch(function () {});
+        });
+      }
+    }
+
     // 官网点击统计
     document.querySelectorAll('[data-track-click]').forEach(function (a) {
       a.addEventListener('click', function () {

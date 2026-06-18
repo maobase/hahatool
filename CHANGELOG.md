@@ -2,6 +2,16 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.52] - 2026-06-19
+
+### 体验 + SEO（迭代 10：资讯阅读体验升级 —— 目标 #1 #2 #4）
+模仿 JustNews 强化资讯文章页的阅读体验，并补齐文章级 OpenGraph。
+- **阅读进度条**：文章顶部细进度条，滚动比例 → `scaleX`（rAF 节流、`transform` 动画、尊重 `prefers-reduced-motion`），品牌渐变。
+- **文章分享行**：微博分享、复制链接（剪贴板 + execCommand 兜底、「已复制」反馈）、系统分享（`navigator.share`，移动端自动显隐）。触控目标 40px、明暗双色、`brand-*` hover。
+- **文章级 OG 元信息**：`article:published_time` / `modified_time` / `section` / `publisher` / `tag`（所有 `is_singular('post')` 文章）。
+- 新增 `link` / `share` 两枚 lucide 图标到 `hh_icon()`。
+- 实测线上：文章页输出进度条/分享行/article:* 元信息，资源刷新到 `?ver=1.6.52`，share-btn 40px 已生效，文章 200。
+
 ## [v1.6.50] - 2026-06-19
 
 ### SEO（迭代 9：首页站点级结构化数据 —— 目标 #4）
