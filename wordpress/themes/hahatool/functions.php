@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.46');
+define('HAHATOOL_VERSION', '1.6.50');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -179,6 +179,34 @@ add_action('wp_head', function () {
         echo '<meta name="twitter:image" content="' . esc_url($image) . "\">\n";
     }
 }, 5);
+
+/** 首页站点级结构化数据：WebSite（含站内搜索 SearchAction）+ Organization —— SEO/Sitelinks 搜索框 */
+add_action('wp_head', function () {
+    if (!is_front_page() && !is_home()) return;
+    $home = home_url('/');
+    $name = get_bloginfo('name');
+    $website = [
+        '@context' => 'https://schema.org',
+        '@type' => 'WebSite',
+        'name' => $name,
+        'url' => $home,
+        'inLanguage' => 'zh-CN',
+        'potentialAction' => [
+            '@type' => 'SearchAction',
+            'target' => ['@type' => 'EntryPoint', 'urlTemplate' => $home . '?s={search_term_string}'],
+            'query-input' => 'required name=search_term_string',
+        ],
+    ];
+    $org = [
+        '@context' => 'https://schema.org',
+        '@type' => 'Organization',
+        'name' => $name,
+        'url' => $home,
+        'description' => get_bloginfo('description'),
+    ];
+    echo "\n<script type=\"application/ld+json\">" . wp_json_encode($website, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "</script>\n";
+    echo '<script type="application/ld+json">' . wp_json_encode($org, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "</script>\n";
+}, 6);
 
 /** 工具/资讯详情页：输出站内浏览自增信号（theme.js 调用 REST /hahatool/v1/track） */
 add_action('wp_footer', function () {

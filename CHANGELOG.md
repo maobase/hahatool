@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.50] - 2026-06-19
+
+### SEO（迭代 9：首页站点级结构化数据 —— 目标 #4）
+首页此前无任何结构化数据。新增 `WebSite` + `Organization` JSON-LD：
+- `WebSite` 含 `SearchAction`（`target = /?s={search_term_string}`）—— 启用 Google 站内链接搜索框（Sitelinks Searchbox）。
+- `Organization` 确立站点实体（name/url/description）。
+- 仅首页输出（`is_front_page`），`inLanguage: zh-CN`。
+- 实测线上：首页输出 WebSite/Organization/SearchAction/EntryPoint，SearchAction target 正确，首页 200。
+
 ## [v1.6.49] - 2026-06-19
 
 ### 内容（迭代 8：增量真实资讯第二批 + 多设备 QA）
