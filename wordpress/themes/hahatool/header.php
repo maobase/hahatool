@@ -13,9 +13,14 @@
 <a class="skip-link" href="#main-content">跳到主要内容</a>
 <header class="site-header">
   <div class="wrap nav">
+    <?php
+    // 站名「HahaTool 哈哈工具」按首个空格拆成 英文字标 + 中文副标，避免与旧版写死的 <small> 重复
+    $hh_name = get_bloginfo('name');
+    $hh_brand = preg_split('/\s+/', $hh_name, 2);
+    ?>
     <a class="brand" href="<?php echo esc_url(home_url('/')); ?>">
       <span class="brand-logo"><?php echo hh_icon('sparkles', 18); ?></span>
-      <span><?php bloginfo('name'); ?><small>哈哈工具</small></span>
+      <span><?php echo esc_html($hh_brand[0]); ?><?php if (!empty($hh_brand[1])): ?><small><?php echo esc_html($hh_brand[1]); ?></small><?php endif; ?></span>
     </a>
     <nav class="nav-links" id="navLinks">
       <form class="nav-links-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">

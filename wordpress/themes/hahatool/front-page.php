@@ -8,6 +8,10 @@ $tools = $all->posts;
 $tool_cats = get_categories(['hide_empty' => true, 'exclude' => implode(',', hahatool_reserved_ids())]);
 $week_ago = time() - 7 * 86400;
 $weekly_new = count(array_filter($tools, fn($p) => strtotime($p->post_date_gmt . ' UTC') > $week_ago));
+// 第三项 hero 统计：优先「本周新增」，为 0 时回退「AI 资讯」总数，避免 hero 出现「0」
+$hh_news_total = (int) (($hh_nc = get_category_by_slug('ai-news')) ? $hh_nc->count : 0);
+if ($weekly_new > 0) { $stat3_n = $weekly_new; $stat3_l = '本周新增'; }
+else { $stat3_n = $hh_news_total; $stat3_l = 'AI 资讯'; }
 
 // 派生板块
 $banners = array_slice(array_values(array_filter($tools, fn($p) => hh_meta($p->ID, 'banner') === '1')), 0, 2);
@@ -47,7 +51,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
     <div class="hero-stats">
       <div><div class="n tnum"><?php echo count($all->posts); ?><?php if (count($all->posts) > 0): ?><span>+</span><?php endif; ?></div><div class="l">收录工具</div></div>
       <div><div class="n tnum"><?php echo count($tool_cats); ?><?php if (count($tool_cats) > 0): ?><span>+</span><?php endif; ?></div><div class="l">工具分类</div></div>
-      <div><div class="n tnum"><?php echo $weekly_new; ?><?php if ($weekly_new > 0): ?><span>+</span><?php endif; ?></div><div class="l">本周新增</div></div>
+      <div><div class="n tnum"><?php echo $stat3_n; ?><?php if ($stat3_n > 0): ?><span>+</span><?php endif; ?></div><div class="l"><?php echo esc_html($stat3_l); ?></div></div>
     </div>
   </div>
 </section>
