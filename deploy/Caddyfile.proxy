@@ -1,0 +1,14 @@
+# 生产：hahatool-frontend(caddy) 监听 :3000，反代到 WordPress，并为静态资源加长缓存 + 压缩。
+# Cloudflare Tunnel → 本代理 → hahatool-wordpress:80。WP 给资源带 ?ver= 版本号，故可 immutable。
+:3000 {
+	encode zstd gzip
+
+	# 静态资源：长缓存 + immutable（主题资源/上传图片/字体等）
+	@static path *.css *.js *.mjs *.woff2 *.woff *.ttf *.otf *.png *.jpg *.jpeg *.webp *.avif *.gif *.svg *.ico
+	header @static Cache-Control "public, max-age=31536000, immutable"
+
+	# wp-json / 动态页不强缓存（交由 WP / Cloudflare 规则）
+	reverse_proxy hahatool-wordpress:80 {
+		header_up X-Forwarded-Proto https
+	}
+}

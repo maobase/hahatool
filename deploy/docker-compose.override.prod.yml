@@ -1,0 +1,14 @@
+# 生产服务器 /opt/haha-apps/hahatool 实际使用的 override（仅维护 WordPress 版）。
+# 把 Cloudflare Tunnel 的目标容器 hahatool-frontend 由 Next.js 改为 Caddy 反代 → WordPress，
+# 并对静态资源加长缓存 + 压缩（配置见 deploy/Caddyfile.proxy）。隧道 ingress 无需改动。
+services:
+  frontend:
+    image: caddy:2-alpine
+    command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    volumes:
+      - ./deploy/Caddyfile.proxy:/etc/caddy/Caddyfile:ro
+    networks: [hahatool, hahanet]
+networks:
+  hahanet:
+    external: true
+    name: manyan_default

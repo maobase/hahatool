@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.47] - 2026-06-19
+
+### 部署/性能（迭代 6：静态资源缓存策略 —— 目标 #3 上半）
+线上代理此前用 `caddy reverse-proxy` 快捷命令，无缓存头（主题 CSS 仅 `max-age=14400`、未压缩、CF MISS）。改为正式 Caddyfile：
+- 新增 `deploy/Caddyfile.proxy`：静态资源（css/js/字体/图片）`Cache-Control: public, max-age=31536000, immutable` + `encode zstd gzip`；HTML/wp-json 不强缓存。
+- 服务器 override 改为挂载该 Caddyfile（`deploy/docker-compose.override.prod.yml` 入库存档），重建 frontend 代理容器。
+- 实测线上：theme CSS 现 `max-age=31536000, immutable` + `content-encoding: gzip` + `vary`；HTML 未被长缓存；首页/热榜/资讯/工具/专题全 200。WP 资源带 `?ver=` 版本号，immutable 安全。
+- 下半（#3 对象存储）：MinIO 桶 + 公网路由 + WP 媒体卸载 + 真实封面图，下轮推进。
+
 ## [v1.6.46] - 2026-06-19
 
 ### 内容（迭代 5：填充真实 AI/科技资讯 —— 目标 #2）
