@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.52');
+define('HAHATOOL_VERSION', '1.6.55');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -154,8 +154,8 @@ add_action('wp_head', function () {
     if (is_singular('post')) {
         $id = get_queried_object_id();
         $type = 'article';
-        $image = hh_meta($id, 'cover') ?: hh_meta($id, 'screenshot');
-        if (!$image && hh_meta($id, 'url')) $image = 'https://s0.wp.com/mshots/v1/' . rawurlencode(hh_meta($id, 'url')) . '?w=1200';
+        // OG 图：资讯封面 / 上传截图 / 工具 Logo —— 不再用 mshots（对防护站点会截到验证页，且是第三方请求）
+        $image = hh_meta($id, 'cover') ?: hh_meta($id, 'screenshot') ?: hh_meta($id, 'logo');
     } elseif (is_tax('topic')) {
         // 专题归档：用专题封面作 OG 图
         $image = get_term_meta(get_queried_object_id(), 'topic_cover', true);
@@ -170,6 +170,8 @@ add_action('wp_head', function () {
     }
     echo "\n<meta name=\"description\" content=\"" . esc_attr($desc) . "\">\n";
     echo '<meta property="og:type" content="' . esc_attr($type) . "\">\n";
+    echo '<meta property="og:site_name" content="' . esc_attr(get_bloginfo('name')) . "\">\n";
+    echo '<meta property="og:locale" content="zh_CN">' . "\n";
     echo '<meta property="og:title" content="' . esc_attr($title) . "\">\n";
     echo '<meta property="og:description" content="' . esc_attr($desc) . "\">\n";
     echo '<meta property="og:url" content="' . esc_url(home_url(add_query_arg(null, null))) . "\">\n";

@@ -323,6 +323,14 @@ main{padding:40px 0;}
 .screenshot img{width:100%;height:100%;aspect-ratio:16/9;object-fit:cover;object-position:top;}
 .screenshot-fallback{position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--text-3);font-size:14px;}
 .screenshot figcaption{padding:8px 16px;border-top:1px solid var(--border-2);background:var(--surface);font-size:12px;color:var(--text-3);}
+/* 品牌预览卡（无真实截图时的可靠替代，取代不稳定的第三方自动截图） */
+.tool-preview{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px;overflow:hidden;background:linear-gradient(135deg,var(--brand-600),var(--brand-900));color:#fff;text-decoration:none;transition:.2s;}
+.tool-preview:hover{filter:brightness(1.06);}
+.tool-preview .tp-orb{position:absolute;top:-30%;right:-12%;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.28),transparent 70%);pointer-events:none;}
+.tool-preview .logo,.tool-preview .logo-fallback{position:relative;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.25);background:#fff;}
+.tool-preview .tp-name{position:relative;font-size:22px;font-weight:700;}
+.tool-preview .tp-tag{position:relative;font-size:14px;color:rgba(255,255,255,.85);max-width:80%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.tool-preview .tp-domain{position:relative;display:inline-flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;color:rgba(255,255,255,.7);background:rgba(255,255,255,.14);padding:5px 12px;border-radius:var(--radius-full);}
 .prose{font-size:15px;color:var(--text);line-height:1.8;}
 .prose h2{font-size:20px;margin:24px 0 12px;}
 .prose h3{font-size:17px;margin:20px 0 10px;}

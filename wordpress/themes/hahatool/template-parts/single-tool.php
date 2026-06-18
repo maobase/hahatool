@@ -66,13 +66,29 @@ $breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 
         </div>
       </div>
 
-      <?php $shot = hh_meta($id, 'screenshot') ?: 'https://s0.wp.com/mshots/v1/' . urlencode($url) . '?w=1280'; ?>
+      <?php
+      // 官网预览：优先用运营上传的真实截图；否则用品牌预览卡（不依赖第三方自动截图——
+      // mshots 对 Cloudflare 等防护站点会截到「人机验证」页，既不可靠又是第三方请求）。
+      $shot_real = hh_meta($id, 'screenshot');
+      $tool_tag = hh_meta($id, 'tagline');
+      ?>
       <figure class="screenshot">
+        <?php if ($shot_real): ?>
         <div class="screenshot-frame">
-          <img loading="lazy" src="<?php echo esc_url($shot); ?>" alt="<?php the_title_attribute(); ?> 官网截图" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <img loading="lazy" src="<?php echo esc_url($shot_real); ?>" alt="<?php the_title_attribute(); ?> 官网截图" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="screenshot-fallback" style="display:none"><?php echo hahatool_logo($id, 56); ?><span>截图生成中，稍后再来看看</span></div>
         </div>
-        <figcaption><?php the_title(); ?> 官网预览 · 截图自动生成，以官网实际为准</figcaption>
+        <figcaption><?php the_title(); ?> 官网截图 · 以官网实际为准</figcaption>
+        <?php else: ?>
+        <a class="screenshot-frame tool-preview" href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int) $id; ?>" aria-label="访问 <?php the_title_attribute(); ?> 官网">
+          <span class="tp-orb" aria-hidden="true"></span>
+          <?php echo hahatool_logo($id, 64); ?>
+          <span class="tp-name"><?php the_title(); ?></span>
+          <?php if ($tool_tag): ?><span class="tp-tag"><?php echo esc_html($tool_tag); ?></span><?php endif; ?>
+          <span class="tp-domain"><?php echo esc_html(hahatool_domain($url)); ?> <?php echo hh_icon('arrow-up-right', 13); ?></span>
+        </a>
+        <figcaption><?php the_title(); ?> 官网预览 · 点击前往官网查看完整页面</figcaption>
+        <?php endif; ?>
       </figure>
 
       <?php if ($history && count($history) > 1 || $regions): ?>
