@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.46] - 2026-06-19
+
+### 内容（迭代 5：填充真实 AI/科技资讯 —— 目标 #2）
+用 WebSearch 搜罗 2026 年 6 月真实 AI 动态，聚合为 7 篇资讯（真实标题 + 事实摘要 + **来源链接**，幂等脚本 `scripts/seed-real-news.php`）：
+- Claude Fable 5 发布 · GPT-5.5 推出 · ChatGPT 代码能力升级 · Gemini 3 Pro 多模态 · DeepSeek V4 开源(SWE-bench 80.6%) · AI 智能体「天级执行」· Anthropic 年化收入破 470 亿。
+- 每篇含 `.news-source` 署名行（虚线分隔、链到原站，`rel=nofollow`）；封面暂用占位图（真实图片随 #3 对象存储接入替换）。
+- 已上线 tool.hahaha.chat：`/news` 列出真实标题、详情页带来源链接、ai-news 总数 17、`/openai-gpt-5-5/` 200。
+
 ## [v1.6.45] - 2026-06-19
 
 ### 优化（迭代 4：多设备 QA + 虚拟枢纽页进 sitemap）
