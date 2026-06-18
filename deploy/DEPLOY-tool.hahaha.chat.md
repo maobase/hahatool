@@ -78,7 +78,18 @@ $RUN rewrite structure '/%postname%/' && $RUN rewrite flush --hard
 bash scripts/setup-wp.sh   # 或逐个 eval-file scripts/seed-*.php
 ```
 
-## 6. 对象存储（MinIO）—— 见后续迭代
+## ✅ 对象存储（MinIO）—— 已接入
+- 复用服务器 `manyan-minio-1`（S3 兼容，`manyan_default` 网络），新建公共读桶 `hahatool-media`：
+  ```sh
+  docker run --rm --network manyan_default --entrypoint sh minio/mc -c \
+    "mc alias set m http://manyan-minio-1:9000 <ROOT_USER> <ROOT_PASS>; mc mb -p m/hahatool-media; mc anonymous set download m/hahatool-media"
+  ```
+- 公网路由：`deploy/Caddyfile.proxy` 内 `handle_path /media/* → reverse_proxy manyan-minio-1:9000`，
+  即 `https://tool.hahaha.chat/media/hahatool-media/<obj>` 直读对象存储；**仅 2xx 加 1 年 immutable 缓存**（避免缓存 404）。
+- 资讯封面已从第三方 picsum 迁移到对象存储：图片 `mc cp` 到 `news/<slug>.jpg`，文章 `cover` meta 改为 `/media/...?v=N`。
+- 上传图片：`docker run -v /tmp:/data --network manyan_default --entrypoint sh minio/mc -c 'mc alias set m ...; mc cp /data/x.jpg m/hahatool-media/news/x.jpg'`。
+
+## 6. 对象存储（MinIO）—— 历史说明
 - 服务器 MinIO 已在跑（manyan-minio，S3 兼容，内网 9000）。
 - 计划：建桶 `hahatool-media`，WP 装 S3 媒体插件（如 *Media Cloud* / *WP Offload Media* / `humanmade/s3-uploads`），
   endpoint 指向内网 MinIO，上传的图片走对象存储；Caddy 对 `/uploads` 等静态资源加长缓存（已在 snippet 内）。

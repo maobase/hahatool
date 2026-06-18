@@ -1,14 +1,26 @@
-# 生产：hahatool-frontend(caddy) 监听 :3000，反代到 WordPress，并为静态资源加长缓存 + 压缩。
-# Cloudflare Tunnel → 本代理 → hahatool-wordpress:80。WP 给资源带 ?ver= 版本号，故可 immutable。
+# 生产：hahatool-frontend(caddy) 监听 :3000。Cloudflare Tunnel → 本代理。
+# /media/* → MinIO 公共桶（对象存储）；其余 → WordPress。静态资源长缓存 + 压缩。
 :3000 {
 	encode zstd gzip
 
-	# 静态资源：长缓存 + immutable（主题资源/上传图片/字体等）
-	@static path *.css *.js *.mjs *.woff2 *.woff *.ttf *.otf *.png *.jpg *.jpeg *.webp *.avif *.gif *.svg *.ico
-	header @static Cache-Control "public, max-age=31536000, immutable"
+	# 对象存储：/media/<bucket>/<obj> → MinIO（manyan-minio，公共读桶 hahatool-media）
+	# 仅对成功响应加长缓存，避免 404/错误被 CDN 当作 immutable 缓存
+	handle_path /media/* {
+		reverse_proxy manyan-minio-1:9000 {
+			@ok status 200 206
+			handle_response @ok {
+				header Cache-Control "public, max-age=31536000, immutable"
+				copy_response
+			}
+		}
+	}
 
-	# wp-json / 动态页不强缓存（交由 WP / Cloudflare 规则）
-	reverse_proxy hahatool-wordpress:80 {
-		header_up X-Forwarded-Proto https
+	# 其余请求 → WordPress；静态资源加长缓存
+	handle {
+		@static path *.css *.js *.mjs *.woff2 *.woff *.ttf *.otf *.png *.jpg *.jpeg *.webp *.avif *.gif *.svg *.ico
+		header @static Cache-Control "public, max-age=31536000, immutable"
+		reverse_proxy hahatool-wordpress:80 {
+			header_up X-Forwarded-Proto https
+		}
 	}
 }

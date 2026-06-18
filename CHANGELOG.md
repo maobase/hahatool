@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.48] - 2026-06-19
+
+### 部署（迭代 7：图片接入对象存储 MinIO —— 目标 #3 下半）
+- **对象存储**：复用服务器 MinIO 建公共读桶 `hahatool-media`；`deploy/Caddyfile.proxy` 加 `handle_path /media/* → manyan-minio-1:9000`，对象经 `https://tool.hahaha.chat/media/...` 公网直读，**仅 2xx 加 1 年 immutable 缓存**（修正 404 被误缓存的问题，用 `handle_response @ok`）。
+- **资讯封面迁移**：7 篇真实资讯封面从第三方 picsum 热链迁移到对象存储（`mc cp` 至 `news/<slug>.jpg`，cover 改为 `/media/...?v=1`）—— 自托管、可缓存、去除外链依赖。
+- 实测线上：`/media/hahatool-media/...` 200 + `image/jpeg` + immutable 缓存；7 张封面全 200；`/news` 7 张封面指向对象存储；站点全路由 200。
+- runbook 增对象存储与上传/迁移说明。
+
 ## [v1.6.47] - 2026-06-19
 
 ### 部署/性能（迭代 6：静态资源缓存策略 —— 目标 #3 上半）
