@@ -127,4 +127,59 @@ add_action('rest_api_init', function () {
     ]);
 });
 
+/**
+ * 热榜数据：代理 momoyu.cc 的 /api/hot/list（公开聚合端点，需带 Referer/Origin），
+ * 服务端缓存 15 分钟（transient）+ 一天兜底，规范化为 {updated, sources:[{name,key,color,items:[{title,extra,link}]}]}。
+ * 供 REST 接口与热榜页模板共用。
+ */
+function hahatool_fetch_hot($per = 12) {
+    $cache = get_transient('hahatool_hot');
+    if ($cache !== false) return $cache;
+    $resp = wp_remote_get('https://momoyu.cc/api/hot/list', [
+        'timeout' => 12,
+        'headers' => [
+            'Referer'    => 'https://momoyu.cc/',
+            'Origin'     => 'https://momoyu.cc',
+            'User-Agent' => 'Mozilla/5.0 (compatible; HahaToolBot/1.0)',
+        ],
+    ]);
+    if (is_wp_error($resp) || wp_remote_retrieve_response_code($resp) !== 200) {
+        $stale = get_transient('hahatool_hot_stale');
+        return $stale !== false ? $stale : ['updated' => 0, 'sources' => []];
+    }
+    $body = json_decode(wp_remote_retrieve_body($resp), true);
+    $out = ['updated' => time(), 'sources' => []];
+    foreach (($body['data'] ?? []) as $s) {
+        $items = [];
+        foreach (array_slice($s['data'] ?? [], 0, $per) as $it) {
+            $link = $it['link'] ?? '';
+            if (!$link) continue;
+            $items[] = [
+                'title' => (string) ($it['title'] ?? ''),
+                'extra' => (string) ($it['extra'] ?? ''),
+                'link'  => esc_url_raw($link),
+            ];
+        }
+        if (!$items) continue;
+        $out['sources'][] = [
+            'name'  => (string) ($s['name'] ?? ''),
+            'key'   => (string) ($s['source_key'] ?? ''),
+            'color' => sanitize_hex_color($s['icon_color'] ?? '') ?: '#7c3aed',
+            'items' => $items,
+        ];
+    }
+    set_transient('hahatool_hot', $out, 15 * MINUTE_IN_SECONDS);
+    set_transient('hahatool_hot_stale', $out, DAY_IN_SECONDS);
+    return $out;
+}
+
+/** 热榜接口：GET /wp-json/hahatool/v1/hot —— 规范化的多源热榜（服务端缓存）。 */
+add_action('rest_api_init', function () {
+    register_rest_route('hahatool/v1', '/hot', [
+        'methods' => 'GET',
+        'permission_callback' => '__return_true',
+        'callback' => fn() => hahatool_fetch_hot(),
+    ]);
+});
+
 /** REST 列表默认带出分类/标签信息时减少额外请求成本：放宽 per_page 上限到 100（WP 默认即 100，留作显式说明） */

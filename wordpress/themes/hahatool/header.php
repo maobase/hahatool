@@ -29,6 +29,7 @@
       <a href="<?php echo esc_url(home_url('/flash/')); ?>">AI快讯</a>
       <a href="<?php echo esc_url(home_url('/news/')); ?>">AI资讯</a>
       <a href="<?php echo esc_url(home_url('/topics/')); ?>">专题</a>
+      <a href="<?php echo esc_url(home_url('/hot/')); ?>">热榜</a>
       <?php $hh_nav_cats = get_categories(['hide_empty' => true, 'exclude' => implode(',', hahatool_reserved_ids())]); if ($hh_nav_cats): ?>
       <span class="nav-dropdown">
         <button type="button" class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">分类<?php echo hh_icon('chevron-down', 14); ?></button>

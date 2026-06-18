@@ -2,6 +2,13 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.44] - 2026-06-19
+
+### 新增（迭代 3：热榜页 + 热榜接口，数据源 momoyu —— 目标 #5）
+- **热榜接口**：mu-plugin 新增 `hahatool_fetch_hot()` + REST `GET /wp-json/hahatool/v1/hot`，服务端代理 momoyu 公开聚合端点 `/api/hot/list`（需带 Referer/Origin 头），**transient 缓存 15 分钟 + 一天兜底**（上游故障返回旧数据），规范化为 `{updated, sources:[{name,key,color,items:[{title,extra,link}]}]}`。
+- **热榜页 `/hot`**：13 个来源（知乎/豆瓣/微博/头条/虎扑/B站/IT之家/中关村/爱范儿/CSDN/虎嗅/什么值得买/掘金）卡片网格，每源 Top12（排名+标题+热度+外链），响应式 3/2/1 列；标题 chip + SEO 标题/描述；顶栏「热榜」导航。
+- 实测**线上 tool.hahaha.chat**：REST 返回 13 源×12 条真实数据、`/hot` 页 200 渲染 13 卡、导航生效（本地 OrbStack 容器外网受限故空，生产服务器正常）。
+
 ## [v1.6.43] - 2026-06-19
 
 ### 部署（迭代 2：tool.hahaha.chat 切换为 WordPress 版并上线）
