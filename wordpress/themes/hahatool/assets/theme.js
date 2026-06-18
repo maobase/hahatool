@@ -77,7 +77,7 @@
     // 跟随系统时响应切换
     matchMedia('(prefers-color-scheme:dark)').addEventListener('change', function () {
       var t = {}; try { t = JSON.parse(localStorage.getItem('hahatool:theme') || '{}'); } catch (e) {}
-      if ((t.mode || 'light') === 'system') applyMode('system');
+      if ((t.mode || 'system') === 'system') applyMode('system');
     });
 
     // 移动菜单

@@ -7,7 +7,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%237c3aed'/><text x='32' y='44' font-size='34' fill='white' text-anchor='middle' font-family='sans-serif'>哈</text></svg>">
     <?php wp_head(); ?>
     <script>/* 首屏防闪烁：在样式应用前写入已存的主题偏好 */
-    (function(){try{var t=JSON.parse(localStorage.getItem('hahatool:theme')||'{}');var m=t.mode||'light';var d=m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);var e=document.documentElement;e.setAttribute('data-mode',d?'dark':'light');if(t.accent)e.setAttribute('data-accent',t.accent);}catch(e){}})();</script>
+    (function(){try{var t=JSON.parse(localStorage.getItem('hahatool:theme')||'{}');var m=t.mode||'system';var d=m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);var e=document.documentElement;e.setAttribute('data-mode',d?'dark':'light');if(t.accent)e.setAttribute('data-accent',t.accent);}catch(e){}})();</script>
 </head>
 <body <?php body_class(); ?>>
 <a class="skip-link" href="#main-content">跳到主要内容</a>
