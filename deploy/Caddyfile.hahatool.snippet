@@ -1,0 +1,18 @@
+# 追加到服务器现有 Caddy 的 Caddyfile（manyan 那份），与 my.hahaha.run 等并列。
+# 前提：hahatool-wordpress 容器与 Caddy 容器同在 `edge` 网络。
+# Caddy 会为该域名自动签发/续期 Let's Encrypt 证书。
+
+tool.hahaha.chat {
+	encode zstd gzip
+
+	reverse_proxy hahatool-wordpress:80 {
+		header_up X-Forwarded-Proto https
+		header_up X-Forwarded-Host {host}
+	}
+
+	# 静态资源长缓存（WP 上传/主题资源），HTML 不强缓存交由 WP/CDN
+	@static {
+		path *.css *.js *.woff2 *.woff *.ttf *.png *.jpg *.jpeg *.webp *.avif *.gif *.svg *.ico
+	}
+	header @static Cache-Control "public, max-age=31536000, immutable"
+}

@@ -1,0 +1,88 @@
+# HahaTool 生产部署（仅 WordPress 版）—— 目标：tool.hahaha.chat
+# 部署在服务器 23.82.99.201（Debian 12 + Docker + 现有 Caddy 自动 HTTPS）。
+# 反向代理由服务器上已有的 Caddy 负责（见 Caddyfile.hahatool.snippet）；
+# 本栈只跑 db + wordpress，wordpress 接入外部网络 `edge` 供 Caddy 反代。
+#
+# 用法（服务器上 /opt/hahatool）：
+#   docker network create edge   # 首次；Caddy 也需加入该网络
+#   docker compose -f deploy/docker-compose.prod.yml --env-file deploy/.env.prod up -d
+services:
+  db:
+    image: mysql:8.0
+    container_name: hahatool-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?set in .env.prod}
+      MYSQL_DATABASE: ${DB_NAME:-hahatool}
+      MYSQL_USER: ${DB_USER:-hahatool}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?set in .env.prod}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    networks:
+      - internal
+
+  wordpress:
+    image: wordpress:apache
+    container_name: hahatool-wordpress
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: ${DB_NAME:-hahatool}
+      WORDPRESS_DB_USER: ${DB_USER:-hahatool}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:?set in .env.prod}
+      WORDPRESS_TABLE_PREFIX: wp_
+      # 站点对外地址（HTTPS 由 Caddy 终止）；WP 据此生成永久链接/canonical
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', 'https://tool.hahaha.chat');
+        define('WP_SITEURL', 'https://tool.hahaha.chat');
+        define('FORCE_SSL_ADMIN', true);
+        if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && $$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') { $$_SERVER['HTTPS'] = 'on'; }
+    volumes:
+      - wp_data:/var/www/html
+      - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./wordpress/themes/hahatool:/var/www/html/wp-content/themes/hahatool
+    networks:
+      - internal
+      - edge   # 与服务器 Caddy 共用，Caddy 通过容器名 hahatool-wordpress:80 反代
+
+  wpcli:
+    image: wordpress:cli
+    user: "33:33"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: ${DB_NAME:-hahatool}
+      WORDPRESS_DB_USER: ${DB_USER:-hahatool}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:?set in .env.prod}
+      WORDPRESS_TABLE_PREFIX: wp_
+    volumes:
+      - wp_data:/var/www/html
+      - ./wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./wordpress/themes/hahatool:/var/www/html/wp-content/themes/hahatool
+      - ./scripts:/scripts:ro
+    networks:
+      - internal
+    profiles: ["tools"]
+
+volumes:
+  db_data:
+  wp_data:
+
+networks:
+  internal:
+    driver: bridge
+  edge:
+    external: true

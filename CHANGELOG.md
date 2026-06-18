@@ -2,6 +2,17 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.42] - 2026-06-18
+
+### 部署（新方向迭代 1：生产部署脚手架 → tool.hahaha.chat）
+新目标：仅维护 WordPress 版，部署到 `tool.hahaha.chat`（服务器 23.82.99.201，复用其 Caddy 自动 HTTPS + MinIO 对象存储）。
+- 调研参考 `hahaha.chat`（Cloudflare Worker）与服务器 `manyan` 栈（Docker + Caddy + MinIO）的部署方案。
+- 新增 `deploy/`：`docker-compose.prod.yml`（**去掉 frontend，仅 db + wordpress + wpcli**，wordpress 接入外部 `edge` 网供 Caddy 反代，注入 `WP_HOME/SITEURL=https://tool.hahaha.chat` + 反代 HTTPS 识别）、`.env.prod.example`、`Caddyfile.hahatool.snippet`（含静态资源长缓存）、`DEPLOY-tool.hahaha.chat.md`（DNS/起栈/Caddy/WP 初始化/对象存储/缓存/回滚全流程）。
+- `compose config` 校验通过；`.env.prod` 已 gitignore。
+- **待人工**：服务器 SSH 口令未入库，实际 `ssh + 部署` 需口令（见 runbook §0）。
+
+> 说明：自本版起按用户要求**仅维护 WordPress 主题版**，无头 Next.js 版停止同步。
+
 ## [v1.6.41] - 2026-06-18
 
 ### 文档（迭代 22：全量功能回归认证）
