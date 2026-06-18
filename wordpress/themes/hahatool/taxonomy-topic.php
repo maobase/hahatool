@@ -28,7 +28,8 @@ $tax_crumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', '
 <script type="application/ld+json"><?php echo wp_json_encode($tax_crumb, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
 <div class="wrap" style="padding-top:32px">
   <nav class="crumb"><a href="<?php echo esc_url(home_url('/topics/')); ?>" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('chevron-left', 16); ?>全部专题</a></nav>
-  <header class="topic-hero"<?php if ($cover): ?> style="background-image:linear-gradient(120deg,rgba(3,7,18,.62),rgba(3,7,18,.86)),url('<?php echo esc_url($cover); ?>')"<?php endif; ?>>
+  <?php /* 封面已是「带文字」的编辑图，用作列表缩略图与社媒 OG；详情头改用品牌渐变 + 真实文案，避免与封面内文字重复 */ ?>
+  <header class="topic-hero">
     <span class="chip" style="background:rgba(255,255,255,.2);color:#fff">专题</span>
     <h1><?php echo esc_html($term->name); ?></h1>
     <?php if ($term->description): ?><p><?php echo esc_html($term->description); ?></p><?php endif; ?>

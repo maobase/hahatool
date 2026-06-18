@@ -44,7 +44,8 @@ foreach ($items as $it) {
         'post_category' => [$cid],
     ], true);
     if (is_wp_error($pid)) { WP_CLI::warning($it[0] . ': ' . $pid->get_error_message()); continue; }
-    update_post_meta($pid, 'cover', "https://picsum.photos/seed/{$it[3]}/1200/630");
+    // 封面走对象存储品牌编辑图（scripts/gen-news-covers.py 生成，按 slug）
+    update_post_meta($pid, 'cover', "https://tool.hahaha.chat/media/hahatool-media/news/covers/{$it[0]}.svg");
     $n++;
     WP_CLI::log("新增：{$it[1]}");
 }

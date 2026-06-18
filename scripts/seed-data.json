@@ -929,7 +929,7 @@
    "created": 1780996800,
    "content": "最新流量统计显示，对话类 AI 助手依旧占据访问量榜首，而 AI 视频生成赛道月环比增速超过 40%，成为增长最快的品类。\n\n## 看点\n\n- 头部聊天助手月访问量保持在数十亿级别\n- 视频生成工具集体爆发，国产产品表现亮眼\n- AI 编程工具付费转化率持续走高\n\n## 趋势解读\n\n从流量结构看，AI 工具正在从「尝鲜」走向「日常」：办公、剪辑、编程等生产力场景的留存率显著高于娱乐场景。对于工具开发者而言，深耕垂直工作流比追逐通用对话更有机会。",
    "fields": {
-    "cover": "https://picsum.photos/seed/aitraffic/1200/630"
+    "cover": "https://tool.hahaha.chat/media/hahatool-media/news/covers/ai-traffic-2026-05.svg"
    },
    "cats": [
     "ai-news"
@@ -943,7 +943,7 @@
    "created": 1780909000,
    "content": "近期多款国产 AI 应用在海外应用商店登顶效率榜，覆盖对话助手、图像生成与视频剪辑等品类，出海成为国产 AI 的关键词。\n\n## 看点\n\n- 视频与图像类工具成为出海主力\n- 本地化运营与多语言能力是胜负手\n- 订阅制付费在海外市场跑通\n\n## 趋势解读\n\n国产 AI 工具凭借工程化速度与产品打磨能力，在海外市场建立了差异化优势。接下来比拼的将是模型能力的持续迭代与合规运营。",
    "fields": {
-    "cover": "https://picsum.photos/seed/goingglobal/1200/630"
+    "cover": "https://tool.hahaha.chat/media/hahatool-media/news/covers/china-ai-going-global.svg"
    },
    "cats": [
     "ai-news"
@@ -957,7 +957,7 @@
    "created": 1780820000,
    "content": "多家厂商相继展示分钟级连贯视频生成能力，AI 视频正从「几秒钟的片段」迈向「可叙事的内容」，长视频生成成为新的竞技场。\n\n## 看点\n\n- 生成时长与一致性大幅提升\n- 运镜控制、多镜头叙事成为标配\n- 影视与广告行业开始规模化采用\n\n## 趋势解读\n\n当生成时长突破分钟级，AI 视频的应用场景将从素材补充转向成片生产，内容产业的成本结构可能被重写。",
    "fields": {
-    "cover": "https://picsum.photos/seed/aivideo/1200/630"
+    "cover": "https://tool.hahaha.chat/media/hahatool-media/news/covers/ai-video-minute-era.svg"
    },
    "cats": [
     "ai-news"
@@ -971,7 +971,7 @@
    "created": 1781180000,
    "content": "我们用同一组提示词实测了多款主流 AI 视频生成工具，从画质、运动一致性、提示词遵循三个维度做了横向对比，本文附实测视频与截图。\n\n## 实测视频\n\n<video src=\"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4\" controls preload=\"metadata\" playsinline></video>\n\n*同一提示词下的生成效果对比（示例视频）*\n\n## 画面表现\n\n![画面对比示意](https://picsum.photos/seed/frame-a/1000/560)\n\n从静帧画质看，第一梯队工具在光影与材质细节上已经接近实拍素材；人物面部与手部仍是普遍弱项。\n\n## 运动一致性\n\n![运动一致性示意](https://picsum.photos/seed/frame-b/1000/560)\n\n长镜头下的主体一致性差距明显：部分工具在 10 秒以上的镜头中会出现主体漂移。\n\n## B 站完整版\n\n<iframe src=\"//player.bilibili.com/player.html?bvid=BV1GJ411x7h7&autoplay=0\" allowfullscreen frameborder=\"0\"></iframe>\n\n## 结论\n\n- 追求电影感：优先 Runway、可灵\n- 中文提示词友好：即梦、可灵\n- 性价比之选：关注各家免费额度的刷新规则",
    "fields": {
-    "cover": "https://picsum.photos/seed/aidemo/1200/630"
+    "cover": "https://tool.hahaha.chat/media/hahatool-media/news/covers/ai-video-review.svg"
    },
    "cats": [
     "ai-news"

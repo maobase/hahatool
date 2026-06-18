@@ -56,7 +56,7 @@ TPL = '''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewB
   <circle cx="1010" cy="120" r="10" fill="{accent}"/>
   <!-- 分类胶囊 -->
   <rect x="72" y="232" width="{chipw}" height="44" rx="22" fill="#ffffff" fill-opacity="0.14"/>
-  <text x="96" y="261" font-size="22" fill="#ffffff" fill-opacity="0.92" font-weight="600">AI 资讯</text>
+  <text x="96" y="261" font-size="22" fill="#ffffff" fill-opacity="0.92" font-weight="600">{chip}</text>
   <!-- 关键词 -->
   <text x="70" y="372" font-size="74" font-weight="800" fill="#ffffff">{label}</text>
   <!-- 副标题 -->
@@ -70,12 +70,23 @@ TPL = '''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewB
   </g>
 </svg>'''
 
-n = 0
-for slug, (label, sub, c1, c2, accent) in ITEMS.items():
-    chipw = 48 + len("AI 资讯") * 11
+# 专题封面（chip 用「专题」）—— 替换无关图库照片
+TOPICS = {
+    "ai-writing":      ("AI 写作助手", "写作 · 润色 · 翻译 · 笔记", "#2d1b4e", "#6d28d9", "#c4b5fd"),
+    "ai-coding":       ("AI 编程提效", "补全 · 审查 · 重构 · 改 bug", "#0c2d48", "#145374", "#5eead4"),
+    "ai-video-create": ("AI 视频创作", "文生视频 · 配乐 · 一站式", "#3b0764", "#7e22ce", "#d8b4fe"),
+}
+
+def emit(slug, label, sub, c1, c2, accent, chip):
+    chipw = 48 + len(chip) * 12
     svg = TPL.format(c1=c1, c2=c2, accent=accent, label=html.escape(label),
-                     sub=html.escape(sub), chipw=chipw)
+                     sub=html.escape(sub), chipw=chipw, chip=html.escape(chip))
     with open(os.path.join(OUT, slug + ".svg"), "w", encoding="utf-8") as f:
         f.write(svg)
-    n += 1
+
+n = 0
+for slug, (label, sub, c1, c2, accent) in ITEMS.items():
+    emit(slug, label, sub, c1, c2, accent, "AI 资讯"); n += 1
+for slug, (label, sub, c1, c2, accent) in TOPICS.items():
+    emit("topic-" + slug, label, sub, c1, c2, accent, "专题"); n += 1
 print(f"generated {n} covers -> {OUT}")

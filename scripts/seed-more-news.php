@@ -46,7 +46,8 @@ $news = [
         $P('围绕生成内容标识、训练数据来源披露与可解释性的讨论持续升温，合规正从「加分项」变为「入场券」。') . $P('对工具方而言，提前建设审计日志与内容溯源能力，有助于在 To B 市场建立信任。')],
 ];
 foreach ($news as $n) {
-    hh_seed_post($n[0], $n[1], $n[2], $news_cat, $n[4], "https://picsum.photos/seed/{$n[3]}/1200/630");
+    // 封面走对象存储品牌编辑图（scripts/gen-news-covers.py 生成，按 slug）
+    hh_seed_post($n[0], $n[1], $n[2], $news_cat, $n[4], "https://tool.hahaha.chat/media/hahatool-media/news/covers/{$n[0]}.svg");
 }
 
 // ---- 快讯（短讯，近两天时间线）----
