@@ -30,6 +30,9 @@ ITEMS = {
     "ai-traffic-2026-05":             ("AI 流量榜", "2026 年 5 月全球榜", "#082f49", "#0369a1", "#7dd3fc"),
     "china-ai-going-global":          ("国产大模型出海", "多款应用登顶海外榜", "#7f1d1d", "#b91c1c", "#fca5a5"),
     "ai-video-minute-era":            ("AI 视频", "迈入「分钟级」时代", "#172554", "#1d4ed8", "#93c5fd"),
+    # 第三批：核实后的真实资讯（量子位/证券时报/21经济报道）
+    "deepseek-mega-funding":          ("DeepSeek 融资", "首轮超 500 亿 · 估值近 4000 亿", "#1e1b4b", "#4338ca", "#818cf8"),
+    "star-market-ai-llm":             ("科创板 × AI", "第五套标准拟扩容大模型", "#422006", "#a16207", "#fcd34d"),
 }
 
 TPL = '''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
