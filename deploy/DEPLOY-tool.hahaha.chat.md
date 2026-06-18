@@ -1,5 +1,24 @@
 # 部署 HahaTool → tool.hahaha.chat
 
+## ✅ 实际生产现状（2026-06-19 已上线）
+`https://tool.hahaha.chat` 已上线，**服务 WordPress 版**（hahatool 主题）。实际链路与下方「方案 A（自建 Caddy + DNS）」不同，采用服务器上已有的 **Cloudflare Tunnel**：
+
+```
+用户 → Cloudflare(HTTPS) → Cloudflare Tunnel(haha-cloudflared)
+     → hahatool-frontend:3000  (caddy:2-alpine 反代，docker-compose.override.yml)
+     → hahatool-wordpress:80    (WordPress + hahatool 主题)
+     → hahatool-db (mysql)
+```
+- 代码目录：服务器 `/opt/haha-apps/hahatool`（主题/插件经 `rsync` 同步）。
+- 仅维护 WordPress：原 Next.js `frontend` 容器已替换为 Caddy 反代（保持容器名/端口/网络，隧道 ingress 无需改）。
+- WP `home/siteurl = https://tool.hahaha.chat`；mu-plugin `https-behind-proxy.php` 在隧道后强制识别 HTTPS（避免回环）。
+- 更新主题：本地 `rsync -az ./wordpress/ root@23.82.99.201:/opt/haha-apps/hahatool/wordpress/`（主题为挂载卷，即时生效）。
+- 切回 Next.js（回滚）：恢复 `docker-compose.override.yml.bak.*` 后 `docker compose up -d --force-recreate frontend`。
+
+---
+
+# 方案 A（备用：自建 Caddy + DNS）—— 原始脚手架
+
 > 目标：把 HahaTool（**仅 WordPress 版**）部署到服务器 `23.82.99.201`，对外域名 `tool.hahaha.chat`，
 > 复用服务器上已有的 **Caddy**（自动 HTTPS）与 **MinIO**（对象存储）。
 > 参考：`hahaha.chat`（Cloudflare Worker，仅静态）与该服务器的 `manyan` 栈（Docker + Caddy + MinIO）。

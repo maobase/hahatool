@@ -2,6 +2,16 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.43] - 2026-06-19
+
+### 部署（迭代 2：tool.hahaha.chat 切换为 WordPress 版并上线）
+发现 `tool.hahaha.chat` 早已经 Cloudflare Tunnel 上线，但指向**旧的 Next.js 无头前端**（主题 1.6.23、默认 twentytwentyfive、未启用 hahatool 主题）。按 #6「仅维护 WordPress」完成切换并上线：
+- **服务器 WP 初始化**：`rsync` 同步最新主题/插件（1.6.23 → 1.6.40）；激活 `hahatool` 主题；永久链接 `/%postname%/`；种子补齐（3 专题 + 6 资讯 + 8 快讯 + 资讯浏览量）。
+- **切换链路（仅服务器侧，无需改 CF）**：把隧道目标容器 `hahatool-frontend` 从 Next.js 换成 `caddy:2-alpine` 反代到 `hahatool-wordpress:80`（保持容器名/端口/网络，隧道 ingress 不变）。
+- **生产 URL**：WP `home/siteurl=https://tool.hahaha.chat`；新增 mu-plugin `https-behind-proxy.php`（隧道后强制 HTTPS 识别、避免重定向回环；本地 http 开发不受影响）。
+- **实测线上**：`https://tool.hahaha.chat` 现为 WordPress 版（wp 标记 53、零 Next.js 残留）；首页/工具库/专题/资讯/快讯/排行/工具详情/专题详情全部 200；canonical=`https://tool.hahaha.chat/...`、sitemap 200、零 localhost 泄漏、零重定向回环。
+- `deploy/DEPLOY-tool.hahaha.chat.md` 增「实际生产现状」拓扑与回滚说明。
+
 ## [v1.6.42] - 2026-06-18
 
 ### 部署（新方向迭代 1：生产部署脚手架 → tool.hahaha.chat）
