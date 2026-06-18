@@ -173,6 +173,31 @@ function hahatool_fetch_hot($per = 12) {
     return $out;
 }
 
+/**
+ * 把虚拟枢纽页（/tools /ranking /compare /topics /hot）加入 wp-sitemap。
+ * wp-sitemap 默认只收录文章/分类法，虚拟路由需自定义 provider 补充（SEO）。
+ */
+add_action('wp_sitemaps_init', function ($sitemaps) {
+    if (!class_exists('WP_Sitemaps_Provider')) return;
+    $provider = new class extends WP_Sitemaps_Provider {
+        public function __construct() {
+            $this->name = 'hahatool-hubs';
+            $this->object_type = 'hahatool-hubs';
+        }
+        public function get_url_list($page_num, $object_subtype = '') {
+            $out = [];
+            foreach (['tools', 'ranking', 'compare', 'topics', 'hot'] as $h) {
+                $out[] = ['loc' => home_url("/$h/")];
+            }
+            return $out;
+        }
+        public function get_max_num_pages($object_subtype = '') {
+            return 1;
+        }
+    };
+    $sitemaps->registry->add_provider('hahatool-hubs', $provider);
+});
+
 /** 热榜接口：GET /wp-json/hahatool/v1/hot —— 规范化的多源热榜（服务端缓存）。 */
 add_action('rest_api_init', function () {
     register_rest_route('hahatool/v1', '/hot', [

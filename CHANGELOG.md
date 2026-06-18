@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.45] - 2026-06-19
+
+### 优化（迭代 4：多设备 QA + 虚拟枢纽页进 sitemap）
+- **多设备 QA（#1）**：对线上 `tool.hahaha.chat` 的 `/hot`（桌面 1280 + 移动 390）与首页（移动 390）截图核验 —— 热榜 3/1 列正确堆叠、Top3 橙色、热度对齐、首页 hero/Banner/卡片均良好，无横向溢出与破版。
+- **SEO（#4）**：`wp-sitemap` 默认不含虚拟路由，新增自定义 provider `hahatool-hubs`，把 `/tools /ranking /compare /topics /hot` 纳入 `wp-sitemap-hahatool-hubs-1.xml`。
+- 顶栏已有「热榜」，补页脚「探索」列的「AI · 科技热榜」入口（一致性）。
+- 实测线上：sitemap 索引含 hubs 子图且列出 5 枢纽 URL、页脚热榜链接、`/hot` 200。
+
 ## [v1.6.44] - 2026-06-19
 
 ### 新增（迭代 3：热榜页 + 热榜接口，数据源 momoyu —— 目标 #5）
