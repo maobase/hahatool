@@ -30,9 +30,15 @@ $crumbs = [['@type' => 'ListItem', 'position' => 1, 'name' => '首页', 'item' =
 if ($main) $crumbs[] = ['@type' => 'ListItem', 'position' => 2, 'name' => $main->name, 'item' => get_category_link($main)];
 $crumbs[] = ['@type' => 'ListItem', 'position' => count($crumbs) + 1, 'name' => get_the_title(), 'item' => get_permalink($id)];
 $breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => $crumbs];
+// FAQ 结构化数据（有 faq 数据时输出，利于 Google FAQ 富结果）
+$faq_ld = $faq ? ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => array_map(fn($f) => [
+    '@type' => 'Question', 'name' => trim($f[0]),
+    'acceptedAnswer' => ['@type' => 'Answer', 'text' => trim($f[1])],
+], $faq)] : null;
 ?>
 <script type="application/ld+json"><?php echo wp_json_encode($jsonld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
 <script type="application/ld+json"><?php echo wp_json_encode($breadcrumb, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
+<?php if ($faq_ld): ?><script type="application/ld+json"><?php echo wp_json_encode($faq_ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script><?php endif; ?>
 
 <div class="wrap" style="padding-top:32px">
   <nav class="crumb"><a href="<?php echo esc_url(home_url('/')); ?>">首页</a> / <?php if ($main): ?><a href="<?php echo esc_url(get_category_link($main)); ?>"><?php echo esc_html($main->name); ?></a> / <?php endif; ?><span style="color:var(--text-2)"><?php the_title(); ?></span></nav>

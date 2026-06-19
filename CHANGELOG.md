@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.59] - 2026-06-19
+
+### SEO + 内容（迭代 17：工具页 FAQPage 结构化数据 + 补全热门工具 FAQ —— 目标 #4 #2）
+工具页此前已渲染 FAQ 手风琴，但缺 `FAQPage` 结构化数据，且仅 3/28 个工具有 FAQ。
+- **FAQPage 结构化数据**：`single-tool.php` 在有 faq 数据时输出 `FAQPage`（Question/Answer），符合 Google FAQ 富结果规范。
+- **补全 8 个热门工具 FAQ**（Claude / Perplexity / GitHub Copilot / Kimi / Suno / Runway / Notion AI / ElevenLabs），均为通用可核实的事实性问答（定价/访问/适用场景），新增幂等脚本 `scripts/seed-tool-faqs.php`（仅填空、不覆盖）。有 FAQ 的工具 3 → 11 个。
+- 实测线上：`/tool/claude/` 结构化数据含 SoftwareApplication + AggregateRating + Offer + BreadcrumbList + **FAQPage（3 问答）**；FAQ 手风琴浅/深双色渲染正常。
+- 主题资源未变，`HAHATOOL_VERSION` 维持 1.6.58。
+
 ## [v1.6.58] - 2026-06-19
 
 ### 界面 + 工具（迭代 16：暗色模式跟随系统 + 暗色 QA 工具 —— 目标 #1）
