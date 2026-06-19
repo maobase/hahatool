@@ -9,6 +9,7 @@
     <link rel="apple-touch-icon" href="<?php echo esc_url(home_url('/media/hahatool-media/brand/icon-192.png')); ?>">
     <link rel="icon" type="image/svg+xml" href="<?php echo esc_url(home_url('/media/hahatool-media/brand/icon.svg')); ?>">
     <link rel="icon" type="image/png" sizes="192x192" href="<?php echo esc_url(home_url('/media/hahatool-media/brand/icon-192.png')); ?>">
+    <link rel="manifest" href="<?php echo esc_url(home_url('/site.webmanifest')); ?>">
     <?php wp_head(); ?>
     <script>/* 首屏防闪烁：在样式应用前写入已存的主题偏好 */
     (function(){try{var t=JSON.parse(localStorage.getItem('hahatool:theme')||'{}');var m=t.mode||'system';var d=m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);var e=document.documentElement;e.setAttribute('data-mode',d?'dark':'light');if(t.accent)e.setAttribute('data-accent',t.accent);}catch(e){}})();</script>

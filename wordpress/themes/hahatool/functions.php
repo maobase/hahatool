@@ -29,6 +29,31 @@ add_action('init', function () {
 add_filter('emoji_svg_url', '__return_false'); // 去掉 s.w.org 的 dns-prefetch
 add_filter('tiny_mce_plugins', fn($p) => is_array($p) ? array_diff($p, ['wpemoji']) : $p);
 
+/**
+ * Web App Manifest（/site.webmanifest）—— 配合 icons / theme-color / apple-touch-icon，
+ * 支持安卓「添加到主屏」。用 init 直接拦截请求输出，无需重写规则与 flush。
+ */
+add_action('init', function () {
+    if (rtrim(strtok($_SERVER['REQUEST_URI'] ?? '', '?'), '/') !== '/site.webmanifest') return;
+    header('Content-Type: application/manifest+json; charset=utf-8');
+    header('Cache-Control: public, max-age=86400');
+    echo wp_json_encode([
+        'name'             => get_bloginfo('name'),
+        'short_name'       => 'HahaTool',
+        'description'      => get_bloginfo('description'),
+        'lang'             => 'zh-CN',
+        'start_url'        => home_url('/'),
+        'display'          => 'standalone',
+        'background_color' => '#ffffff',
+        'theme_color'      => '#7c3aed',
+        'icons'            => [
+            ['src' => home_url('/media/hahatool-media/brand/icon-192.png'), 'sizes' => '192x192', 'type' => 'image/png', 'purpose' => 'any'],
+            ['src' => home_url('/media/hahatool-media/brand/icon-512.png'), 'sizes' => '512x512', 'type' => 'image/png', 'purpose' => 'any maskable'],
+        ],
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    exit;
+});
+
 add_action('after_setup_theme', function () {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');

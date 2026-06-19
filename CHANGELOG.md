@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.81] - 2026-06-19
+
+### 移动端（迭代 39：Web App Manifest，完成可安装 PWA-lite —— 目标 #1 #3）
+承接前两轮的 icons / theme-color / apple-touch-icon，补齐 **Web App Manifest**：
+- **`/site.webmanifest`**：经 `init` 钩子直接拦截输出（无需重写规则/flush），含 name/short_name/description/`lang:zh-CN`/`start_url`/`display:standalone`/`theme_color`/192+512 图标（512 标 `maskable`）；`Cache-Control` 1 天。
+- header 增加 `<link rel="manifest">`。安卓 Chrome 现可「添加到主屏」（正确名称/图标/主题色），iOS 已由 apple-touch-icon 覆盖。
+- 实测线上：`/site.webmanifest` 返回 `application/manifest+json` 200 + 正确 JSON；head 含 manifest 链接。
+
 ## [v1.6.80] - 2026-06-19
 
 ### 品牌一致性 + 功能核验（迭代 38：favicon 统一为品牌 sparkle —— 目标 #1）
