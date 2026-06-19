@@ -73,8 +73,12 @@ add_action('pre_get_posts', function ($q) {
     }
 });
 
-/** html 上的主题色/明暗默认值（theme.js 会在首屏前覆盖） */
-add_filter('language_attributes', fn($o) => $o . ' data-accent="violet" data-mode="light"');
+/** html 上的语言纠正（站点为中文，WP 默认 en-US 不符，影响读屏与 SEO）+ 主题色/明暗默认值（theme.js 首屏前覆盖） */
+add_filter('language_attributes', function ($o) {
+    $o = preg_replace('/lang="[^"]*"/', 'lang="zh-CN"', $o, 1);
+    if (strpos($o, 'lang=') === false) $o = 'lang="zh-CN" ' . $o;
+    return $o . ' data-accent="violet" data-mode="light"';
+});
 
 /**
  * SEO：为虚拟路由页与工具详情设置规范的文档标题，对齐无头版。

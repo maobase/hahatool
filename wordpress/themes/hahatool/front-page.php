@@ -91,7 +91,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
             <span class="tag" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('megaphone', 11); ?>推广</span>
             <div style="display:flex;align-items:center;gap:16px">
               <?php echo hahatool_logo($bid, 56); ?>
-              <div><h3 style="font-size:20px"><?php echo esc_html(get_the_title($bid)); ?></h3><p style="margin:4px 0 0;color:rgba(255,255,255,.8);font-size:14px;max-width:380px" class="clamp2"><?php echo esc_html(hh_meta($bid, 'tagline')); ?></p></div>
+              <div><div style="font-size:20px;font-weight:700"><?php echo esc_html(get_the_title($bid)); ?></div><p style="margin:4px 0 0;color:rgba(255,255,255,.8);font-size:14px;max-width:380px" class="clamp2"><?php echo esc_html(hh_meta($bid, 'tagline')); ?></p></div>
             </div>
             <div style="margin-top:20px;display:flex;gap:12px">
               <a class="btn" style="background:#fff;color:var(--brand-700)" href="<?php echo esc_url(hh_meta($bid, 'url')); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$bid; ?>">立即体验<?php echo hh_icon('arrow-right', 15); ?></a>

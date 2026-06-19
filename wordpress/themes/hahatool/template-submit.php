@@ -53,16 +53,16 @@ $criteria = ['产品可正常访问、功能可用，非纯落地页', '与 AI �
       <h2 style="font-size:16px">在线提交</h2>
       <?php if ($err): ?><p style="color:#f43f5e;margin-top:8px;display:flex;align-items:center;gap:6px"><?php echo hh_icon('alert', 16); ?><?php echo esc_html($err); ?></p><?php endif; ?>
       <div class="grid2" style="margin-top:8px">
-        <div><label>工具名称 *</label><input name="name" required maxlength="50" placeholder="如：Gemini" value="<?php echo esc_attr($_POST['name'] ?? ''); ?>"></div>
-        <div><label>官网链接 *</label><input name="url" type="url" required placeholder="https://…" value="<?php echo esc_attr($_POST['url'] ?? ''); ?>"></div>
+        <div><label for="f-name">工具名称 *</label><input id="f-name" name="name" required maxlength="50" placeholder="如：Gemini" value="<?php echo esc_attr($_POST['name'] ?? ''); ?>"></div>
+        <div><label for="f-url">官网链接 *</label><input id="f-url" name="url" type="url" required placeholder="https://…" value="<?php echo esc_attr($_POST['url'] ?? ''); ?>"></div>
       </div>
-      <label>一句话简介 *（60 字内）</label><input name="tagline" required maxlength="60" placeholder="谁 + 能干什么" value="<?php echo esc_attr($_POST['tagline'] ?? ''); ?>">
+      <label for="f-tagline">一句话简介 *（60 字内）</label><input id="f-tagline" name="tagline" required maxlength="60" placeholder="谁 + 能干什么" value="<?php echo esc_attr($_POST['tagline'] ?? ''); ?>">
       <div class="grid2">
-        <div><label>分类 *</label><select name="cat" required style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text)"><option value="">请选择</option><?php foreach ($tool_cats as $c): ?><option value="<?php echo (int)$c->term_id; ?>"><?php echo esc_html($c->name); ?></option><?php endforeach; ?></select></div>
-        <div><label>定价模式 *</label><select name="pricing" required style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text)"><option value="免费">免费</option><option value="免费增值" selected>免费增值</option><option value="付费">付费</option></select></div>
+        <div><label for="f-cat">分类 *</label><select id="f-cat" name="cat" required style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text)"><option value="">请选择</option><?php foreach ($tool_cats as $c): ?><option value="<?php echo (int)$c->term_id; ?>"><?php echo esc_html($c->name); ?></option><?php endforeach; ?></select></div>
+        <div><label for="f-pricing">定价模式 *</label><select id="f-pricing" name="pricing" required style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text)"><option value="免费">免费</option><option value="免费增值" selected>免费增值</option><option value="付费">付费</option></select></div>
       </div>
-      <label>联系邮箱 *（不公开）</label><input name="mail" type="email" required value="<?php echo esc_attr($_POST['mail'] ?? ''); ?>">
-      <label>补充说明（可选）</label><textarea name="note" rows="3" maxlength="500"></textarea>
+      <label for="f-mail">联系邮箱 *（不公开）</label><input id="f-mail" name="mail" type="email" required value="<?php echo esc_attr($_POST['mail'] ?? ''); ?>">
+      <label for="f-note">补充说明（可选）</label><textarea id="f-note" name="note" rows="3" maxlength="500"></textarea>
       <button class="btn" type="submit" style="margin-top:16px">提交审核</button>
       <p class="muted" style="margin-top:10px;font-size:12px">提交即表示同意我们按收录标准审核。</p>
     </form>
