@@ -193,7 +193,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
       <div class="news-feature-grid">
         <?php $feat = $news[0]; $fc = hh_meta($feat->ID, 'cover'); ?>
         <a class="card news-card" href="<?php echo esc_url(get_permalink($feat)); ?>">
-          <?php if ($fc): ?><img class="news-cover" style="aspect-ratio:16/9" src="<?php echo esc_url($fc); ?>" alt="<?php echo esc_attr(get_the_title($feat)); ?>" loading="lazy"><?php endif; ?>
+          <?php if ($fc): ?><img class="news-cover" src="<?php echo esc_url($fc); ?>" alt="<?php echo esc_attr(get_the_title($feat)); ?>" loading="lazy"><?php endif; ?>
           <div class="news-body">
             <div class="news-meta"><time><?php echo esc_html(get_the_date('Y-m-d', $feat)); ?></time><span>·</span><span class="rt"><?php echo hh_icon('clock', 12); ?><?php echo (int) hahatool_read_time($feat->post_content); ?> 分钟阅读</span></div>
             <h3 style="font-size:18px;margin-top:8px"><?php echo esc_html(get_the_title($feat)); ?></h3>
