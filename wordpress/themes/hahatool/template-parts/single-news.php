@@ -3,6 +3,10 @@
 if (!defined('ABSPATH')) exit;
 $id = get_the_ID();
 $cover = hh_meta($id, 'cover');
+// 频道感知（资讯 / 快讯）—— 用于可见面包屑与结构化数据正确标注（本模板同时服务 ai-news 与 ai-flash）
+$is_flash = has_category('ai-flash', $id);
+$chan_name = $is_flash ? 'AI 快讯' : 'AI 资讯';
+$chan_link = $is_flash ? home_url('/flash/') : get_category_link_safe('ai-news');
 // 侧栏数据（对齐无头版资讯页侧栏：快讯 + 本周热门工具）
 $side_flash = hahatool_channel('ai-flash', 6)->posts;
 $hot = hahatool_tools(['posts_per_page' => 200])->posts;
@@ -24,7 +28,7 @@ $nl_article = array_filter([
 ]);
 $nl_crumbs = [
     ['@type' => 'ListItem', 'position' => 1, 'name' => '首页', 'item' => home_url('/')],
-    ['@type' => 'ListItem', 'position' => 2, 'name' => 'AI 资讯', 'item' => get_category_link_safe('ai-news')],
+    ['@type' => 'ListItem', 'position' => 2, 'name' => $chan_name, 'item' => $chan_link],
     ['@type' => 'ListItem', 'position' => 3, 'name' => get_the_title(), 'item' => get_permalink()],
 ];
 $nl_breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => $nl_crumbs];
@@ -33,7 +37,7 @@ $nl_breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList
 <script type="application/ld+json"><?php echo wp_json_encode($nl_breadcrumb, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
 <div class="read-progress" id="readProgress" aria-hidden="true"></div>
 <div class="wrap" style="padding-top:32px">
-  <nav class="crumb"><a href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('chevron-left', 16); ?>返回资讯列表</a></nav>
+  <nav class="crumb"><a href="<?php echo esc_url(home_url('/')); ?>">首页</a> / <a href="<?php echo esc_url($chan_link); ?>"><?php echo esc_html($chan_name); ?></a> / <span style="color:var(--text-2)"><?php the_title(); ?></span></nav>
   <div class="detail-grid" style="margin-top:16px">
     <div class="detail-main">
       <article class="panel" style="padding:0;overflow:hidden">
