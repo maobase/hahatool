@@ -2,6 +2,16 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.70] - 2026-06-19
+
+### 内容（迭代 28：填充 Anthropic IPO + 谷歌 Antigravity 资讯 2 篇 —— 目标 #2 #3）
+多源核实后填充，覆盖国际厂商与 AI 编程工具：
+- **Anthropic 保密提交 IPO 招股书：估值 9650 亿美元，最快今秋上市**（6/1，36 氪核实）—— SEC 保密交 S-1，前序 650 亿 H 轮，ARR 约 470 亿，亚马逊 50 亿战略增资，Claude Opus 4.8 提速降本。
+- **谷歌 I/O 发布 Antigravity 2.0：从 AI IDE 转向「任务中心」Agent 工作台**（5/20，36 氪核实）—— 开放支持 Gemini/Claude/GPT-OSS，新增 /goal、/schedule 等斜杠命令，对标 Codex 与 Claude Code（首次覆盖 AI 编程 Agent 工具）。
+- 跳过「GPT-6 / Gemini 3.5 Pro 即将发布」类「将发布」消息（未实际落地，遵循不臆测）。
+- SVG + PNG 双格式封面入对象存储；新增 `scripts/seed-real-news-6.php`。
+- ai-news 27 → 29；实测两文 200，og:image=PNG，品牌封面正常。
+
 ## [v1.6.69] - 2026-06-19
 
 ### 安全/文案（迭代 27：评论反垃圾 + 空状态文案审查 —— 目标 #1）

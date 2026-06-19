@@ -39,6 +39,9 @@ ITEMS = {
     # 第五批：行业大会 + 模型发布（爱范儿 / 证券时报核实）
     "waic-2026-countdown":            ("WAIC 2026", "7 月上海 · 智能伙伴共创未来", "#0c2d48", "#0369a1", "#38bdf8"),
     "minimax-m3-release":             ("MiniMax M3", "MSA 稀疏注意力 · 推理提效", "#4a044e", "#a21caf", "#f0abfc"),
+    # 第六批：资本市场 + AI 编程工具（36氪核实）
+    "anthropic-ipo-s1":               ("Anthropic IPO", "S-1 交表 · 估值 9650 亿", "#451a03", "#b45309", "#fcd34d"),
+    "google-antigravity-2":           ("Antigravity 2.0", "谷歌 · Agent 编程工作台", "#0c2d48", "#1d4ed8", "#60a5fa"),
 }
 
 TPL = '''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
