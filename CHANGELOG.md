@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.66] - 2026-06-19
+
+### SEO/社媒（迭代 24：og:image 改用 PNG 位图 —— 目标 #4 #3）
+发现真实问题：资讯/专题的 `og:image` 指向 **SVG 封面**，而 FB / Twitter / 微信 / 微博等社媒**不渲染 SVG og:image**——分享文章时预览图会空白。
+- **og:image 改 PNG**：把全部品牌封面 SVG 渲染为 1200×600 PNG（无头 Chrome）上传对象存储（25 资讯 + 3 专题）；`og:image`/`twitter:image` 自动把站内 `.svg` 换成同名 `.png`，并补 `og:image:width/height`=1200×600。
+- **页面显示不变**：on-page `<img>` 仍用 SVG（清晰、体积小），仅社媒预览改 PNG——实测同一篇文章页同时含 `.svg`（显示）与 `.png`（og）。
+- 新增 `scripts/render-covers-png.sh`（幂等：生成 SVG→渲染 PNG→上传），保证可复现。
+- 实测线上：文章/专题 og:image 为 `.png`（image/png 200）+ 尺寸标注；页面 `<img>` 仍 SVG。
+
 ## [v1.6.65] - 2026-06-19
 
 ### 无障碍（迭代 23：A11y 审查与修复 —— 目标 #1 #4）

@@ -181,8 +181,16 @@ add_action('wp_head', function () {
     echo '<meta property="og:url" content="' . esc_url(home_url(add_query_arg(null, null))) . "\">\n";
     echo '<meta name="twitter:card" content="' . ($image ? 'summary_large_image' : 'summary') . "\">\n";
     if ($image) {
-        echo '<meta property="og:image" content="' . esc_url($image) . "\">\n";
-        echo '<meta name="twitter:image" content="' . esc_url($image) . "\">\n";
+        // 社媒 og:image 必须是位图：站内 SVG 品牌封面替换为同名 PNG（FB/Twitter/微信/微博等不渲染 SVG og:image）。
+        // 页面 <img> 仍用 SVG（清晰、体积小），仅社媒预览改用 PNG。
+        $is_media = strpos($image, '/media/hahatool-media/') !== false;
+        $og_image = ($is_media && substr($image, -4) === '.svg') ? substr($image, 0, -4) . '.png' : $image;
+        echo '<meta property="og:image" content="' . esc_url($og_image) . "\">\n";
+        echo '<meta name="twitter:image" content="' . esc_url($og_image) . "\">\n";
+        if ($is_media) { // 品牌封面固定 1200×600，提示尺寸利于社媒即时渲染
+            echo '<meta property="og:image:width" content="1200">' . "\n";
+            echo '<meta property="og:image:height" content="600">' . "\n";
+        }
     }
     // 文章页补充 OpenGraph article:* 元信息（资讯/提示词/工具详情）—— 利于社媒与新闻聚合识别
     if (is_singular('post')) {
