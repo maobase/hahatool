@@ -71,6 +71,27 @@ function hahatool_raster($url) {
     return $url;
 }
 
+/**
+ * 列表页结构化数据：CollectionPage + ItemList（工具库 / 排行榜 / 分类归档）。
+ * $posts 为当前页展示的文章；position 从 1 递增（排行榜即为名次）。最多取 50 条。
+ */
+function hahatool_itemlist_ld($posts, $name, $url = '', $desc = '') {
+    $items = [];
+    foreach (array_slice(array_values($posts), 0, 50) as $i => $p) {
+        $items[] = ['@type' => 'ListItem', 'position' => $i + 1, 'name' => get_the_title($p), 'url' => get_permalink($p)];
+    }
+    if (!$items) return '';
+    $ld = array_filter([
+        '@context' => 'https://schema.org',
+        '@type' => 'CollectionPage',
+        'name' => $name,
+        'description' => $desc ?: null,
+        'url' => $url ?: null,
+        'mainEntity' => ['@type' => 'ItemList', 'itemListElement' => $items],
+    ]);
+    return "\n<script type=\"application/ld+json\">" . wp_json_encode($ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "</script>\n";
+}
+
 /** 读 meta 简写 */
 function hh_meta($id, $key, $default = '') {
     $v = get_post_meta($id, $key, true);

@@ -34,6 +34,8 @@ $link = function ($k, $v) use ($cat, $pricing, $sort, $base) {
     if ($v === null) unset($args[$k]); else $args[$k] = $v;
     return esc_url(add_query_arg($args, $base));
 };
+// 结构化数据：当前页工具列表 CollectionPage + ItemList
+echo hahatool_itemlist_ld($tools, '全部工具 - ' . get_bloginfo('name'), home_url('/tools/'), '浏览 HahaTool 收录的全部 AI 工具，支持分类、定价筛选与多维排序。');
 ?>
 <div class="wrap" style="padding-top:40px">
   <h1 class="section-title-lg">全部工具</h1>

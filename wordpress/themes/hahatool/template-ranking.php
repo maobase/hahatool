@@ -28,6 +28,8 @@ $base = home_url('/ranking/');
 $rlink = fn($k, $v) => esc_url(add_query_arg(array_filter([$k === 'by' ? 'by' : 'cat' => $v, $k === 'by' ? 'cat' : 'by' => ($k === 'by' ? $cat : ($by === 'visits' ? '' : $by))]), $base));
 $valfmt = fn($t) => $by === 'likes' ? hahatool_count(hh_meta($t->ID, 'likes')) : ($by === 'hot' ? hahatool_count(hh_meta($t->ID, 'views')) : hahatool_count(hh_meta($t->ID, 'monthly_visits')));
 $vallbl = $by === 'likes' ? '收藏' : ($by === 'hot' ? '站内浏览' : '月访问');
+// 结构化数据：排行榜即有序 ItemList（position 为名次）
+echo hahatool_itemlist_ld($tools, 'AI 工具排行榜 · ' . $active[0], $base, $active[1]);
 ?>
 <div class="wrap" style="padding-top:40px;max-width:1000px">
   <h1 class="section-title-lg">AI 工具排行榜</h1>

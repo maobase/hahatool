@@ -2,6 +2,16 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.76] - 2026-06-19
+
+### SEO（迭代 34：列表页 CollectionPage + ItemList 结构化数据 —— 目标 #4）
+此前仅专题有 CollectionPage，工具库/排行榜两大列表页无结构化数据。新增 `hahatool_itemlist_ld()` 助手并接入：
+- **排行榜 `/ranking`**：输出 `CollectionPage` + 有序 `ItemList`（position 即名次，最多 50），随 by 参数标注榜单名。
+- **工具库 `/tools`**：输出当前页工具的 `CollectionPage` + `ItemList`。
+- 同时核验排行榜筛选（流量/收藏/增长/人气/新品 × 分类）均按 `by` 正确 `usort`，功能正常。
+- 实测线上：`/ranking` 含 CollectionPage+ItemList+28 ListItem；`/tools` 含 +24 ListItem。
+- 结构化数据现覆盖：首页 · 工具详情 · 资讯 · 专题 · **工具库 · 排行榜** · 全页面包屑 · FAQ。
+
 ## [v1.6.75] - 2026-06-19
 
 ### 界面 + SEO（迭代 33：资讯面包屑频道化 + 平板 QA —— 目标 #1 #4）
