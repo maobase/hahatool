@@ -184,7 +184,7 @@ add_action('wp_head', function () {
         // 社媒 og:image 必须是位图：站内 SVG 品牌封面替换为同名 PNG（FB/Twitter/微信/微博等不渲染 SVG og:image）。
         // 页面 <img> 仍用 SVG（清晰、体积小），仅社媒预览改用 PNG。
         $is_media = strpos($image, '/media/hahatool-media/') !== false;
-        $og_image = ($is_media && substr($image, -4) === '.svg') ? substr($image, 0, -4) . '.png' : $image;
+        $og_image = hahatool_raster($image);
         echo '<meta property="og:image" content="' . esc_url($og_image) . "\">\n";
         echo '<meta name="twitter:image" content="' . esc_url($og_image) . "\">\n";
         if ($is_media) { // 品牌封面固定 1200×600，提示尺寸利于社媒即时渲染
@@ -228,6 +228,7 @@ add_action('wp_head', function () {
         '@type' => 'Organization',
         'name' => $name,
         'url' => $home,
+        'logo' => hahatool_logo_url(),
         'description' => get_bloginfo('description'),
     ];
     echo "\n<script type=\"application/ld+json\">" . wp_json_encode($website, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "</script>\n";

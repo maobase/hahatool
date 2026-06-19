@@ -16,11 +16,11 @@ $nl_article = array_filter([
     'headline' => get_the_title(),
     'datePublished' => get_the_date('c'),
     'dateModified' => get_the_modified_date('c'),
-    'image' => $cover ? [$cover] : null,
+    'image' => $cover ? [hahatool_raster($cover)] : null, // Article 富结果需位图：SVG 封面取同名 PNG
     'description' => mb_substr(wp_strip_all_tags(get_the_excerpt()), 0, 160),
     'mainEntityOfPage' => get_permalink(),
-    'author' => ['@type' => 'Organization', 'name' => get_bloginfo('name')],
-    'publisher' => ['@type' => 'Organization', 'name' => get_bloginfo('name')],
+    'author' => ['@type' => 'Organization', 'name' => get_bloginfo('name'), 'url' => home_url('/')],
+    'publisher' => ['@type' => 'Organization', 'name' => get_bloginfo('name'), 'logo' => ['@type' => 'ImageObject', 'url' => hahatool_logo_url(), 'width' => 600, 'height' => 140]],
 ]);
 $nl_crumbs = [
     ['@type' => 'ListItem', 'position' => 1, 'name' => '首页', 'item' => home_url('/')],

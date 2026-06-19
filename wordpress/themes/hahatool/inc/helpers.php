@@ -58,6 +58,19 @@ function get_category_link_safe($slug) {
     return $t ? get_category_link($t) : home_url('/');
 }
 
+/** 品牌 Logo（位图 PNG，用于结构化数据 publisher/Organization logo 与社媒兜底） */
+function hahatool_logo_url() {
+    return home_url('/media/hahatool-media/brand/logo.png');
+}
+
+/** 站内 SVG 封面转同名 PNG（结构化数据 image / 社媒 og:image 需位图）；其余原样返回 */
+function hahatool_raster($url) {
+    if ($url && substr($url, -4) === '.svg' && strpos($url, '/media/hahatool-media/') !== false) {
+        return substr($url, 0, -4) . '.png';
+    }
+    return $url;
+}
+
 /** 读 meta 简写 */
 function hh_meta($id, $key, $default = '') {
     $v = get_post_meta($id, $key, true);

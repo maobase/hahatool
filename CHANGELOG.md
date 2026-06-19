@@ -2,6 +2,16 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.68] - 2026-06-19
+
+### SEO（迭代 26：文章结构化数据补位图 image + publisher/Organization logo —— 目标 #4 #3）
+完善文章富结果信号（Google Article 要求 image 为可抓取位图，并推荐 publisher.logo）：
+- **NewsArticle.image 改位图**：原指向 SVG 封面，改用同名 PNG（新增 `hahatool_raster()` 助手，与 og:image 复用同一逻辑）。
+- **新增品牌 Logo 资源**：生成 600×140 品牌 Logo（紫色 mark + HahaTool 字标 + 中文副标）渲染为 PNG 入对象存储 `brand/logo.png`；源文件 `scripts/brand-logo.svg` 入库可复现。
+- **publisher.logo + Organization.logo**：NewsArticle 的 publisher 补 `logo`（ImageObject 600×140）、author 补 url；首页 Organization 补 `logo`，强化实体信号。
+- 顺手：CLS 核验——所有封面 `<img>` 均有固定尺寸或 `aspect-ratio` 占位，无布局抖动；清理了一处 rsync 误投到主题根目录的散落文件。
+- 实测线上：NewsArticle image=PNG、publisher.logo 正确；首页 Organization.logo 正确；logo 公网 `image/png` 200。
+
 ## [v1.6.67] - 2026-06-19
 
 ### 内容（迭代 25：填充行业大会 + 模型发布资讯 2 篇 —— 目标 #2 #3）
