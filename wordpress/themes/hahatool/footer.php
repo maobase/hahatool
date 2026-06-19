@@ -41,6 +41,9 @@
   </div>
   <div class="foot-bottom">© <?php echo esc_html(date('Y')); ?> <?php bloginfo('name'); ?> · WordPress 主题版 · 由 AI 构建 · 仅供学习交流</div>
 </footer>
+<button id="toTop" class="to-top" type="button" aria-label="返回顶部" title="返回顶部">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 <?php wp_footer(); ?>
 </body>
 </html>

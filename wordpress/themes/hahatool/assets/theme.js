@@ -192,6 +192,24 @@
       }
     }
 
+    // 返回顶部按钮：滚动超 600px 显示，点击平滑回顶（尊重 reduced-motion）
+    var toTop = document.getElementById('toTop');
+    if (toTop) {
+      var toTopTick = false;
+      var syncToTop = function () {
+        toTop.classList.toggle('show', (window.scrollY || document.documentElement.scrollTop) > 600);
+        toTopTick = false;
+      };
+      window.addEventListener('scroll', function () {
+        if (!toTopTick) { toTopTick = true; requestAnimationFrame(syncToTop); }
+      }, { passive: true });
+      syncToTop();
+      toTop.addEventListener('click', function () {
+        var rm = matchMedia('(prefers-reduced-motion:reduce)').matches;
+        window.scrollTo({ top: 0, behavior: rm ? 'auto' : 'smooth' });
+      });
+    }
+
     // 官网点击统计
     document.querySelectorAll('[data-track-click]').forEach(function (a) {
       a.addEventListener('click', function () {
