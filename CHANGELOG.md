@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.80] - 2026-06-19
+
+### 品牌一致性 + 功能核验（迭代 38：favicon 统一为品牌 sparkle —— 目标 #1）
+- **favicon 统一**：原 favicon 为「哈」字 data URI，与页头 Logo / App 图标 / OG 卡的 **sparkle** 品牌标记不一致。改为指向对象存储的品牌 sparkle 图标（`brand/icon.svg` + `icon-192.png` 位图兜底），浏览器标签页与全站品牌标记统一。
+- **功能核验**：实测埋点接口 `POST /hahatool/v1/track` —— 资讯 views 由 1→2，确认浏览统计（驱动「热门资讯」榜与工具浏览量）正常工作。
+- 本轮亦再探最新资讯，无可核实新条目（仅 WAIC 等已收录项），未入库。
+- 实测线上：favicon 指向 `brand/icon.svg`（image/svg+xml 200）+ PNG 兜底；`php -l` 通过。
+
 ## [v1.6.79] - 2026-06-19
 
 ### 性能/清理（迭代 37：头部精简 + 性能审计 —— 目标 #3 #1）
