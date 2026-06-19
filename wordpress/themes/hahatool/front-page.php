@@ -148,14 +148,28 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
       </div>
     </section>
 
-    <?php foreach ($tool_cats as $cat):
-      $cq = hahatool_tools(['posts_per_page' => 4, 'category__and' => [], 'cat' => $cat->term_id]);
+    <?php
+    // 分类区：热门 5 类做完整橱窗，其余压缩为分类胶囊，避免首页过长（其余分类仍可一键直达）
+    $cats_sorted = $tool_cats;
+    usort($cats_sorted, fn($a, $b) => $b->count - $a->count);
+    $cats_full = array_slice($cats_sorted, 0, 5);
+    $cats_rest = array_slice($cats_sorted, 5);
+    foreach ($cats_full as $cat):
+      $cq = hahatool_tools(['posts_per_page' => 4, 'cat' => $cat->term_id]);
       if (!$cq->posts) continue; ?>
       <section class="section" id="cat-<?php echo esc_attr($cat->slug); ?>">
         <div class="section-head"><div><h2><?php echo esc_html($cat->name); ?></h2><div class="sub"><?php echo esc_html($cat->description); ?></div></div><a class="more" href="<?php echo esc_url(get_category_link($cat)); ?>">全部 <?php echo (int)$cat->count; ?> 款<?php echo hh_icon('chevron-right', 16); ?></a></div>
         <div class="grid"><?php foreach ($cq->posts as $p) hahatool_tool_card($p); wp_reset_postdata(); ?></div>
       </section>
     <?php endforeach; ?>
+    <?php if ($cats_rest): ?>
+    <section class="section">
+      <div class="section-head"><div><h2>更多分类</h2><div class="sub">浏览全部 AI 工具品类</div></div><a class="more" href="<?php echo esc_url(home_url('/tools/')); ?>">全部工具<?php echo hh_icon('chevron-right', 16); ?></a></div>
+      <div class="tagcloud-grid">
+        <?php foreach ($cats_rest as $c): ?><a href="<?php echo esc_url(get_category_link($c)); ?>"><?php echo esc_html($c->name); ?><b><?php echo (int) $c->count; ?></b></a><?php endforeach; ?>
+      </div>
+    </section>
+    <?php endif; ?>
 
     <?php if ($hot_prompts): ?>
     <section class="section">
