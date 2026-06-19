@@ -33,6 +33,9 @@ ITEMS = {
     # 第三批：核实后的真实资讯（量子位/证券时报/21经济报道）
     "deepseek-mega-funding":          ("DeepSeek 融资", "首轮超 500 亿 · 估值近 4000 亿", "#1e1b4b", "#4338ca", "#818cf8"),
     "star-market-ai-llm":             ("科创板 × AI", "第五套标准拟扩容大模型", "#422006", "#a16207", "#fcd34d"),
+    # 第四批：国产 AI 算力芯片（量子位 / 证券时报核实）
+    "suanmiao-tokenpu-tapeout":       ("国产算力芯片", "算苗 3D TokenPU 流片", "#0c2d48", "#0e7490", "#22d3ee"),
+    "enflame-ipo-approved":           ("燧原科技 IPO", "云端 AI 芯片 · 科创板过会", "#064e3b", "#059669", "#6ee7b7"),
 }
 
 TPL = '''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
