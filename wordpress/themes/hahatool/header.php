@@ -4,6 +4,9 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#030712" media="(prefers-color-scheme: dark)">
+    <link rel="apple-touch-icon" href="<?php echo esc_url(home_url('/media/hahatool-media/brand/icon-192.png')); ?>">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%237c3aed'/><text x='32' y='44' font-size='34' fill='white' text-anchor='middle' font-family='sans-serif'>哈</text></svg>">
     <?php wp_head(); ?>
     <script>/* 首屏防闪烁：在样式应用前写入已存的主题偏好 */

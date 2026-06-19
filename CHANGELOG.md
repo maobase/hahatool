@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.78] - 2026-06-19
+
+### 移动端打磨（迭代 36：theme-color + apple-touch-icon —— 目标 #1 #3）
+补齐两处移动端完整性缺口：
+- **浏览器主题色**：新增 `<meta name="theme-color">`（浅 `#ffffff` / 深 `#030712`，随 `prefers-color-scheme`），手机浏览器地址栏/状态栏随站点明暗主题着色，不再是默认白。
+- **iOS 主屏图标**：生成 512/192 品牌 App 图标（紫色圆角 + sparkle，iOS 风格圆角），入对象存储 `brand/icon-*.png`，新增 `<link rel="apple-touch-icon">`；源 `scripts/brand-icon.svg` 入库。
+- 本轮亦探查最新（6/18–19）资讯，无新增可核实条目，遵循不回填旧闻未入库。
+- 实测线上：首页输出 theme-color 浅/深两条 + apple-touch-icon；图标公网 `image/png` 200。
+
 ## [v1.6.77] - 2026-06-19
 
 ### SEO/社媒（迭代 35：默认社交卡 og:image 兜底 —— 目标 #4 #3）
