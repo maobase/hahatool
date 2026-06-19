@@ -254,3 +254,27 @@ function hahatool_comment($comment, $args, $depth) {
         <div class="txt"><?php comment_text(); ?></div>
     <?php
 }
+
+/**
+ * 评论反垃圾（无第三方依赖、无验证码摩擦）：蜜罐字段 + 最短填写时间。
+ * 机器人会填充隐藏蜜罐字段或秒级提交，据此拦截。
+ */
+function hahatool_comment_spam_fields() {
+    echo '<p class="hh-hp" style="position:absolute!important;left:-9999px!important;height:0;overflow:hidden" aria-hidden="true">'
+        . '<label>如果你是人类请留空<input type="text" name="hh_hp" value="" autocomplete="off" tabindex="-1"></label></p>';
+    echo '<input type="hidden" name="hh_ts" value="' . esc_attr(time()) . '">';
+}
+add_action('comment_form_after_fields', 'hahatool_comment_spam_fields');
+add_action('comment_form_logged_in_after', 'hahatool_comment_spam_fields');
+
+add_filter('preprocess_comment', function ($commentdata) {
+    if (is_user_logged_in() && current_user_can('moderate_comments')) return $commentdata; // 管理员豁免
+    if (!empty($_POST['hh_hp'])) {                       // 蜜罐被填 → 机器人
+        wp_die('提交未通过校验。', '评论被拦截', ['response' => 403, 'back_link' => true]);
+    }
+    $ts = isset($_POST['hh_ts']) ? (int) $_POST['hh_ts'] : 0;
+    if ($ts > 0 && (time() - $ts) < 3) {                 // 秒级提交 → 机器人
+        wp_die('提交太快了，请稍等几秒再发表。', '评论被拦截', ['response' => 403, 'back_link' => true]);
+    }
+    return $commentdata;
+});
