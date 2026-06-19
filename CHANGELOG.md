@@ -2,6 +2,13 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.79] - 2026-06-19
+
+### 性能/清理（迭代 37：头部精简 + 性能审计 —— 目标 #3 #1）
+- **性能审计（CDP 实测）**：首页 **21 请求 / 147KB**，已属精简、无瓶颈（tool.hahaha.chat 69KB/9req，logo 62KB，分析/CF 微量）。确认无需结构性优化。
+- **头部精简**：移除 WP 默认 emoji 检测脚本与内联样式（本项目禁用 emoji 图标，纯冗余）、`<meta generator>` 版本号暴露、RSD / WLW 遗留链接，以及对 `s.w.org` 的额外 dns-prefetch 请求。
+- 实测线上：首页头部 generator/wlwmanifest/rsd/s.w.org/wp-emoji **全部清零**；首页/资讯/工具页均 200，功能正常。
+
 ## [v1.6.78] - 2026-06-19
 
 ### 移动端打磨（迭代 36：theme-color + apple-touch-icon —— 目标 #1 #3）
