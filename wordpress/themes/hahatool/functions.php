@@ -164,6 +164,8 @@ add_action('wp_head', function () {
         // 专题归档：用专题封面作 OG 图
         $image = get_term_meta(get_queried_object_id(), 'topic_cover', true);
     }
+    // 其余页面（首页/工具库/排行/热榜/搜索等）回退到默认品牌社交卡，确保分享有预览图
+    if (!$image) $image = home_url('/media/hahatool-media/brand/og-default.png');
     // 频道页规范链接指向清爽 URL（/prompts /flash /news），避免与 /category/ 重复内容
     if (is_category()) {
         $cslug = get_queried_object()->slug ?? '';
