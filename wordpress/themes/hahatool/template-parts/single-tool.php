@@ -19,6 +19,14 @@ if ($main) {
     $alt = array_slice($aq->posts, 0, 5);
 }
 $side_promo = hahatool_promo('detail-side', 2, $id);
+// 相关资讯：提到本工具名的资讯（工具↔内容双向内链）
+$rel_news = [];
+$tool_title = get_the_title($id);
+if (mb_strlen($tool_title) >= 2) {
+    $rn = new WP_Query(['category_name' => 'ai-news', 'posts_per_page' => 3, 's' => $tool_title, 'orderby' => 'date', 'order' => 'DESC', 'no_found_rows' => true, 'ignore_sticky_posts' => true]);
+    $rel_news = $rn->posts;
+    wp_reset_postdata();
+}
 
 // 结构化数据
 $pricing = hh_meta($id, 'pricing');
@@ -182,6 +190,22 @@ $faq_ld = $faq ? ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mai
           <?php endforeach; ?>
         </div>
         <?php if ($main): ?><a href="<?php echo esc_url(get_category_link($main)); ?>" style="margin-top:12px;display:block;text-align:center;font-size:14px;color:var(--brand-600)">查看<?php echo esc_html($main->name); ?>全部工具 →</a><?php endif; ?>
+      </div>
+      <?php endif; ?>
+
+      <?php if ($rel_news): ?>
+      <div class="panel" style="margin-top:24px">
+        <h2 style="font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:5px"><span style="color:var(--brand-500)"><?php echo hh_icon('newspaper', 15); ?></span>相关资讯</h2>
+        <div class="rank-list">
+          <?php foreach ($rel_news as $rp): ?>
+            <a class="rank-item" href="<?php echo esc_url(get_permalink($rp)); ?>" style="align-items:flex-start">
+              <span style="min-width:0;flex:1">
+                <time class="muted" style="font-size:12px;display:block"><?php echo esc_html(get_the_date('Y-m-d', $rp)); ?></time>
+                <span style="display:block;font-weight:500;font-size:14px;margin-top:2px"><?php echo esc_html(get_the_title($rp)); ?></span>
+              </span>
+            </a>
+          <?php endforeach; ?>
+        </div>
       </div>
       <?php endif; ?>
     </aside>
