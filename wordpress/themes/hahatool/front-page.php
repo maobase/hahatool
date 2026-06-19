@@ -203,6 +203,31 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
     </section>
     <?php endif; ?>
 
+    <?php
+    // AI·科技热榜 首页 teaser：取前 3 源各 6 条。用默认 $per 与 /hot 共享服务端缓存，避免缓存键冲突；拉取失败则不渲染。
+    $home_hot = function_exists('hahatool_fetch_hot') ? hahatool_fetch_hot() : ['sources' => []];
+    $home_hot_src = array_slice($home_hot['sources'] ?? [], 0, 3);
+    if ($home_hot_src): ?>
+    <section class="section">
+      <div class="section-head"><div><h2 style="display:flex;align-items:center;gap:6px"><span style="color:#f97316"><?php echo hh_icon('flame', 20); ?></span>AI · 科技热榜</h2><div class="sub">聚合知乎 / IT之家 / 虎嗅等全网热点 · 实时追踪<?php if (!empty($home_hot['updated'])): ?> · 更新于 <?php echo esc_html(wp_date('H:i', $home_hot['updated'])); ?><?php endif; ?></div></div><a class="more" href="<?php echo esc_url(home_url('/hot/')); ?>">完整热榜<?php echo hh_icon('chevron-right', 16); ?></a></div>
+      <div class="hot-grid">
+        <?php foreach ($home_hot_src as $s): ?>
+          <section class="hot-card panel">
+            <h3 class="hot-card-head"><span class="hot-dot" style="background:<?php echo esc_attr($s['color']); ?>"></span><?php echo esc_html($s['name']); ?></h3>
+            <ol class="hot-list">
+              <?php foreach (array_slice($s['items'], 0, 6) as $i => $it): ?>
+                <li><a href="<?php echo esc_url($it['link']); ?>" target="_blank" rel="noopener nofollow">
+                  <span class="hot-rank<?php echo $i < 3 ? ' top' : ''; ?>"><?php echo $i + 1; ?></span>
+                  <span class="hot-title"><?php echo esc_html($it['title']); ?></span>
+                </a></li>
+              <?php endforeach; ?>
+            </ol>
+          </section>
+        <?php endforeach; ?>
+      </div>
+    </section>
+    <?php endif; ?>
+
   <?php endif; ?>
 </main>
 
