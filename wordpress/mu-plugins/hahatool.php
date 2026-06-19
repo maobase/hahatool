@@ -181,13 +181,21 @@ add_action('wp_sitemaps_init', function ($sitemaps) {
     if (!class_exists('WP_Sitemaps_Provider')) return;
     $provider = new class extends WP_Sitemaps_Provider {
         public function __construct() {
-            $this->name = 'hahatool-hubs';
-            $this->object_type = 'hahatool-hubs';
+            // 名称不能含连字符：wp-sitemap 的 rewrite 仅匹配 [a-z]+，"hahatool-hubs" 会被错解析成
+            // sitemap=hahatool 导致子站点地图回退到首页 HTML（曾经的 bug）。用纯字母名 "hubs"。
+            $this->name = 'hubs';
+            $this->object_type = 'hubs';
         }
         public function get_url_list($page_num, $object_subtype = '') {
+            // 以最近内容修改时间作 lastmod，提示搜索引擎枢纽页内容更新
+            $latest = get_posts(['numberposts' => 1, 'orderby' => 'modified', 'order' => 'DESC', 'post_status' => 'publish', 'fields' => 'ids']);
+            $lastmod = $latest ? get_post_modified_time('c', true, $latest[0]) : '';
             $out = [];
-            foreach (['tools', 'ranking', 'compare', 'topics', 'hot'] as $h) {
-                $out[] = ['loc' => home_url("/$h/")];
+            // 枢纽页 + 清爽频道 URL（与 canonical 一致：/news /flash /prompts 而非 /category/ai-*）
+            foreach (['tools', 'ranking', 'compare', 'topics', 'hot', 'news', 'flash', 'prompts'] as $h) {
+                $entry = ['loc' => home_url("/$h/")];
+                if ($lastmod) $entry['lastmod'] = $lastmod;
+                $out[] = $entry;
             }
             return $out;
         }
@@ -195,8 +203,19 @@ add_action('wp_sitemaps_init', function ($sitemaps) {
             return 1;
         }
     };
-    $sitemaps->registry->add_provider('hahatool-hubs', $provider);
+    $sitemaps->registry->add_provider('hubs', $provider);
 });
+
+/**
+ * 保留分类（ai-news/ai-flash/ai-prompts）的 canonical 指向清爽 URL（/news /flash /prompts），
+ * 故从分类 sitemap 排除其 /category/ai-* 版本，避免收录非规范 URL；清爽 URL 已由 hubs provider 补充。
+ */
+add_filter('wp_sitemaps_taxonomies_query_args', function ($args, $taxonomy) {
+    if ($taxonomy !== 'category') return $args;
+    $reserved = array_filter(array_map(fn($s) => ($t = get_category_by_slug($s)) ? (int) $t->term_id : 0, ['ai-news', 'ai-flash', 'ai-prompts']));
+    if ($reserved) $args['exclude'] = array_values(array_unique(array_merge((array) ($args['exclude'] ?? []), $reserved)));
+    return $args;
+}, 10, 2);
 
 /** 热榜接口：GET /wp-json/hahatool/v1/hot —— 规范化的多源热榜（服务端缓存）。 */
 add_action('rest_api_init', function () {

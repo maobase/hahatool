@@ -2,6 +2,16 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.63] - 2026-06-19
+
+### SEO 修复 + 移动 QA（迭代 21：站点地图枢纽页修复 —— 目标 #4 #1）
+**移动审查**：compare / ranking / 工具详情 在 390px 实测——卡片堆叠、雷达/表格自适应、FAQ 与评论表单均正常，无横向滚动，移动端体验过关（无需改动）。
+**站点地图真实 bug 修复**（#4）：
+- `wp-sitemap-hahatool-hubs-1.xml` 此前返回首页 HTML 而非 XML——根因是 WP 的 sitemap rewrite 仅匹配 `[a-z]+`，**provider 名带连字符**「hahatool-hubs」被错解析成 `sitemap=hahatool` 而回退首页。枢纽页因此长期**不在任何有效 sitemap 中**。改用纯字母名 `hubs` 修复。
+- 枢纽 provider 补齐**清爽频道 URL**（/news /flash /prompts，与 canonical 一致）+ 枢纽页（/tools /ranking /compare /topics /hot），并加 **lastmod**（取最近内容修改时间）。
+- 从分类 sitemap **排除保留分类**（ai-news/ai-flash/ai-prompts）——其 canonical 指向清爽 URL，避免收录非规范 `/category/ai-*`。
+- 实测线上：索引列出 `wp-sitemap-hubs-1.xml`，含 8 个 loc + lastmod；分类 sitemap 已不含 ai-* 保留分类。
+
 ## [v1.6.62] - 2026-06-19
 
 ### 内容（迭代 20：填充国产 AI 算力芯片资讯 2 篇 —— 目标 #2 #3）
