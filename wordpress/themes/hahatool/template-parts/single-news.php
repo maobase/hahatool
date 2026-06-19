@@ -57,6 +57,35 @@ $nl_breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList
       </article>
 
       <?php
+      // 文中相关工具：扫描正文，匹配站内已收录的工具标题，做内容↔工具交叉链接（利于内链与发现）
+      $nl_text = wp_strip_all_tags(get_the_content());
+      $nl_mentioned = [];
+      foreach (hahatool_tools(['posts_per_page' => 300])->posts as $nt) {
+          $tt = get_the_title($nt);
+          if ($tt && mb_strlen($tt) >= 2 && mb_strpos($nl_text, $tt) !== false) {
+              $nl_mentioned[] = $nt;
+              if (count($nl_mentioned) >= 4) break;
+          }
+      }
+      if ($nl_mentioned): ?>
+      <section class="panel" style="margin-top:20px">
+        <h2 style="font-size:16px;display:flex;align-items:center;gap:6px"><span style="color:var(--brand-500)"><?php echo hh_icon('sparkles', 16); ?></span>文中相关工具</h2>
+        <div class="rank-list" style="margin-top:12px">
+          <?php foreach ($nl_mentioned as $nt): ?>
+            <a class="rank-item" href="<?php echo esc_url(get_permalink($nt)); ?>">
+              <?php echo hahatool_logo($nt->ID, 36); ?>
+              <span style="flex:1;min-width:0">
+                <span style="display:block;font-weight:600;font-size:14px"><?php echo esc_html(get_the_title($nt)); ?></span>
+                <?php if ($nt_tag = hh_meta($nt->ID, 'tagline')): ?><span class="muted" style="display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><?php echo esc_html($nt_tag); ?></span><?php endif; ?>
+              </span>
+              <span class="muted"><?php echo hh_icon('arrow-up-right', 14); ?></span>
+            </a>
+          <?php endforeach; ?>
+        </div>
+      </section>
+      <?php endif; ?>
+
+      <?php
       // 上一篇 / 下一篇（同分类）
       $prev = get_previous_post(true);
       $next = get_next_post(true);
