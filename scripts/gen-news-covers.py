@@ -44,6 +44,8 @@ ITEMS = {
     "google-antigravity-2":           ("Antigravity 2.0", "谷歌 · Agent 编程工作台", "#0c2d48", "#1d4ed8", "#60a5fa"),
     # 第七批：政策（证券时报核实）
     "ai-consumption-policy":          ("AI + 消费", "八部门 17 项举措落地", "#451a03", "#c2410c", "#fdba74"),
+    # 第八批：世界模型 / 具身大脑融资（量子位核实）
+    "daxiao-world-model-funding":     ("世界模型", "大晓机器人 · 数亿美元融资", "#134e4a", "#0d9488", "#5eead4"),
 }
 
 TPL = '''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
