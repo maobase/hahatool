@@ -2,6 +2,16 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.83] - 2026-06-19
+
+### 部署/性能（迭代 41：Redis 缓存硬化 —— 共享 Redis 良民 + 重启存活 —— 目标 #3）
+承接上轮 Redis 对象缓存，做生产硬化：
+- **发现**：共享 `manyan-redis-1` 为 `maxmemory 0` + `noeviction`——键永不自动淘汰，对象缓存会无限增长、影响同机其他应用。
+- **设 `WP_REDIS_MAXTTL=604800`(7天)** 并 `wp cache flush` 重建：实测旧键 TTL 由 `-1` → ≈604788（≤7天），DB7 键 623→462 重建中。hahatool 缓存键现会自动过期，做共享 Redis 良民。
+- **重启存活验证**：`docker compose up -d wordpress` 重建后，站点 200、`wp redis status` 仍 Connected、drop-in Valid。
+- 核验首页无 `wp-embed` 等冗余脚本（上轮头部精简已生效）。
+- 更新部署 runbook（MAXTTL/noeviction/flush/`-T` 要点）。
+
 ## [v1.6.82] - 2026-06-19
 
 ### 部署/性能（迭代 40：接入 Redis 对象缓存，复用现有 Redis —— 目标 #3）
