@@ -1,12 +1,20 @@
 # 生产服务器 /opt/haha-apps/hahatool 实际使用的 override（仅维护 WordPress 版）。
-# 把 Cloudflare Tunnel 的目标容器 hahatool-frontend 由 Next.js 改为 Caddy 反代 → WordPress，
-# 并对静态资源加长缓存 + 压缩（配置见 deploy/Caddyfile.proxy）。隧道 ingress 无需改动。
+# 1) 把 Cloudflare Tunnel 的目标容器 hahatool-frontend 由 Next.js 改为 Caddy 反代 → WordPress，
+#    并对静态资源加长缓存 + 压缩（配置见 deploy/Caddyfile.proxy）。隧道 ingress 无需改动。
+# 2) wordpress / wpcli 接入 manyan_default(hahanet)，复用现有 manyan-redis-1 做 WP 对象缓存
+#    （专用 DB 索引 7 + 键前缀 hahatool:，与其他应用隔离，不新建 Redis 容器）。
+#    Redis 常量写在 wp-config.php（wp config set WP_REDIS_HOST/PORT/DATABASE/PREFIX/TIMEOUT...）；
+#    对象缓存由官方插件 redis-cache(Till Krüss) 的 object-cache.php drop-in 提供，客户端走 Predis（纯 PHP，无需装扩展）。
 services:
   frontend:
     image: caddy:2-alpine
     command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
     volumes:
       - ./deploy/Caddyfile.proxy:/etc/caddy/Caddyfile:ro
+    networks: [hahatool, hahanet]
+  wordpress:
+    networks: [hahatool, hahanet]
+  wpcli:
     networks: [hahatool, hahanet]
 networks:
   hahanet:

@@ -100,8 +100,18 @@ curl -sL https://tool.hahaha.chat -o /dev/null -w "HTTP %{http_code}\n"
 curl -sL https://tool.hahaha.chat/wp-sitemap.xml -o /dev/null -w "sitemap %{http_code}\n"
 ```
 
+## ✅ Redis 对象缓存（复用现有 Redis，已接入）
+- **复用** 服务器现有 `manyan-redis-1`（`manyan_default` 网络，无密码），**不新建 Redis 容器**。
+- 隔离：专用 **DB 索引 7** + 键前缀 `hahatool:`（与其他应用互不影响；实测 DB7 约 560+ 键，DB0 不受影响）。
+- 接入方式（Docker 原生）：
+  - `docker-compose.override.yml` 给 `wordpress` / `wpcli` 加 `hahanet`(=`manyan_default`) 网络 → 可解析 `manyan-redis-1`。
+  - `wp-config.php` 写入常量（`wp config set`）：`WP_REDIS_HOST=manyan-redis-1`、`PORT=6379`、`DATABASE=7`、`PREFIX=hahatool:`、`TIMEOUT/READ_TIMEOUT=1`。
+  - 插件 `redis-cache`(Till Krüss) 提供 `object-cache.php` drop-in，客户端 **Predis（纯 PHP，无需装 php-redis 扩展）**。
+- 运维：`docker compose run --rm -T wpcli wp redis status|enable|disable --allow-root`（`-T` 必加，否则 `docker compose run` 会吞掉 heredoc 的 stdin）。出问题即 `wp redis disable` 秒级回滚（删 drop-in）。
+
 ## 缓存策略（#3）
 - **静态资源**（css/js/字体/图片）：Caddy `Cache-Control: public, max-age=31536000, immutable`（见 snippet）+ 主题资源已带版本号（`HAHATOOL_VERSION`）刷新。
+- **对象缓存**：WP 对象缓存走 Redis（见上节），降低 DB 查询、加速动态页面。
 - **HTML/REST**：不强缓存；如需可在 Cloudflare 层加页面缓存规则。
 - 图片走 MinIO 后，可在对象存储/CDN 侧再设长缓存。
 

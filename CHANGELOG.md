@@ -2,6 +2,16 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.82] - 2026-06-19
+
+### 部署/性能（迭代 40：接入 Redis 对象缓存，复用现有 Redis —— 目标 #3）
+按新指令「数据库/Redis 尽量复用、新建库表、尽量 Docker」，为 WordPress 接入对象缓存：
+- **复用现有 `manyan-redis-1`**（不新建 Redis 容器），专用 **DB 索引 7** + 键前缀 `hahatool:` 实现隔离（实测 DB7 约 563 键，其他 DB 不受影响）。
+- **Docker 原生**：`docker-compose.override.yml` 给 `wordpress`/`wpcli` 加 `manyan_default` 网络以解析 Redis；`wp-config.php` 写入 `WP_REDIS_*` 常量；官方 `redis-cache` 插件 drop-in，客户端 **Predis（纯 PHP，无需重建镜像/装扩展）**。
+- 实测线上：`wp redis status` = **Connected**（Predis 2.4.0，Redis 7.4.9），drop-in Valid；首页/资讯/工具/热榜均 200；秒级回滚预案 `wp redis disable`。
+- 文档：更新 `deploy/docker-compose.override.prod.yml` 与部署 runbook（含 `-T` 必加等运维要点）。
+- 注：新建 30 分钟迭代循环（cron `106bb902`，发布凭证已纳入循环上下文）。
+
 ## [v1.6.81] - 2026-06-19
 
 ### 移动端（迭代 39：Web App Manifest，完成可安装 PWA-lite —— 目标 #1 #3）
