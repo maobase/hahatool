@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.86] - 2026-06-19
+
+### SEO/安全（迭代 44：http→https 跳转，hahatool 作用域内解决 —— 目标 #4）
+上轮发现 `http://tool.hahaha.chat` 返回 200 未跳转。因 zone 级 `always_use_https` 会影响同 zone 其他应用（待确认），改在 **WP 层** scoped 解决：
+- 新增 mu-plugin `force-https-redirect.php`：凭 Cloudflare `CF-Visitor` 头判定原始请求 scheme，http 则 301 跳 https。
+- 排坑：WP `wp_magic_quotes()` 会给 `$_SERVER` 加反斜杠，须 `wp_unslash` 才能匹配 `"scheme":"http"`；`X-Forwarded-Proto` 被 Caddy 写死 `https` 不可用，故只信 CF-Visitor。
+- **无环、无副作用**：仅作用于 hahatool；检测不到 CF-Visitor 则无害空操作；非 GET/HEAD、WP-CLI/CRON/REST/admin 均跳过。
+- 实测线上：`http://tool.hahaha.chat/` 与 `/news/` 均 **301 → https（保留路径）**，https 仍 200，跟随跳转终态 200（无环）。
+
 ## [v1.6.85] - 2026-06-19
 
 ### 性能/部署（迭代 43：Cloudflare 边缘提速 + 设置审计 —— 目标 #3 #4）

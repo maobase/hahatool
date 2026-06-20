@@ -116,7 +116,7 @@ curl -sL https://tool.hahaha.chat/wp-sitemap.xml -o /dev/null -w "sitemap %{http
 
 - ✅ 已开启（安全、纯增益）：`brotli`、`http3`、**`0rtt`**、**`early_hints`**（后两项本轮开启，加速 TLS 恢复与 103 资源预提示，不改变任何行为、不会破坏应用）。
 - ⚠️ 建议但**未自动改**（影响全 zone 行为，留待确认）：
-  - `always_use_https=on`：当前 `off`，`http://tool.hahaha.chat/` 返回 200 **未跳转 https**（canonical 已是 https 故 SEO 影响有限，但仍建议强制跳转）。
+  - `always_use_https=on`：当前 `off`（zone 级未改，避免影响其他应用）。**hahatool 自身的 http→https 已在 WP 层解决**：mu-plugin `force-https-redirect.php` 凭 `CF-Visitor` 头（需 `wp_unslash`，因 `wp_magic_quotes` 会转义；X-Forwarded-Proto 被 Caddy 写死 https 不可用）判定原始 http 并 301 跳 https，仅作用于本站、无环、检测不到则无害空操作。
   - `min_tls_version=1.2`：当前 `1.0`（已弃用/不安全），建议提到 1.2。
   - 仅作用于 hahatool 而不动全 zone 的话：用 Redirect Rule 限定 `http.host eq "tool.hahaha.chat"` 跳 https（注意避免重定向环）。
 
