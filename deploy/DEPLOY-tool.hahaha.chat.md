@@ -120,6 +120,10 @@ curl -sL https://tool.hahaha.chat/wp-sitemap.xml -o /dev/null -w "sitemap %{http
   - `min_tls_version=1.2`：当前 `1.0`（已弃用/不安全），建议提到 1.2。
   - 仅作用于 hahatool 而不动全 zone 的话：用 Redirect Rule 限定 `http.host eq "tool.hahaha.chat"` 跳 https（注意避免重定向环）。
 
+## 安全响应头（#4，已上线）
+- `deploy/Caddyfile.proxy` 顶部 `header {}` 块输出：`Strict-Transport-Security: max-age=31536000`（配合 WP 层 http→https，回访免 301 往返）、`X-Content-Type-Options: nosniff`、`Referrer-Policy: strict-origin-when-cross-origin`、`X-Frame-Options: SAMEORIGIN`，并 `-Server` 去掉源站 Server 头。仅作用于 tool.hahaha.chat（自己的 caddy），不动同 zone 其他应用。
+- ⚠️ **改 Caddyfile 后用 `docker compose restart frontend`，不要只 `caddy reload`**——bind-mount 的 Caddyfile 变更 reload 有时不生效（实测 reload 后头未出，restart 后才出）。
+
 ## 缓存策略（#3）
 - **静态资源**（css/js/字体/图片）：Caddy `Cache-Control: public, max-age=31536000, immutable`（见 snippet）+ 主题资源已带版本号（`HAHATOOL_VERSION`）刷新。
 - **对象缓存**：WP 对象缓存走 Redis（见上节），降低 DB 查询、加速动态页面。

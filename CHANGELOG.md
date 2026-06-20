@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.87] - 2026-06-19
+
+### 安全（迭代 45：安全响应头 HSTS 等 —— 目标 #4）
+承接 http→https，给 hahatool 加标准安全响应头（`deploy/Caddyfile.proxy` 顶部 `header{}`，仅作用本站、不动同 zone 其他应用）：
+- `Strict-Transport-Security: max-age=31536000`（配合跳转，回访浏览器免 301 往返直走 https）、`X-Content-Type-Options: nosniff`、`Referrer-Policy: strict-origin-when-cross-origin`、`X-Frame-Options: SAMEORIGIN`、`-Server`（去源站 Apache Server 头）。
+- 排坑：改 Caddyfile 后 `caddy reload` 对 bind-mount 变更有时不生效，须 `docker compose restart frontend`（reload 后头未出、restart 后才出）。
+- 同时核验：WP 时区 `Asia/Shanghai`（日期/`datePublished` 正确）；track 埋点 POST 不被 https 跳转误伤（REST/POST 已豁免）。
+- 实测线上：经 Cloudflare 四个安全头齐全，全路由 200。
+
 ## [v1.6.86] - 2026-06-19
 
 ### SEO/安全（迭代 44：http→https 跳转，hahatool 作用域内解决 —— 目标 #4）

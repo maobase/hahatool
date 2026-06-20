@@ -3,6 +3,16 @@
 :3000 {
 	encode zstd gzip
 
+	# 安全响应头（仅作用于 tool.hahaha.chat，不影响同 zone 其他应用）。
+	# HSTS 配合 WP 层 http→https 跳转：回访浏览器直接走 https，免去 301 往返。
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Frame-Options "SAMEORIGIN"
+		-Server
+	}
+
 	# 对象存储：/media/<bucket>/<obj> → MinIO（manyan-minio，公共读桶 hahatool-media）
 	# 仅对成功响应加长缓存，避免 404/错误被 CDN 当作 immutable 缓存
 	handle_path /media/* {
