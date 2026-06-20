@@ -42,6 +42,8 @@ ITEMS = {
     # 第六批：资本市场 + AI 编程工具（36氪核实）
     "anthropic-ipo-s1":               ("Anthropic IPO", "S-1 交表 · 估值 9650 亿", "#451a03", "#b45309", "#fcd34d"),
     "google-antigravity-2":           ("Antigravity 2.0", "谷歌 · Agent 编程工作台", "#0c2d48", "#1d4ed8", "#60a5fa"),
+    # 第七批：政策（证券时报核实）
+    "ai-consumption-policy":          ("AI + 消费", "八部门 17 项举措落地", "#451a03", "#c2410c", "#fdba74"),
 }
 
 TPL = '''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
