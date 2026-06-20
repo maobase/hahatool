@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.85] - 2026-06-19
+
+### 性能/部署（迭代 43：Cloudflare 边缘提速 + 设置审计 —— 目标 #3 #4）
+用所给 Cloudflare 凭证审计 hahaha.chat zone 边缘设置（API 从服务器执行，本机解析不了 api.cloudflare.com）：
+- **开启 `0rtt` + `early_hints`**（此前 off）—— 纯增益、零行为风险（更快 TLS 恢复 + 103 资源预提示）。`brotli`/`http3` 本就已开。
+- **审计发现（建议但未自动改，因影响全 zone 其他应用）**：`always_use_https=off`（`http://tool.hahaha.chat` 返回 200 未跳转 https，canonical 已 https 故影响有限）；`min_tls_version=1.0`（建议升 1.2）。已在 runbook 记录命令与「仅限 hahatool 的 Redirect Rule」备选方案，留待确认。
+- 文档：部署 runbook 新增「Cloudflare 边缘设置」节。
+
 ## [v1.6.84] - 2026-06-19
 
 ### 内容（迭代 42：填充「AI+消费」政策资讯 —— 目标 #2 #3）

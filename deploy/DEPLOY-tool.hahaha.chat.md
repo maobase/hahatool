@@ -110,6 +110,16 @@ curl -sL https://tool.hahaha.chat/wp-sitemap.xml -o /dev/null -w "sitemap %{http
 - **共享 Redis 良民**：`manyan-redis-1` 为 `maxmemory 0` + `noeviction`（键不会自动淘汰），故必须设 `WP_REDIS_MAXTTL=604800`(7天) 让缓存键到期自动过期，避免无限增长影响其他应用。改 MAXTTL 后需 `wp cache flush` 让旧键（TTL=-1）重建为带 TTL（实测重建后 TTL≈604788）。
 - 运维：`docker compose run --rm -T wpcli wp redis status|enable|disable --allow-root` + `wp cache flush`（`-T` 必加，否则 `docker compose run` 会吞掉 heredoc 的 stdin）。出问题即 `wp redis disable` 秒级回滚（删 drop-in）。已验证 `docker compose up -d wordpress` 重启后缓存仍 Connected。
 
+## Cloudflare 边缘设置（zone: hahaha.chat, id f827a21cc105d243088275cd5ce75a9c）
+> 该 zone 托管多个应用，改 zone 级设置会影响全部子域，谨慎。用 API（从服务器执行，本机 DNS 解析不了 api.cloudflare.com）：
+> `curl -s [-X PATCH] https://api.cloudflare.com/client/v4/zones/<ZID>/settings/<key> -H "X-Auth-Email: <email>" -H "X-Auth-Key: <globalkey>" [-H "Content-Type: application/json" --data '{"value":"on"}']`
+
+- ✅ 已开启（安全、纯增益）：`brotli`、`http3`、**`0rtt`**、**`early_hints`**（后两项本轮开启，加速 TLS 恢复与 103 资源预提示，不改变任何行为、不会破坏应用）。
+- ⚠️ 建议但**未自动改**（影响全 zone 行为，留待确认）：
+  - `always_use_https=on`：当前 `off`，`http://tool.hahaha.chat/` 返回 200 **未跳转 https**（canonical 已是 https 故 SEO 影响有限，但仍建议强制跳转）。
+  - `min_tls_version=1.2`：当前 `1.0`（已弃用/不安全），建议提到 1.2。
+  - 仅作用于 hahatool 而不动全 zone 的话：用 Redirect Rule 限定 `http.host eq "tool.hahaha.chat"` 跳 https（注意避免重定向环）。
+
 ## 缓存策略（#3）
 - **静态资源**（css/js/字体/图片）：Caddy `Cache-Control: public, max-age=31536000, immutable`（见 snippet）+ 主题资源已带版本号（`HAHATOOL_VERSION`）刷新。
 - **对象缓存**：WP 对象缓存走 Redis（见上节），降低 DB 查询、加速动态页面。
