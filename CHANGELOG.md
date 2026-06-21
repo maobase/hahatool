@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.89] - 2026-06-19
+
+### SEO（迭代 47：补齐 self-canonical —— 目标 #4）
+curl 审计各页面类型，发现**首页、虚拟枢纽页（/tools /ranking /hot /compare /topics）、专题归档此前无 canonical 标签**（WP `rel_canonical` 只覆盖单篇）。补 self-canonical：
+- 首页 → `home_url('/')`；hh_page 虚拟路由 → `/<page>/`；topic 归档 → 词条链接；分页页不输出（避免与 paged 冲突）。
+- **排坑**：虚拟枢纽页主查询无文章，`is_front_page()` 会**误判为 true**——必须先判 `hh_page` 再判首页，否则 /tools /ranking 等会错误 canonical 到首页（已发现并修正）。
+- 单篇文章仍由 WP 输出唯一 canonical，未重复。
+- 实测线上：/ /tools /ranking /hot /compare /topics /topic/* 七类页面 canonical 均指向各自 URL、唯一。
+
 ## [v1.6.88] - 2026-06-19
 
 ### 内容（迭代 46：填充「世界模型/具身大脑融资」资讯 —— 目标 #2 #3）

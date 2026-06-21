@@ -218,6 +218,19 @@ add_action('wp_head', function () {
             echo "\n<link rel=\"canonical\" href=\"" . esc_url(home_url($clean[$cslug])) . "\">\n";
         }
     }
+    // self-canonical：首页 / 虚拟枢纽页(/tools /ranking /compare /topics /hot 等) / 专题归档 —— WP 默认不输出，补齐避免重复内容
+    $hh_canonical = '';
+    if ($hh_vp = get_query_var('hh_page')) { // 必须先判虚拟枢纽页：其主查询无文章，is_front_page() 会误判为 true
+        $hh_canonical = home_url('/' . $hh_vp . '/');
+    } elseif (is_front_page()) {
+        $hh_canonical = home_url('/');
+    } elseif (is_tax('topic')) {
+        $tl = get_term_link(get_queried_object());
+        if (!is_wp_error($tl)) $hh_canonical = $tl;
+    }
+    if ($hh_canonical && !is_paged()) {
+        echo "\n<link rel=\"canonical\" href=\"" . esc_url($hh_canonical) . "\">\n";
+    }
     echo "\n<meta name=\"description\" content=\"" . esc_attr($desc) . "\">\n";
     echo '<meta property="og:type" content="' . esc_attr($type) . "\">\n";
     echo '<meta property="og:site_name" content="' . esc_attr(get_bloginfo('name')) . "\">\n";
