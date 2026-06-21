@@ -5,6 +5,15 @@ get_header();
 $cat = get_queried_object();
 $slug = $cat->slug;
 $paged = max(1, (int)get_query_var('paged'));
+// 频道归档（资讯/快讯/提示词）结构化数据：CollectionPage + ItemList（canonical 已指向清爽 URL）
+$hh_chan = [
+    'ai-news'    => ['AI 资讯', '/news/'],
+    'ai-flash'   => ['AI 快讯', '/flash/'],
+    'ai-prompts' => ['AI 提示词库', '/prompts/'],
+];
+if ($paged <= 1 && isset($hh_chan[$slug]) && function_exists('hahatool_itemlist_ld')) {
+    echo hahatool_itemlist_ld($GLOBALS['wp_query']->posts, $hh_chan[$slug][0], home_url($hh_chan[$slug][1]), hahatool_meta_description());
+}
 ?>
 <div class="wrap" style="padding-top:40px">
 

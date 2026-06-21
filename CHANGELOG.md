@@ -2,6 +2,13 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.90] - 2026-06-19
+
+### SEO（迭代 48：频道归档补 CollectionPage/ItemList —— 目标 #4）
+落实上轮审计发现：`/news` `/flash` `/prompts` 频道归档缺结构化数据。在 `category.php` 为这三个保留分类输出 `CollectionPage` + `ItemList`（复用 `hahatool_itemlist_ld()`，仅首页不分页时输出，描述取频道 meta）。
+- 实测线上：/news（24）、/flash（16）、/prompts（12）均含 CollectionPage + ItemList + ListItem。
+- 至此结构化数据**全列表页覆盖**：工具库 · 排行榜 · 资讯 · 快讯 · 提示词 · 专题 + 首页/工具/资讯/专题详情 + 全页面包屑 + FAQ。
+
 ## [v1.6.89] - 2026-06-19
 
 ### SEO（迭代 47：补齐 self-canonical —— 目标 #4）
