@@ -158,6 +158,13 @@ h1,h2,h3,h4{margin:0;line-height:1.25;}
   .hero-stats .l{font-size:11px;}
   .hero h1{font-size:30px;}
 }
+/* 列表页（浅底）数据条，区别于深色 hero-stats */
+.dir-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px;}
+.dir-stats>div{padding:16px 12px;text-align:center;border:1px solid var(--border);border-radius:14px;background:var(--surface);}
+.dir-stats .n{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--text);line-height:1.1;}
+.dir-stats .n span{color:var(--brand-500);}
+.dir-stats .l{font-size:12px;color:var(--text-3);margin-top:4px;white-space:nowrap;}
+@media(max-width:560px){.dir-stats{grid-template-columns:repeat(2,1fr);}.dir-stats .n{font-size:22px;}}
 
 /* ============================================================
    分类快捷条
