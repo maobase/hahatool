@@ -512,3 +512,9 @@ main{padding:40px 0;}
 .to-top:hover{border-color:var(--brand-300);background:var(--brand-50);}
 [data-mode="dark"] .to-top:hover{background:rgba(124,58,237,.16);}
 @media(max-width:640px){.to-top{right:14px;bottom:16px;}}
+/* 工具PK 热门对比组合卡 */
+.pk-pair{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);text-decoration:none;color:var(--text);transition:.15s;}
+.pk-pair:hover{border-color:var(--brand-300);box-shadow:var(--shadow);transform:translateY(-2px);}
+.pk-pair .nm{flex:1;min-width:0;font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pk-pair .vs{flex-shrink:0;font-family:var(--font-display);font-weight:700;color:var(--text-3);font-size:13px;}
+.pk-pair .logo,.pk-pair .logo-fallback{width:28px;height:28px;flex-shrink:0;}

@@ -2,6 +2,14 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.94] - 2026-06-22
+
+### 界面（迭代 52：工具PK 页补「热门对比」组合 —— 目标 #1 #2）
+延续「内容越丰富越好」：/compare 数据表之后是大片空白。底部新增 **「热门对比」** 区——8 组精选对比组合卡（ChatGPT×Claude、Midjourney×Stable Diffusion、Cursor×GitHub Copilot、Kimi×豆包、Runway×可灵、Perplexity×ChatGPT、Notion AI×WPS AI、Suno×ElevenLabs），点一下直接跳到对应对比。
+- 仅渲染两端工具都存在的组合；卡片含双 Logo + 名称 + VS，新增 `.pk-pair` 样式（明暗双色 + hover 上浮）。
+- 既填满页面又增加真实导航/发现价值（探索更多对比）。
+- 实测线上：8 张组合卡渲染，资源刷新 `?ver=1.6.94`；`php -l` 通过；截图确认底部不再空。
+
 ## [v1.6.93] - 2026-06-22
 
 ### 界面（迭代 51：提示词详情页从单栏稀疏 → 两栏丰富 —— 目标 #1 #2）

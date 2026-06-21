@@ -14,6 +14,12 @@ if ($A && (!$B || $B->ID === $A->ID)) { foreach ($tools as $t) if ($t->ID !== $A
 $CA = 'var(--brand-600)'; $CB = '#f59e0b';
 $opts = $tools;
 usort($opts, fn($x, $y) => strcmp($x->post_title, $y->post_title));
+// 热门对比组合（仅渲染两端工具都存在的）
+$pk_pairs = [
+    ['chatgpt', 'claude'], ['midjourney', 'stable-diffusion'], ['cursor', 'github-copilot'],
+    ['kimi', 'doubao'], ['runway', 'kling'], ['perplexity', 'chatgpt'],
+    ['notion-ai', 'wps-ai'], ['suno', 'elevenlabs'],
+];
 
 function pk_win($a, $b, $hi = true) {
     if (!$a || !$b || $a == $b) return '';
@@ -86,6 +92,24 @@ function pk_win($a, $b, $hi = true) {
     </div>
   </div>
   <p class="muted" style="text-align:center;margin-top:24px">数据由运营团队整理，仅供参考 · 在上方选择器中任意切换工具</p>
+
+  <?php
+  $pk_render = array_values(array_filter($pk_pairs, fn($pr) => isset($bySlug[$pr[0]], $bySlug[$pr[1]]) && $bySlug[$pr[0]]->ID !== $bySlug[$pr[1]]->ID));
+  if ($pk_render): ?>
+  <section style="margin-top:44px">
+    <h2 style="font-size:20px;margin-bottom:4px;display:flex;align-items:center;gap:7px"><span style="color:var(--brand-500)"><?php echo hh_icon('swords', 18); ?></span>热门对比</h2>
+    <p class="muted" style="margin-bottom:16px">大家都在 PK 这些组合，点一下直接对比</p>
+    <div class="grid grid-2">
+      <?php foreach ($pk_render as [$x, $y]): $X = $bySlug[$x]; $Y = $bySlug[$y]; ?>
+        <a class="pk-pair" href="<?php echo esc_url(home_url('/compare/?a=' . $x . '&b=' . $y)); ?>" aria-label="对比 <?php echo esc_attr($X->post_title . ' 与 ' . $Y->post_title); ?>">
+          <?php echo hahatool_logo($X->ID, 28); ?><span class="nm"><?php echo esc_html($X->post_title); ?></span>
+          <span class="vs">VS</span>
+          <span class="nm" style="text-align:right"><?php echo esc_html($Y->post_title); ?></span><?php echo hahatool_logo($Y->ID, 28); ?>
+        </a>
+      <?php endforeach; ?>
+    </div>
+  </section>
+  <?php endif; ?>
   <?php endif; ?>
 </div>
 <?php get_footer();
