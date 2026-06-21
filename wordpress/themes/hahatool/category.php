@@ -33,17 +33,39 @@ if ($paged <= 1 && isset($hh_chan[$slug]) && function_exists('hahatool_itemlist_
   <div class="grid grid-3" style="margin-top:24px"><?php foreach ($list as $p) hahatool_prompt_card($p); ?></div>
   <p class="muted" style="text-align:center;margin-top:40px;font-size:12px">有好用的提示词想分享？通过 <a href="<?php echo esc_url(home_url('/submit/')); ?>" style="color:var(--brand-600)">提交页</a> 投稿给我们</p>
 
-<?php elseif ($slug === 'ai-flash'): /* 快讯时间线（按天分组）*/ ?>
+<?php elseif ($slug === 'ai-flash'): /* 快讯时间线（按天分组）+ 侧栏 */
+  $fp = [];
+  while (have_posts()) { the_post(); $fp[] = get_post(); }
+  $flash_hot = hahatool_hot_tools(5);
+?>
   <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:var(--brand-600);color:#fff"><?php echo hh_icon('zap', 18); ?></span>AI 快讯</h1>
-  <p class="muted">行业即时短讯 · 按时间线更新</p>
-  <div style="margin-top:28px;max-width:720px">
-    <?php
-    $fp = [];
-    while (have_posts()) { the_post(); $fp[] = get_post(); }
-    hahatool_flash_timeline($fp);
-    ?>
+  <p class="muted">行业即时短讯 · 按时间线更新<?php if ($fp) echo ' · 当前 ' . count($fp) . ' 条'; ?></p>
+  <div class="detail-grid" style="margin-top:24px">
+    <div>
+      <?php if ($fp): hahatool_flash_timeline($fp); else: ?>
+        <div class="empty">暂无快讯，先看看 <a href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>" style="color:var(--brand-600)">AI 资讯</a></div>
+      <?php endif; ?>
+      <?php hahatool_pagination(max(1, (int) get_query_var('paged')), $GLOBALS['wp_query']->max_num_pages, 'get_pagenum_link'); ?>
+    </div>
+    <aside>
+      <div class="panel">
+        <h2 style="font-size:16px;display:flex;align-items:center;gap:5px"><?php echo hh_icon('newspaper', 16); ?>想看完整报道？</h2>
+        <p class="muted" style="font-size:13px;margin-top:8px;line-height:1.7">快讯只给一句话速览。想看深度解读与背景，移步 AI 资讯频道。</p>
+        <a class="btn btn-ghost" style="margin-top:14px;display:inline-flex;width:100%;justify-content:center" href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>">浏览 AI 资讯<?php echo hh_icon('chevron-right', 16); ?></a>
+      </div>
+      <?php hahatool_hot_news_panel(); ?>
+      <?php if ($flash_hot): ?>
+      <div class="panel" style="margin-top:24px">
+        <h2 style="font-size:16px;margin-bottom:10px">本周热门工具</h2>
+        <div class="rank-list">
+          <?php foreach ($flash_hot as $i => $t): ?>
+            <a class="rank-item" href="<?php echo esc_url(get_permalink($t)); ?>"><span class="num"><?php echo $i + 1; ?></span><?php echo hahatool_logo($t->ID, 32); ?><span style="flex:1;min-width:0;font-size:14px;font-weight:500"><?php echo esc_html(get_the_title($t)); ?></span><span class="muted tnum" style="font-size:12px"><?php echo hahatool_count(hh_meta($t->ID, 'monthly_visits')); ?></span></a>
+          <?php endforeach; ?>
+        </div>
+      </div>
+      <?php endif; ?>
+    </aside>
   </div>
-  <?php hahatool_pagination(max(1, (int) get_query_var('paged')), $GLOBALS['wp_query']->max_num_pages, 'get_pagenum_link'); ?>
 
 <?php elseif ($slug === 'ai-news'): /* 资讯列表 + 侧栏 */
   $news_posts = []; while (have_posts()) { the_post(); $news_posts[] = get_post(); }
