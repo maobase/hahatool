@@ -3,15 +3,36 @@
 if (!defined('ABSPATH')) exit;
 get_header();
 $hot = function_exists('hahatool_fetch_hot') ? hahatool_fetch_hot() : ['updated' => 0, 'sources' => []];
+$src_count = count($hot['sources']);
+$item_count = array_sum(array_map(fn($s) => count($s['items']), $hot['sources']));
+
+// 结构化数据：CollectionPage + 面包屑（SEO）
+$hot_ld = ['@context' => 'https://schema.org', '@type' => 'CollectionPage', 'name' => 'AI · 科技热榜', 'url' => home_url('/hot/'), 'description' => '聚合知乎、IT之家、虎嗅、掘金、爱范儿等站点热榜，实时追踪 AI 与科技热点。'];
+$hot_crumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => [
+    ['@type' => 'ListItem', 'position' => 1, 'name' => '首页', 'item' => home_url('/')],
+    ['@type' => 'ListItem', 'position' => 2, 'name' => 'AI · 科技热榜', 'item' => home_url('/hot/')],
+]];
 ?>
-<div class="wrap" style="padding-top:40px">
-  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:var(--brand-600);color:#fff"><?php echo hh_icon('flame', 18); ?></span>AI · 科技热榜</h1>
-  <p class="muted">聚合知乎 / IT之家 / 虎嗅 / 掘金 / 爱范儿 / 中关村等站点热榜 · 实时追踪 AI 与科技热点<?php if (!empty($hot['updated'])): ?> · 更新于 <?php echo esc_html(wp_date('H:i', $hot['updated'])); ?><?php endif; ?></p>
+<script type="application/ld+json"><?php echo wp_json_encode($hot_ld, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
+<script type="application/ld+json"><?php echo wp_json_encode($hot_crumb, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
+<div class="wrap" style="padding-top:32px">
+  <nav class="crumb"><a href="<?php echo esc_url(home_url('/')); ?>">首页</a> / <span style="color:var(--text-2)">AI · 科技热榜</span></nav>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px;margin-top:12px"><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:var(--brand-600);color:#fff"><?php echo hh_icon('flame', 18); ?></span>AI · 科技热榜</h1>
+  <p class="muted">聚合知乎 / IT之家 / 虎嗅 / 掘金 / 爱范儿 / 中关村等站点热榜 · 实时追踪 AI 与科技热点</p>
+
+  <?php if (!empty($hot['sources'])): ?>
+  <div class="dir-stats">
+    <div><div class="n tnum"><?php echo (int) $src_count; ?></div><div class="l">站点源</div></div>
+    <div><div class="n tnum"><?php echo (int) $item_count; ?></div><div class="l">实时热点</div></div>
+    <div><div class="n tnum">15<span>min</span></div><div class="l">缓存刷新</div></div>
+    <div><div class="n tnum"><?php echo !empty($hot['updated']) ? esc_html(wp_date('H:i', $hot['updated'])) : '—'; ?></div><div class="l">最近更新</div></div>
+  </div>
+  <?php endif; ?>
 
   <?php if (empty($hot['sources'])): ?>
     <div class="empty" style="margin-top:24px">热榜暂时拉取失败，稍后再来看看。</div>
   <?php else: ?>
-  <div class="hot-grid">
+  <div class="hot-grid" style="margin-top:24px">
     <?php foreach ($hot['sources'] as $s): ?>
       <section class="hot-card panel">
         <h2 class="hot-card-head"><span class="hot-dot" style="background:<?php echo esc_attr($s['color']); ?>"></span><?php echo esc_html($s['name']); ?></h2>

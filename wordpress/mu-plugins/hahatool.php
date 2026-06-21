@@ -187,14 +187,31 @@ add_action('wp_sitemaps_init', function ($sitemaps) {
             $this->object_type = 'hubs';
         }
         public function get_url_list($page_num, $object_subtype = '') {
-            // 以最近内容修改时间作 lastmod，提示搜索引擎枢纽页内容更新
-            $latest = get_posts(['numberposts' => 1, 'orderby' => 'modified', 'order' => 'DESC', 'post_status' => 'publish', 'fields' => 'ids']);
-            $lastmod = $latest ? get_post_modified_time('c', true, $latest[0]) : '';
+            // 各枢纽以「自身相关内容」的最近修改时间作 lastmod，更精确地提示搜索引擎哪个枢纽更新了，
+            // 利于按需重抓（旧实现是所有枢纽共用全站最新修改时间，加一条资讯会误标提示词页也更新）。
+            $mod = function ($args) {
+                $q = get_posts(array_merge(['numberposts' => 1, 'orderby' => 'modified', 'order' => 'DESC', 'post_status' => 'publish', 'fields' => 'ids', 'no_found_rows' => true], $args));
+                return $q ? get_post_modified_time('c', true, $q[0]) : '';
+            };
+            // 工具类枢纽（/tools /ranking /compare /topics）数据来自工具 = 非保留分类的文章
+            $reserved = array_filter(array_map(fn($s) => ($t = get_category_by_slug($s)) ? (int) $t->term_id : 0, ['ai-news', 'ai-flash', 'ai-prompts']));
+            $tool_mod = $mod($reserved ? ['category__not_in' => array_values($reserved)] : []);
+            // /hot 为外部聚合，无本地内容修改时间，故不输出 lastmod（不虚报更新时间）
+            $hubs = [
+                'tools'   => $tool_mod,
+                'ranking' => $tool_mod,
+                'compare' => $tool_mod,
+                'topics'  => $tool_mod,
+                'hot'     => '',
+                'news'    => $mod(['category_name' => 'ai-news']),
+                'flash'   => $mod(['category_name' => 'ai-flash']),
+                'prompts' => $mod(['category_name' => 'ai-prompts']),
+            ];
             $out = [];
             // 枢纽页 + 清爽频道 URL（与 canonical 一致：/news /flash /prompts 而非 /category/ai-*）
-            foreach (['tools', 'ranking', 'compare', 'topics', 'hot', 'news', 'flash', 'prompts'] as $h) {
+            foreach ($hubs as $h => $lm) {
                 $entry = ['loc' => home_url("/$h/")];
-                if ($lastmod) $entry['lastmod'] = $lastmod;
+                if ($lm) $entry['lastmod'] = $lm;
                 $out[] = $entry;
             }
             return $out;
