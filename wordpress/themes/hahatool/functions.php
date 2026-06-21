@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.101');
+define('HAHATOOL_VERSION', '1.6.102');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -163,7 +163,7 @@ function hahatool_meta_description() {
         'submit'    => '向 HahaTool 提交你的 AI 工具，在线表单免费收录。',
         'favorites' => '我的 AI 工具收藏夹（本机保存，无需登录）。',
         'topics'    => '精心策划的 AI 工具专题合集，按场景与主题归类，快速找到同类好工具。',
-        'hot'       => '聚合知乎、IT之家、虎嗅、掘金、爱范儿等站点热榜，实时追踪 AI 与科技热点。',
+        'hot'       => '聚合 IT之家、虎嗅、掘金、爱范儿、中关村、CSDN 等科技站点热榜，实时追踪 AI 与科技热点。',
     ];
     $vp = get_query_var('hh_page');
     if ($vp && isset($vmap[$vp])) return $vmap[$vp];
@@ -204,6 +204,9 @@ add_action('wp_head', function () {
         $type = 'article';
         // OG 图：资讯封面 / 上传截图 / 工具 Logo —— 不再用 mshots（对防护站点会截到验证页，且是第三方请求）
         $image = hh_meta($id, 'cover') ?: hh_meta($id, 'screenshot') ?: hh_meta($id, 'logo');
+        // 工具 Logo 多为第三方 favicon 小图：作 summary_large_image 会被裁切糊化、且引入外部依赖。
+        // 丢弃后回退到自有品牌社交卡（og-default.png，1200×600），分享预览更专业、零第三方请求。
+        if ($image && strpos($image, 'favicon') !== false) $image = '';
     } elseif (is_tax('topic')) {
         // 专题归档：用专题封面作 OG 图
         $image = get_term_meta(get_queried_object_id(), 'topic_cover', true);
