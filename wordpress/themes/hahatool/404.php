@@ -24,5 +24,29 @@ get_header();
     </div>
   </div>
   <?php endif; ?>
+
+  <?php // 把死胡同变成发现页：热门专题 + 最新资讯，内容更丰富、更有去处
+  $t404 = get_terms(['taxonomy' => 'topic', 'hide_empty' => true, 'number' => 6, 'orderby' => 'count', 'order' => 'DESC']);
+  if (!is_wp_error($t404) && $t404): ?>
+  <div style="margin-top:40px">
+    <p class="muted" style="font-size:13px;margin-bottom:14px">按场景逛专题</p>
+    <div class="tagcloud-grid" style="justify-content:center">
+      <?php foreach ($t404 as $tm): ?><a href="<?php echo esc_url(get_term_link($tm)); ?>"># <?php echo esc_html($tm->name); ?></a><?php endforeach; ?>
+    </div>
+  </div>
+  <?php endif; ?>
+
+  <?php $n404 = new WP_Query(['post_type' => 'post', 'category_name' => 'ai-news', 'posts_per_page' => 4, 'no_found_rows' => true, 'ignore_sticky_posts' => true]);
+  if ($n404->have_posts()): ?>
+  <div style="margin-top:40px;text-align:left;max-width:520px;margin-left:auto;margin-right:auto">
+    <p class="muted" style="font-size:13px;margin-bottom:12px;text-align:center">最新 AI 资讯</p>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <?php while ($n404->have_posts()): $n404->the_post(); ?>
+        <a class="rank-item" href="<?php echo esc_url(get_permalink()); ?>" style="text-decoration:none"><span class="muted tnum" style="flex-shrink:0;font-size:12px"><?php echo esc_html(get_the_date('m-d')); ?></span><span class="clamp1" style="flex:1;min-width:0;font-size:14px;font-weight:500;color:var(--text)"><?php the_title(); ?></span><?php echo hh_icon('chevron-right', 15); ?></a>
+      <?php endwhile; wp_reset_postdata(); ?>
+    </div>
+    <p style="text-align:center;margin-top:14px"><a class="more" href="<?php echo esc_url(get_category_link_safe('ai-news')); ?>" style="font-size:13px">查看全部资讯<?php echo hh_icon('chevron-right', 14); ?></a></p>
+  </div>
+  <?php endif; ?>
 </div>
 <?php get_footer();
