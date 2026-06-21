@@ -41,5 +41,21 @@ if (have_posts()) {
         <a class="news-item" href="<?php echo esc_url(get_permalink($p)); ?>"><div class="body"><time><?php echo esc_html(get_the_date('Y-m-d', $p)); ?></time><h3><?php echo esc_html(get_the_title($p)); ?></h3><p><?php echo esc_html(wp_trim_words(wp_strip_all_tags($p->post_content), 40)); ?></p></div></a>
       <?php endforeach; ?></div></section>
   <?php endif; ?>
+
+  <?php // 发现区：热门搜索常驻；结果稀少时再补「大家都在用」，把空搜索变成有用的发现页
+  $hh_total = count($tools) + count($prompts) + count($news);
+  $hh_hot_kw = ['AI 写作', 'AI 绘画', '视频生成', 'AI 编程', '数字人', 'AI 音乐', '提示词', '智能体']; ?>
+  <section class="section" style="margin-top:36px">
+    <h2 style="font-size:18px;margin-bottom:12px">热门搜索</h2>
+    <div class="tagcloud-grid">
+      <?php foreach ($hh_hot_kw as $k): ?><a href="<?php echo esc_url(home_url('/?s=' . urlencode($k))); ?>"># <?php echo esc_html($k); ?></a><?php endforeach; ?>
+    </div>
+  </section>
+  <?php if ($hh_total < 4): $hh_hot_tools = hahatool_hot_tools(8); if ($hh_hot_tools): ?>
+  <section class="section">
+    <div class="section-head"><div><h2>大家都在用</h2><div class="sub">没找到合适的？看看这些热门工具</div></div><a class="more" href="<?php echo esc_url(home_url('/tools/')); ?>">全部工具<?php echo hh_icon('chevron-right', 16); ?></a></div>
+    <div class="grid"><?php foreach ($hh_hot_tools as $t) hahatool_tool_card($t); wp_reset_postdata(); ?></div>
+  </section>
+  <?php endif; endif; ?>
 </div>
 <?php get_footer();
