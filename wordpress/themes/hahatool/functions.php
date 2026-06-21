@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.102');
+define('HAHATOOL_VERSION', '1.6.103');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -202,11 +202,9 @@ add_action('wp_head', function () {
     if (is_singular('post')) {
         $id = get_queried_object_id();
         $type = 'article';
-        // OG 图：资讯封面 / 上传截图 / 工具 Logo —— 不再用 mshots（对防护站点会截到验证页，且是第三方请求）
-        $image = hh_meta($id, 'cover') ?: hh_meta($id, 'screenshot') ?: hh_meta($id, 'logo');
-        // 工具 Logo 多为第三方 favicon 小图：作 summary_large_image 会被裁切糊化、且引入外部依赖。
-        // 丢弃后回退到自有品牌社交卡（og-default.png，1200×600），分享预览更专业、零第三方请求。
-        if ($image && strpos($image, 'favicon') !== false) $image = '';
+        // OG 大图：仅用资讯封面 / 上传截图。工具 Logo 是小图标（无论第三方 favicon 还是自托管 128px），
+        // 作 summary_large_image 都会被裁切糊化，故不纳入 og:image —— 无大图时回退自有品牌卡（见下 og-default）。
+        $image = hh_meta($id, 'cover') ?: hh_meta($id, 'screenshot') ?: '';
     } elseif (is_tax('topic')) {
         // 专题归档：用专题封面作 OG 图
         $image = get_term_meta(get_queried_object_id(), 'topic_cover', true);

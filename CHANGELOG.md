@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.109] - 2026-06-22
+
+### 性能 / 对象存储（迭代 66：全部 28 个工具 Logo 自托管，彻底去除 favicon.im 第三方依赖 —— 目标 #3）
+此前每个列表页/详情页都要向第三方 `favicon.im` 拉 N 个工具图标（外部请求、可被墙、不可控）。本轮把全部工具 Logo 迁入自有对象存储：
+- 取图源用 Google favicons（服务端可达；favicon.im 对数据中心 IP 返回 403）。25 个直接拿到 128px PNG；canva/gamma 为 JPEG、elevenlabs 的 Google 图是空白占位 → 回退 DuckDuckGo ico；按真实格式定扩展名上传 MinIO `tools/logos/`，并重写各工具 `logo` meta。
+- 结果：favicon.im 0 个、自托管 28 个；首页 favicon.im 请求数 0；Logo 文件 `max-age=31536000, immutable`，content-type 正确（png/jpeg/x-icon）。
+- 配套：og:image 逻辑改为「资讯封面 / 上传截图」二选一，彻底不纳入小尺寸 Logo（自托管后也不会误把 128px 图标当社交大图），无大图回退品牌卡 og-default.png。取代上轮的 favicon 字符串判断。
+- 迁移脚本 `scripts/migrate-tool-logos.sh`（幂等可重跑）。主题 1.6.102 → 1.6.103。实测：工具网格 Logo 全部自托管正常渲染；`/chatgpt/` og:image 仍为品牌卡。
+
 ## [v1.6.108] - 2026-06-22
 
 ### SEO / 社媒（迭代 65：工具页社交卡改用自有品牌卡，去除第三方 favicon 依赖 —— 目标 #3 #4）
