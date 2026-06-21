@@ -97,12 +97,26 @@ if ($paged <= 1 && isset($hh_chan[$slug]) && function_exists('hahatool_itemlist_
 
 <?php else: /* 工具分类 */
   $q = hahatool_tools(['cat' => $cat->term_id, 'posts_per_page' => 24, 'paged' => max(1, get_query_var('paged')), 'no_found_rows' => false]);
+  $hh_tool_cats = get_categories(['hide_empty' => true, 'exclude' => implode(',', hahatool_reserved_ids())]);
 ?>
-  <h1 class="section-title-lg"><?php echo esc_html($cat->name); ?></h1>
+  <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:var(--brand-600);color:#fff"><?php echo hh_icon('layers', 18); ?></span><?php echo esc_html($cat->name); ?></h1>
   <p class="muted"><?php echo esc_html($cat->description ?: '该分类下的 AI 工具'); ?> · 共 <?php echo (int)$cat->count; ?> 款</p>
+  <?php if ($hh_tool_cats): ?>
+  <div class="filters" style="margin-top:16px">
+    <a href="<?php echo esc_url(home_url('/tools/')); ?>">全部工具</a>
+    <?php foreach ($hh_tool_cats as $c): ?><a class="<?php echo $c->term_id === $cat->term_id ? 'on' : ''; ?>" href="<?php echo esc_url(get_category_link($c)); ?>"><?php echo esc_html($c->name); ?></a><?php endforeach; ?>
+  </div>
+  <?php endif; ?>
   <?php if ($q->posts): ?>
-    <div class="grid" style="margin-top:24px"><?php foreach ($q->posts as $p) hahatool_tool_card($p); wp_reset_postdata(); ?></div>
+    <div class="grid" style="margin-top:20px"><?php foreach ($q->posts as $p) hahatool_tool_card($p); wp_reset_postdata(); ?></div>
     <?php hahatool_pagination(max(1, (int) get_query_var('paged')), $q->max_num_pages, 'get_pagenum_link'); ?>
+    <div class="panel" style="margin-top:32px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div><b><?php echo esc_html($cat->name); ?></b> 还能这样逛<span class="muted"> · 按流量/增长看排行，或把好工具提交进来</span></div>
+      <div style="display:flex;gap:10px;flex-shrink:0">
+        <a class="btn btn-ghost" style="display:inline-flex;align-items:center;gap:5px" href="<?php echo esc_url(home_url('/ranking/?cat=' . $cat->slug)); ?>"><?php echo hh_icon('chart', 15); ?>看排行</a>
+        <a class="btn" href="<?php echo esc_url(home_url('/submit/')); ?>">提交工具</a>
+      </div>
+    </div>
   <?php else: ?>
     <div class="empty" style="margin-top:24px">该分类下暂无工具</div>
   <?php endif; ?>
