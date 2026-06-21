@@ -58,6 +58,34 @@ function get_category_link_safe($slug) {
     return $t ? get_category_link($t) : home_url('/');
 }
 
+/**
+ * 当前导航项是否高亮（用于 header 导航 active 状态 + aria-current）。
+ * key: home/tools/ranking/compare/prompts/flash/news/topics/hot
+ */
+function hahatool_nav_active($key) {
+    $vp = get_query_var('hh_page');
+    $id = is_singular('post') ? get_queried_object_id() : 0;
+    switch ($key) {
+        case 'home':    return is_front_page() && !$vp; // 虚拟枢纽页 is_front_page() 会误判为 true，须排除
+        case 'tools':   return $vp === 'tools' || ($id && hahatool_is_tool($id))
+                            || (is_category() && !in_array(get_queried_object()->slug ?? '', HAHATOOL_RESERVED, true))
+                            || is_tag();
+        case 'ranking':
+        case 'compare':
+        case 'hot':     return $vp === $key;
+        case 'topics':  return $vp === 'topics' || is_tax('topic');
+        case 'prompts': return is_category('ai-prompts') || ($id && hh_meta($id, 'prompt'));
+        case 'flash':   return is_category('ai-flash') || ($id && has_category('ai-flash', $id));
+        case 'news':    return is_category('ai-news') || ($id && has_category('ai-news', $id));
+    }
+    return false;
+}
+
+/** 导航项 active 属性（class + aria-current）输出片段 */
+function hahatool_nav_attr($key) {
+    return hahatool_nav_active($key) ? ' class="active" aria-current="page"' : '';
+}
+
 /** 品牌 Logo（位图 PNG，用于结构化数据 publisher/Organization logo 与社媒兜底） */
 function hahatool_logo_url() {
     return home_url('/media/hahatool-media/brand/logo.png');

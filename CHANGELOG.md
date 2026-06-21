@@ -2,6 +2,16 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.91] - 2026-06-19
+
+### 界面 + 无障碍（迭代 49：导航当前栏目高亮 + aria-current —— 目标 #1）
+此前导航只有「首页」会高亮，访问 /tools /news 等时**当前栏目无任何高亮**，用户不知身处何处。
+- 新增 `hahatool_nav_active()` / `hahatool_nav_attr()`：按 hh_page 虚拟路由 / 分类归档 / 单篇（工具/资讯/快讯/提示词）/ topic 智能判定当前栏目，输出 `class="active"` + **`aria-current="page"`**（读屏可播报当前页）。
+- **排坑**：虚拟枢纽页 `is_front_page()` 误判为 true（主查询无文章），导致 /tools 等「首页」与本栏目双高亮——`home` 项加 `&& !$vp` 排除（与 canonical 同源坑）。
+- 复用既有 `.nav-links a.active` 样式（明暗双色），无需改 CSS。
+- 实测线上：/ 工具库 排行榜 工具PK 提示词 AI快讯 AI资讯 专题 热榜 九类页面各只高亮自身；单篇工具→工具库、单篇资讯→AI资讯、工具分类→工具库 均正确。
+- 顺带核验：快讯 ticker 已有 pause-on-hover + reduced-motion，无需改。
+
 ## [v1.6.90] - 2026-06-19
 
 ### SEO（迭代 48：频道归档补 CollectionPage/ItemList —— 目标 #4）

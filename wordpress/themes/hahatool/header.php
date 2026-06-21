@@ -31,15 +31,15 @@
       <form class="nav-links-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
         <input type="search" name="s" placeholder="搜索 AI 工具…" aria-label="搜索">
       </form>
-      <a href="<?php echo esc_url(home_url('/')); ?>"<?php echo is_front_page() ? ' class="active"' : ''; ?>>首页</a>
-      <a href="<?php echo esc_url(home_url('/tools/')); ?>">工具库</a>
-      <a href="<?php echo esc_url(home_url('/ranking/')); ?>">排行榜</a>
-      <a href="<?php echo esc_url(home_url('/compare/')); ?>">工具PK</a>
-      <a href="<?php echo esc_url(home_url('/prompts/')); ?>">提示词</a>
-      <a href="<?php echo esc_url(home_url('/flash/')); ?>">AI快讯</a>
-      <a href="<?php echo esc_url(home_url('/news/')); ?>">AI资讯</a>
-      <a href="<?php echo esc_url(home_url('/topics/')); ?>">专题</a>
-      <a href="<?php echo esc_url(home_url('/hot/')); ?>">热榜</a>
+      <a href="<?php echo esc_url(home_url('/')); ?>"<?php echo hahatool_nav_attr('home'); ?>>首页</a>
+      <a href="<?php echo esc_url(home_url('/tools/')); ?>"<?php echo hahatool_nav_attr('tools'); ?>>工具库</a>
+      <a href="<?php echo esc_url(home_url('/ranking/')); ?>"<?php echo hahatool_nav_attr('ranking'); ?>>排行榜</a>
+      <a href="<?php echo esc_url(home_url('/compare/')); ?>"<?php echo hahatool_nav_attr('compare'); ?>>工具PK</a>
+      <a href="<?php echo esc_url(home_url('/prompts/')); ?>"<?php echo hahatool_nav_attr('prompts'); ?>>提示词</a>
+      <a href="<?php echo esc_url(home_url('/flash/')); ?>"<?php echo hahatool_nav_attr('flash'); ?>>AI快讯</a>
+      <a href="<?php echo esc_url(home_url('/news/')); ?>"<?php echo hahatool_nav_attr('news'); ?>>AI资讯</a>
+      <a href="<?php echo esc_url(home_url('/topics/')); ?>"<?php echo hahatool_nav_attr('topics'); ?>>专题</a>
+      <a href="<?php echo esc_url(home_url('/hot/')); ?>"<?php echo hahatool_nav_attr('hot'); ?>>热榜</a>
       <?php $hh_nav_cats = get_categories(['hide_empty' => true, 'exclude' => implode(',', hahatool_reserved_ids())]); if ($hh_nav_cats): ?>
       <span class="nav-dropdown">
         <button type="button" class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">分类<?php echo hh_icon('chevron-down', 14); ?></button>
