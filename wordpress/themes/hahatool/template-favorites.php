@@ -13,6 +13,12 @@ $tools = hahatool_tools(['posts_per_page' => 300])->posts;
     <p style="margin-top:8px;font-weight:500;color:var(--text-2)">还没有收藏任何工具</p>
     <p>在工具卡片或详情页点击心形按钮即可收藏</p>
     <a class="btn" style="margin-top:16px;display:inline-flex" href="<?php echo esc_url(home_url('/tools/')); ?>">去逛逛工具库</a>
+    <?php $fav_hot = hahatool_hot_tools(8); if ($fav_hot): ?>
+    <div style="margin-top:44px;text-align:left">
+      <p style="text-align:center;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px"><span style="color:#f97316"><?php echo hh_icon('flame', 16); ?></span>先从这些热门工具收藏起</p>
+      <div class="grid" style="margin-top:18px"><?php foreach ($fav_hot as $t) hahatool_tool_card($t); wp_reset_postdata(); ?></div>
+    </div>
+    <?php endif; ?>
   </div>
 
   <div class="grid" id="favGrid" style="margin-top:24px;display:none">
