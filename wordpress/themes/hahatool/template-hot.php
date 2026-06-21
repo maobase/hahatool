@@ -7,7 +7,7 @@ $src_count = count($hot['sources']);
 $item_count = array_sum(array_map(fn($s) => count($s['items']), $hot['sources']));
 
 // 结构化数据：CollectionPage + 面包屑（SEO）
-$hot_ld = ['@context' => 'https://schema.org', '@type' => 'CollectionPage', 'name' => 'AI · 科技热榜', 'url' => home_url('/hot/'), 'description' => '聚合知乎、IT之家、虎嗅、掘金、爱范儿等站点热榜，实时追踪 AI 与科技热点。'];
+$hot_ld = ['@context' => 'https://schema.org', '@type' => 'CollectionPage', 'name' => 'AI · 科技热榜', 'url' => home_url('/hot/'), 'description' => '聚合 IT之家、虎嗅、掘金、爱范儿、中关村、CSDN 等科技站点热榜，实时追踪 AI 与科技热点。'];
 $hot_crumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => [
     ['@type' => 'ListItem', 'position' => 1, 'name' => '首页', 'item' => home_url('/')],
     ['@type' => 'ListItem', 'position' => 2, 'name' => 'AI · 科技热榜', 'item' => home_url('/hot/')],
@@ -18,7 +18,7 @@ $hot_crumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', '
 <div class="wrap" style="padding-top:32px">
   <nav class="crumb"><a href="<?php echo esc_url(home_url('/')); ?>">首页</a> / <span style="color:var(--text-2)">AI · 科技热榜</span></nav>
   <h1 class="section-title-lg" style="display:flex;align-items:center;gap:8px;margin-top:12px"><span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;background:var(--brand-600);color:#fff"><?php echo hh_icon('flame', 18); ?></span>AI · 科技热榜</h1>
-  <p class="muted">聚合知乎 / IT之家 / 虎嗅 / 掘金 / 爱范儿 / 中关村等站点热榜 · 实时追踪 AI 与科技热点</p>
+  <p class="muted">聚合 IT之家 / 虎嗅 / 掘金 / 爱范儿 / 中关村 / CSDN 等科技站点热榜 · 实时追踪 AI 与科技热点</p>
 
   <?php if (!empty($hot['sources'])): ?>
   <div class="dir-stats">

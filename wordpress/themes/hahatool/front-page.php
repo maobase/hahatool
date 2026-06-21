@@ -223,7 +223,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
     $home_hot_src = array_slice($home_hot['sources'] ?? [], 0, 3);
     if ($home_hot_src): ?>
     <section class="section">
-      <div class="section-head"><div><h2 style="display:flex;align-items:center;gap:6px"><span style="color:#f97316"><?php echo hh_icon('flame', 20); ?></span>AI · 科技热榜</h2><div class="sub">聚合知乎 / IT之家 / 虎嗅等全网热点 · 实时追踪<?php if (!empty($home_hot['updated'])): ?> · 更新于 <?php echo esc_html(wp_date('H:i', $home_hot['updated'])); ?><?php endif; ?></div></div><a class="more" href="<?php echo esc_url(home_url('/hot/')); ?>">完整热榜<?php echo hh_icon('chevron-right', 16); ?></a></div>
+      <div class="section-head"><div><h2 style="display:flex;align-items:center;gap:6px"><span style="color:#f97316"><?php echo hh_icon('flame', 20); ?></span>AI · 科技热榜</h2><div class="sub">聚合 IT之家 / 虎嗅 / 爱范儿等科技热点 · 实时追踪<?php if (!empty($home_hot['updated'])): ?> · 更新于 <?php echo esc_html(wp_date('H:i', $home_hot['updated'])); ?><?php endif; ?></div></div><a class="more" href="<?php echo esc_url(home_url('/hot/')); ?>">完整热榜<?php echo hh_icon('chevron-right', 16); ?></a></div>
       <div class="hot-grid">
         <?php foreach ($home_hot_src as $s): ?>
           <section class="hot-card panel">

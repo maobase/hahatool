@@ -148,7 +148,12 @@ function hahatool_fetch_hot($per = 12) {
         return $stale !== false ? $stale : ['updated' => 0, 'sources' => []];
     }
     $body = json_decode(wp_remote_retrieve_body($resp), true);
+    // 「AI · 科技热榜」只保留科技/AI 相关源，过滤掉微博/豆瓣/头条/虎扑/值得买等泛娱乐生活源，
+    // 让页面名实相符。多列几个常见科技源 key 以兼容 momoyu 未来调整；万一全被过滤则回退全部，避免空页。
+    $tech_keys = ['itzhijia', 'ithome', 'zhongguancun', 'aifaner', 'csdn', 'huxiu', 'juejin', '36kr', 'sspai', 'jiqizhixin', 'qbitai', 'geekpark', 'pingwest', 'leiphone', 'oschina', 'v2ex'];
     $out = ['updated' => time(), 'sources' => []];
+    $all_sources = [];
+    $tech_sources = [];
     foreach (($body['data'] ?? []) as $s) {
         $items = [];
         foreach (array_slice($s['data'] ?? [], 0, $per) as $it) {
@@ -161,13 +166,17 @@ function hahatool_fetch_hot($per = 12) {
             ];
         }
         if (!$items) continue;
-        $out['sources'][] = [
+        $key = (string) ($s['source_key'] ?? '');
+        $src = [
             'name'  => (string) ($s['name'] ?? ''),
-            'key'   => (string) ($s['source_key'] ?? ''),
+            'key'   => $key,
             'color' => sanitize_hex_color($s['icon_color'] ?? '') ?: '#7c3aed',
             'items' => $items,
         ];
+        $all_sources[] = $src;
+        if (in_array($key, $tech_keys, true)) $tech_sources[] = $src;
     }
+    $out['sources'] = $tech_sources ?: $all_sources;
     set_transient('hahatool_hot', $out, 15 * MINUTE_IN_SECONDS);
     set_transient('hahatool_hot_stale', $out, DAY_IN_SECONDS);
     return $out;
