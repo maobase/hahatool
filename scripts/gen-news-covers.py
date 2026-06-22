@@ -52,6 +52,8 @@ ITEMS = {
     "openai-codex-record-replay":     ("Codex 录制回放", "演示一遍 · 自动成技能", "#0b1f17", "#065f46", "#34d399"),
     # 第十一批：AI 版支付宝 / 阿宝（爱范儿实测核实）
     "alipay-ai-agent":                ("AI 版支付宝", "智能助手「阿宝」· Agent OS", "#07203f", "#1677ff", "#69b1ff"),
+    # 第十二批：演语科技 / LiblibAI ARR（爱范儿核实）
+    "liblibai-evoken-arr":            ("国产 AI 创意吸金", "演语科技 ARR 近 3 亿美元", "#2e1065", "#7e22ce", "#d8b4fe"),
 }
 
 TPL = '''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif">

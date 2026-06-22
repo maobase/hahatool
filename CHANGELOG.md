@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.113] - 2026-06-22
+
+### 内容（迭代 70：填充「演语科技 / LiblibAI ARR」资讯 —— 目标 #2 #3）
+核实后入库一条新鲜、对口（AIGC 创意工具 + 资本）的国产 AI 资讯：
+- **国产 AI 创意公司演语科技 ARR 近 3 亿美元：LiblibAI、LibTV 领跑，估值超 20 亿**（6/18，爱范儿核实）—— ARR 近 3 亿美元、2026 年 5 月集团收入同比增速超 3000%、年底预计破 6 亿；旗下 LiblibAI（AI 绘画社区）、LibTV（AI 视频，月收入已是首月 13 倍+）、星流（AI 设计 Agent，累计用户超千万）；近 3 亿美元 B+ 轮、投后估值超 20 亿美元。
+- 紫色（创意）品牌封面 SVG+PNG 入对象存储；新增 `scripts/seed-real-news-12.php`。
+- ai-news 34 → 35；实测：文章 200、og:image=PNG、`/news/` 列表与主 `/feed/`（第 4 条）均含新文。
+- 顺带确认 PWA/移动头部完整（theme-color 明暗双值、apple-touch-icon、manifest、favicon.ico 均在位），无需改动。
+
 ## [v1.6.112] - 2026-06-22
 
 ### SEO / 资讯（迭代 69：RSS Feed 修正与净化 —— 目标 #2 #4）
