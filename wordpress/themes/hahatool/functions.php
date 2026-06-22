@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.104');
+define('HAHATOOL_VERSION', '1.6.105');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -122,6 +122,16 @@ add_filter('language_attributes', function ($o) {
     $o = preg_replace('/lang="[^"]*"/', 'lang="zh-CN"', $o, 1);
     if (strpos($o, 'lang=') === false) $o = 'lang="zh-CN" ' . $o;
     return $o . ' data-accent="violet" data-mode="light"';
+});
+
+/** RSS：纠正 Feed 语言为 zh-CN（站点 locale 默认 en_US，与中文内容不符，影响阅读器与 SEO） */
+add_filter('bloginfo_rss', fn($info, $show) => $show === 'language' ? 'zh-CN' : $info, 10, 2);
+
+/** RSS：全站主 Feed 聚焦内容流——排除提示词（实用模板而非文章，作 Feed 条目突兀），保留资讯/快讯/新工具。分类/标签 Feed 不受影响。 */
+add_action('pre_get_posts', function ($q) {
+    if (!$q->is_main_query() || !$q->is_feed() || $q->is_category() || $q->is_tag()) return;
+    $pc = get_category_by_slug('ai-prompts');
+    if ($pc) $q->set('category__not_in', [(int) $pc->term_id]);
 });
 
 /**

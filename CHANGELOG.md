@@ -2,6 +2,15 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。分支策略：`main` 为稳定分支，功能在 `feat/*` 分支开发后合入，每次发布打 `vX.Y.Z` 标签。
 
+## [v1.6.112] - 2026-06-22
+
+### SEO / 资讯（迭代 69：RSS Feed 修正与净化 —— 目标 #2 #4）
+审计 RSS 发现两处问题并修复（JustNews 式资讯站应有干净可订阅的 Feed）：
+- **Feed 语言纠正**：`<language>` 原为 `en-US`（站点 locale 默认值，与中文内容不符，影响阅读器分类与 SEO）→ 经 `bloginfo_rss` 过滤改为 `zh-CN`。
+- **主 Feed 净化**：全站 `/feed/` 原本混入提示词（实用模板而非文章，作订阅条目突兀）。经 `pre_get_posts` 在主 Feed 排除 `ai-prompts`，保留资讯/快讯/新工具；**分类/标签 Feed 不受影响**（`/news/feed/` 仍专供资讯）。
+- 既有：Feed 自动发现 `<link rel=alternate>` 已在 `<head>`（`automatic-feed-links`）。
+- 主题 1.6.104 → 1.6.105。实测：`/feed/` `<language>zh-CN</language>`、10 条且无提示词条目；`/news/feed/` 正常。
+
 ## [v1.6.111] - 2026-06-22
 
 ### 打磨（迭代 68：移动端 QA 巡检 + 工具详情流量分析标题修正 —— 目标 #1）
