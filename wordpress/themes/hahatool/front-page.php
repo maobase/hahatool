@@ -89,13 +89,13 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
         <?php foreach ($banners as $bp): $bid = $bp->ID; ?>
           <div class="hero-banner">
             <span class="tag" style="display:inline-flex;align-items:center;gap:4px"><?php echo hh_icon('megaphone', 11); ?>推广</span>
-            <div style="display:flex;align-items:center;gap:16px">
-              <?php echo hahatool_logo($bid, 56); ?>
-              <div><div style="font-size:20px;font-weight:700"><?php echo esc_html(get_the_title($bid)); ?></div><p style="margin:4px 0 0;color:rgba(255,255,255,.8);font-size:14px;max-width:380px" class="clamp2"><?php echo esc_html(hh_meta($bid, 'tagline')); ?></p></div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <?php echo hahatool_logo($bid, 46); ?>
+              <div style="min-width:0"><div style="font-size:17px;font-weight:700"><?php echo esc_html(get_the_title($bid)); ?></div><p style="margin:3px 0 0;color:rgba(255,255,255,.8);font-size:13px;max-width:360px" class="clamp1"><?php echo esc_html(hh_meta($bid, 'tagline')); ?></p></div>
             </div>
-            <div style="margin-top:20px;display:flex;gap:12px">
-              <a class="btn" style="background:#fff;color:var(--brand-700)" href="<?php echo esc_url(hh_meta($bid, 'url')); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$bid; ?>">立即体验<?php echo hh_icon('arrow-right', 15); ?></a>
-              <a class="btn btn-ghost" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)" href="<?php echo esc_url(get_permalink($bid)); ?>">查看详情</a>
+            <div style="margin-top:14px;display:flex;gap:10px">
+              <a class="btn" style="background:#fff;color:var(--brand-700);padding:8px 16px;min-height:auto" href="<?php echo esc_url(hh_meta($bid, 'url')); ?>" target="_blank" rel="noopener nofollow" data-track-click="<?php echo (int)$bid; ?>">立即体验<?php echo hh_icon('arrow-right', 14); ?></a>
+              <a class="btn btn-ghost" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4);padding:8px 16px;min-height:auto" href="<?php echo esc_url(get_permalink($bid)); ?>">查看详情</a>
             </div>
           </div>
         <?php endforeach; ?>
