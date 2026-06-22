@@ -168,12 +168,16 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
     <?php endif; ?>
 
     <?php
-    // 全网热榜 首页 teaser：取前 3 源各 6 条。与 /hot 共享服务端缓存（5 分钟）；拉取失败则不渲染。
+    // 全网热榜 首页 teaser：本站为 AI/科技导航，首页只精选 3 个科技源做预览（IT之家/虎嗅/爱范儿等），
+    // 更贴合站点调性；完整 13 源（含知乎/微博等）在 /hot 全网热榜页。与 /hot 共享 5 分钟缓存，拉取失败则不渲染。
     $home_hot = function_exists('hahatool_fetch_hot') ? hahatool_fetch_hot() : ['sources' => []];
-    $home_hot_src = array_slice($home_hot['sources'] ?? [], 0, 3);
+    $home_hot_all = $home_hot['sources'] ?? [];
+    $home_tech_keys = ['itzhijia', 'ithome', 'huxiu', 'aifaner', 'juejin', 'csdn', 'zhongguancun', '36kr', 'sspai', 'qbitai', 'jiqizhixin'];
+    $home_hot_pref = array_values(array_filter($home_hot_all, fn($s) => in_array($s['key'] ?? '', $home_tech_keys, true)));
+    $home_hot_src = array_slice($home_hot_pref ?: $home_hot_all, 0, 3);
     if ($home_hot_src): ?>
     <section class="section">
-      <div class="section-head"><div><h2 style="display:flex;align-items:center;gap:6px"><span style="color:#f97316"><?php echo hh_icon('flame', 20); ?></span>全网热榜</h2><div class="sub">聚合知乎 / 微博 / B站 / IT之家 / 虎嗅等全网热点 · 每 5 分钟更新<?php if (!empty($home_hot['updated'])): ?> · 更新于 <?php echo esc_html(wp_date('H:i', $home_hot['updated'])); ?><?php endif; ?></div></div><a class="more" href="<?php echo esc_url(home_url('/hot/')); ?>">完整热榜<?php echo hh_icon('chevron-right', 16); ?></a></div>
+      <div class="section-head"><div><h2 style="display:flex;align-items:center;gap:6px"><span style="color:#f97316"><?php echo hh_icon('flame', 20); ?></span>全网热榜</h2><div class="sub">聚合 IT之家 / 虎嗅 / 爱范儿 / 知乎 / 微博等全网热点 · 每 5 分钟更新<?php if (!empty($home_hot['updated'])): ?> · 更新于 <?php echo esc_html(wp_date('H:i', $home_hot['updated'])); ?><?php endif; ?></div></div><a class="more" href="<?php echo esc_url(home_url('/hot/')); ?>">完整热榜<?php echo hh_icon('chevron-right', 16); ?></a></div>
       <div class="hot-grid">
         <?php foreach ($home_hot_src as $s): ?>
           <section class="hot-card panel">
