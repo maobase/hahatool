@@ -5,7 +5,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('HAHATOOL_VERSION', '1.6.105');
+define('HAHATOOL_VERSION', '1.6.106');
 define('HAHATOOL_RESERVED', ['ai-news', 'ai-flash', 'ai-prompts']);
 
 require_once get_template_directory() . '/inc/helpers.php';
@@ -146,7 +146,7 @@ add_filter('document_title_parts', function ($parts) {
         'submit'    => '提交工具',
         'favorites' => '我的收藏',
         'topics'    => '专题合集',
-        'hot'       => 'AI · 科技热榜',
+        'hot'       => '全网热榜',
     ];
     $vp = get_query_var('hh_page');
     if ($vp && isset($vmap[$vp])) {
@@ -173,7 +173,7 @@ function hahatool_meta_description() {
         'submit'    => '向 HahaTool 提交你的 AI 工具，在线表单免费收录。',
         'favorites' => '我的 AI 工具收藏夹（本机保存，无需登录）。',
         'topics'    => '精心策划的 AI 工具专题合集，按场景与主题归类，快速找到同类好工具。',
-        'hot'       => '聚合 IT之家、虎嗅、掘金、爱范儿、中关村、CSDN 等科技站点热榜，实时追踪 AI 与科技热点。',
+        'hot'       => '聚合知乎、微博、B站、IT之家、虎嗅、掘金、爱范儿等全网站点热榜，每 5 分钟更新，实时追踪科技与社会热点。',
     ];
     $vp = get_query_var('hh_page');
     if ($vp && isset($vmap[$vp])) return $vmap[$vp];

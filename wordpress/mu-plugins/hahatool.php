@@ -128,14 +128,14 @@ add_action('rest_api_init', function () {
 });
 
 /**
- * 热榜数据：代理 momoyu.cc 的 /api/hot/list（公开聚合端点，需带 Referer/Origin），
- * 服务端缓存 15 分钟（transient）+ 一天兜底，规范化为 {updated, sources:[{name,key,color,items:[{title,extra,link}]}]}。
- * 供 REST 接口与热榜页模板共用。
+ * 热榜数据：代理 momoyu.cc 的 /api/hot/list?type=0（公开聚合端点，需带 Referer/Origin），
+ * 服务端缓存 5 分钟（transient）+ 一天兜底，规范化为 {updated, sources:[{name,key,color,items:[{title,extra,link}]}]}。
+ * 收录全部源（与 momoyu 一致）；供 REST 接口、热榜页与首页共用。
  */
 function hahatool_fetch_hot($per = 12) {
     $cache = get_transient('hahatool_hot');
     if ($cache !== false) return $cache;
-    $resp = wp_remote_get('https://momoyu.cc/api/hot/list', [
+    $resp = wp_remote_get('https://momoyu.cc/api/hot/list?type=0', [
         'timeout' => 12,
         'headers' => [
             'Referer'    => 'https://momoyu.cc/',
@@ -148,12 +148,8 @@ function hahatool_fetch_hot($per = 12) {
         return $stale !== false ? $stale : ['updated' => 0, 'sources' => []];
     }
     $body = json_decode(wp_remote_retrieve_body($resp), true);
-    // 「AI · 科技热榜」只保留科技/AI 相关源，过滤掉微博/豆瓣/头条/虎扑/值得买等泛娱乐生活源，
-    // 让页面名实相符。多列几个常见科技源 key 以兼容 momoyu 未来调整；万一全被过滤则回退全部，避免空页。
-    $tech_keys = ['itzhijia', 'ithome', 'zhongguancun', 'aifaner', 'csdn', 'huxiu', 'juejin', '36kr', 'sspai', 'jiqizhixin', 'qbitai', 'geekpark', 'pingwest', 'leiphone', 'oschina', 'v2ex'];
+    // 收录 momoyu 全部源（与 momoyu.cc 保持一致），不做科技过滤——页面定位为「全网热榜」。
     $out = ['updated' => time(), 'sources' => []];
-    $all_sources = [];
-    $tech_sources = [];
     foreach (($body['data'] ?? []) as $s) {
         $items = [];
         foreach (array_slice($s['data'] ?? [], 0, $per) as $it) {
@@ -166,18 +162,15 @@ function hahatool_fetch_hot($per = 12) {
             ];
         }
         if (!$items) continue;
-        $key = (string) ($s['source_key'] ?? '');
-        $src = [
+        $out['sources'][] = [
             'name'  => (string) ($s['name'] ?? ''),
-            'key'   => $key,
+            'key'   => (string) ($s['source_key'] ?? ''),
             'color' => sanitize_hex_color($s['icon_color'] ?? '') ?: '#7c3aed',
             'items' => $items,
         ];
-        $all_sources[] = $src;
-        if (in_array($key, $tech_keys, true)) $tech_sources[] = $src;
     }
-    $out['sources'] = $tech_sources ?: $all_sources;
-    set_transient('hahatool_hot', $out, 15 * MINUTE_IN_SECONDS);
+    // 5 分钟刷新（用户要求）+ 一天兜底，避免 momoyu 偶发失败时空页
+    set_transient('hahatool_hot', $out, 5 * MINUTE_IN_SECONDS);
     set_transient('hahatool_hot_stale', $out, DAY_IN_SECONDS);
     return $out;
 }
