@@ -50,6 +50,8 @@ ITEMS = {
     "smart-glasses-2026":             ("智能眼镜 XR", "Xreal Aura · Snap SPECS", "#0c4a6e", "#0891b2", "#67e8f9"),
     # 第十批：OpenAI Codex 录制回放（爱范儿 + techtimes 多源核实）
     "openai-codex-record-replay":     ("Codex 录制回放", "演示一遍 · 自动成技能", "#0b1f17", "#065f46", "#34d399"),
+    # 第十一批：AI 版支付宝 / 阿宝（爱范儿实测核实）
+    "alipay-ai-agent":                ("AI 版支付宝", "智能助手「阿宝」· Agent OS", "#07203f", "#1677ff", "#69b1ff"),
 }
 
 TPL = '''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif">
