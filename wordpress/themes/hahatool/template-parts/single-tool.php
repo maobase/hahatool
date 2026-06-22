@@ -107,7 +107,8 @@ $faq_ld = $faq ? ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mai
 
       <?php if ($history && count($history) > 1 || $regions): ?>
       <div class="panel">
-        <h2 style="font-size:18px;display:flex;align-items:center;gap:6px"><span style="color:var(--brand-500)"><?php echo hh_icon('chart', 18); ?></span><?php the_title(); ?> 流量分析 <span class="muted" style="font-weight:400">数据由运营整理，仅供参考</span></h2>
+        <h2 style="font-size:18px;display:flex;align-items:center;gap:6px"><span style="color:var(--brand-500)"><?php echo hh_icon('chart', 18); ?></span><?php the_title(); ?> 流量分析</h2>
+        <p class="muted" style="font-size:12px;margin-top:4px">数据由运营整理，仅供参考</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:18px" class="ta-grid">
           <?php if (count($history) > 1): $mx = max($history); ?>
           <div>
