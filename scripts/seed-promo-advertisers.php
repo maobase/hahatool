@@ -5,8 +5,13 @@
  * 比拿 ChatGPT/Midjourney 占位更真实。同时取消 ChatGPT/Midjourney 的 banner 标记。
  * 链接指向各自站内详情页（避免死链）；详情正文标注「示例推广位」保持诚实。
  */
-$cat = get_term_by('slug', 'chat-assistant', 'category');
-if (!$cat) { $cs = get_categories(['hide_empty' => false, 'exclude' => implode(',', hahatool_reserved_ids()), 'number' => 1]); $cat = $cs ? $cs[0] : null; }
+$cat = get_term_by('slug', 'chatbot', 'category'); // 聊天机器人（注意 slug 是 chatbot，非 chat-assistant）
+if (!$cat) {
+    $uncat = get_category_by_slug('uncategorized');
+    $excl = array_merge(hahatool_reserved_ids(), $uncat ? [(int) $uncat->term_id] : []); // 绝不回退到「未分类」
+    $cs = get_categories(['hide_empty' => false, 'exclude' => implode(',', $excl), 'number' => 1]);
+    $cat = $cs ? $cs[0] : null;
+}
 $cid = $cat ? (int) $cat->term_id : 0;
 $base = 'https://tool.hahaha.chat/media/hahatool-media/tools/logos/';
 
