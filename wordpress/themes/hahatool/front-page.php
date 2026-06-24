@@ -78,7 +78,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
   </div>
 </nav>
 
-<main class="wrap">
+<main class="wrap" style="padding-top:36px">
   <?php if (!$tools): ?>
     <div class="empty">还没有任何工具数据。请在后台发布带 <code>url</code> 字段的文章，或运行示例数据导入。</div>
   <?php else: ?>
