@@ -16,7 +16,7 @@
         <li><a href="<?php echo esc_url(home_url('/compare/')); ?>">工具 PK 对比</a></li>
         <li><a href="<?php echo esc_url(home_url('/prompts/')); ?>">AI 提示词库</a></li>
         <li><a href="<?php echo esc_url(home_url('/topics/')); ?>">专题合集</a></li>
-        <li><a href="<?php echo esc_url(home_url('/hot/')); ?>">AI · 科技热榜</a></li>
+        <li><a href="<?php echo esc_url(home_url('/hot/')); ?>">全网热榜</a></li>
         <li><a href="<?php echo esc_url(home_url('/favorites/')); ?>">我的收藏</a></li>
         <li><a href="<?php echo esc_url(home_url('/flash/')); ?>">AI 快讯</a></li>
         <li><a href="<?php echo esc_url(home_url('/news/')); ?>">AI 资讯</a></li>
@@ -39,7 +39,7 @@
       </ul>
     </div>
   </div>
-  <div class="foot-bottom">© <?php echo esc_html(date('Y')); ?> <?php bloginfo('name'); ?> · WordPress 主题版 · 由 AI 构建 · 仅供学习交流</div>
+  <div class="foot-bottom">© <?php echo esc_html(date('Y')); ?> <?php bloginfo('name'); ?> · WordPress 主题版 · 由 AI 构建 · 仅供学习交流 · <span class="tnum" title="主题版本">v<?php echo esc_html(HAHATOOL_VERSION); ?></span></div>
 </footer>
 <button id="toTop" class="to-top" type="button" aria-label="返回顶部" title="返回顶部">
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
