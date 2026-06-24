@@ -48,7 +48,7 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
       <?php endforeach; ?>
     </div>
     <p class="hero-meta">
-      <span class="hero-live"><span class="dot" aria-hidden="true"></span>每日更新</span>
+      <span class="hero-live"><span class="dot" aria-hidden="true"></span>数据持续更新</span>
       <span>已收录 <b class="tnum"><?php echo count($all->posts); ?>+</b> 款工具</span>
       <span>·</span><span><b class="tnum"><?php echo count($tool_cats); ?></b> 大分类</span>
       <?php if ($stat3_n > 0): ?><span>·</span><span><b class="tnum"><?php echo (int) $stat3_n; ?>+</b> <?php echo esc_html($stat3_l); ?></span><?php endif; ?>
