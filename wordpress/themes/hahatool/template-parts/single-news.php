@@ -94,23 +94,24 @@ $nl_breadcrumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList
       $prev = get_previous_post(true);
       $next = get_next_post(true);
       if ($prev || $next): ?>
-      <nav style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px">
-        <?php if ($prev): ?><a class="panel" style="padding:16px" href="<?php echo esc_url(get_permalink($prev)); ?>"><span class="muted" style="display:inline-flex;align-items:center;gap:3px"><?php echo hh_icon('chevron-left', 13); ?>上一篇</span><div style="margin-top:4px;font-weight:500"><?php echo esc_html(get_the_title($prev)); ?></div></a><?php else: ?><span></span><?php endif; ?>
-        <?php if ($next): ?><a class="panel" style="padding:16px;text-align:right" href="<?php echo esc_url(get_permalink($next)); ?>"><span class="muted" style="display:inline-flex;align-items:center;justify-content:flex-end;gap:3px">下一篇<?php echo hh_icon('chevron-right', 13); ?></span><div style="margin-top:4px;font-weight:500"><?php echo esc_html(get_the_title($next)); ?></div></a><?php endif; ?>
+      <nav class="pn-nav">
+        <?php if ($prev): ?><a class="pn-card" href="<?php echo esc_url(get_permalink($prev)); ?>"><span class="pn-label"><?php echo hh_icon('chevron-left', 13); ?>上一篇</span><span class="pn-title clamp2"><?php echo esc_html(get_the_title($prev)); ?></span></a><?php else: ?><span></span><?php endif; ?>
+        <?php if ($next): ?><a class="pn-card pn-next" href="<?php echo esc_url(get_permalink($next)); ?>"><span class="pn-label">下一篇<?php echo hh_icon('chevron-right', 13); ?></span><span class="pn-title clamp2"><?php echo esc_html(get_the_title($next)); ?></span></a><?php endif; ?>
       </nav>
       <?php endif; ?>
 
       <?php
-      // 相关资讯（同 ai-news 分类，排除当前，取 3）
-      $rel_q = new WP_Query(['post_type' => 'post', 'category_name' => 'ai-news', 'posts_per_page' => 3, 'post__not_in' => [$id], 'no_found_rows' => true]);
+      // 相关资讯（同 ai-news 分类，排除当前，取 4，带封面缩略图、紧凑排版）
+      $rel_q = new WP_Query(['post_type' => 'post', 'category_name' => 'ai-news', 'posts_per_page' => 4, 'post__not_in' => [$id], 'no_found_rows' => true]);
       if ($rel_q->have_posts()): ?>
-      <section style="margin-top:40px">
-        <h2 style="font-size:20px;margin-bottom:16px">相关资讯</h2>
-        <div style="display:flex;flex-direction:column;gap:12px">
-          <?php while ($rel_q->have_posts()): $rel_q->the_post(); ?>
-            <a class="panel" style="padding:16px;display:block" href="<?php the_permalink(); ?>">
-              <time class="muted" style="font-size:12px"><?php echo esc_html(get_the_date('Y-m-d')); ?></time>
-              <div style="margin-top:4px;font-weight:500"><?php the_title(); ?></div>
+      <section style="margin-top:36px">
+        <h2 style="font-size:20px;margin-bottom:14px">相关资讯</h2>
+        <div class="rel-list">
+          <?php while ($rel_q->have_posts()): $rel_q->the_post(); $rc = hh_meta(get_the_ID(), 'cover'); ?>
+            <a class="rel-item" href="<?php the_permalink(); ?>">
+              <?php if ($rc): ?><img class="rel-thumb" src="<?php echo esc_url($rc); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy"><?php endif; ?>
+              <span class="rel-bd"><span class="rel-tt clamp2" style="display:block"><?php the_title(); ?></span><time class="muted" style="font-size:12px;display:block;margin-top:4px"><?php echo esc_html(get_the_date('Y-m-d')); ?></time></span>
+              <span class="rel-ic"><?php echo hh_icon('chevron-right', 16); ?></span>
             </a>
           <?php endwhile; wp_reset_postdata(); ?>
         </div>
