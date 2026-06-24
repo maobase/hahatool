@@ -34,7 +34,6 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
 
 <section class="hero">
   <div class="wrap hero-inner">
-    <span class="pill" style="display:inline-flex;align-items:center;gap:5px"><?php echo hh_icon('sparkles', 12); ?>全球 AI 工具中文导航 · 每日更新</span>
     <h1>发现最好用的 <span class="hl">AI 工具</span></h1>
     <p class="sub">收录全球优秀 AI 产品，附流量数据、定价与真实点评，帮你少踩坑、快上手。</p>
     <form class="hero-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
@@ -48,11 +47,12 @@ $tags = get_tags(['hide_empty' => true, 'orderby' => 'count', 'order' => 'DESC',
         <a href="<?php echo esc_url(home_url('/?s=' . urlencode($kw))); ?>"><?php echo esc_html($kw); ?></a>
       <?php endforeach; ?>
     </div>
-    <div class="hero-stats">
-      <div><div class="n tnum"><?php echo count($all->posts); ?><?php if (count($all->posts) > 0): ?><span>+</span><?php endif; ?></div><div class="l">收录工具</div></div>
-      <div><div class="n tnum"><?php echo count($tool_cats); ?><?php if (count($tool_cats) > 0): ?><span>+</span><?php endif; ?></div><div class="l">工具分类</div></div>
-      <div><div class="n tnum"><?php echo $stat3_n; ?><?php if ($stat3_n > 0): ?><span>+</span><?php endif; ?></div><div class="l"><?php echo esc_html($stat3_l); ?></div></div>
-    </div>
+    <p class="hero-meta">
+      <span class="hero-live"><span class="dot" aria-hidden="true"></span>每日更新</span>
+      <span>已收录 <b class="tnum"><?php echo count($all->posts); ?>+</b> 款工具</span>
+      <span>·</span><span><b class="tnum"><?php echo count($tool_cats); ?></b> 大分类</span>
+      <?php if ($stat3_n > 0): ?><span>·</span><span><b class="tnum"><?php echo (int) $stat3_n; ?>+</b> <?php echo esc_html($stat3_l); ?></span><?php endif; ?>
+    </p>
   </div>
 </section>
 
