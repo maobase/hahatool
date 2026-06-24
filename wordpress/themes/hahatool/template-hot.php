@@ -48,7 +48,7 @@ $hot_crumb = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', '
       </section>
     <?php endforeach; ?>
   </div>
-  <p class="muted" style="text-align:center;margin-top:28px;font-size:12px">数据来源：momoyu.cc · 服务端缓存 5 分钟 · 仅聚合标题与链接，版权归原站</p>
+  <p class="muted" style="text-align:center;margin-top:28px;font-size:12px">实时聚合全网热榜 · 每 5 分钟更新 · 仅聚合标题与链接，版权归各来源站点</p>
   <?php endif; ?>
 </div>
 <script>/* 全网热榜 5 分钟刷新一次：用户离开后重新回到本页且已超 5 分钟时自动拉取最新（不打断正在阅读的人） */
